@@ -50,6 +50,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    function transactionsAsSource()
+    {
+        return $this->hasMany(Transaction::class, 'source_id');
+    }
+    function transactionsAsDestination()
+    {
+        return $this->hasMany(Transaction::class, 'destination_id');
+    }
     function role()
     {
         return $this->belongsTo(Role::class);
@@ -58,6 +66,19 @@ class User extends Authenticatable
     {
         return $this->hasMany(Order::class);
     }
+    function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
+    function sales()
+    {
+        return $this->hasMany(Sale::class);
+    }
+    function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
     function products()
     {
         return $this->hasMany(Product::class);
