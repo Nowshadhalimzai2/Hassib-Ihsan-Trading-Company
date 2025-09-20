@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Models\Post\Comment;
 use App\Models\Post\Like;
 use App\Models\Post\Post;
+use App\Models\Users\Role;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -49,7 +50,18 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-
+    function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+    function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+    function products()
+    {
+        return $this->hasMany(Product::class);
+    }
     function posts()
     {
         return $this->hasMany(Post::class);

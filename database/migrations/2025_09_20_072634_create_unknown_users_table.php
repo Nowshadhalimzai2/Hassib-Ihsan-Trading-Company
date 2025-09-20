@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('roles', function (Blueprint $table) {
+        Schema::create('unknown_customers', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique()->notNullable();
+            $table->string('first_name')->notNullable();
+            $table->string('last_name');
+            $table->string('phone')->notNullable();
+            $table->string('address')->notNullable();
             $table->timestamps();
         });
     }
@@ -23,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('unknown_customers');
     }
 };
