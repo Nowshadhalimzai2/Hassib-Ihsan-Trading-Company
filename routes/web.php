@@ -2,25 +2,12 @@
 
 use App\Http\Controllers\Comment\CommentController;
 use App\Http\Controllers\Post\PostController;
-use App\Models\Post\Post;
+
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Mail;
 
-// class Products
-// {
-//     public static function all()
-//     {
-//         return collect(range(1, 100))->map(function ($id) {
-//             return [
-//                 'id' => $id,
-//                 'name' => 'Product ' . $id,
-//                 'price' => rand(10, 100) . '.00',
-//                 'description' => 'This is the description for product ' . $id,
-//             ];
-//         });
-//     }
-// }
 
 Route::get('/', function () {
     // sleep(2);
@@ -91,7 +78,10 @@ Route::prefix('blog')->group(function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
+        //return authenticated user
+
+        $role = Auth::user()->role;
+        return Inertia::render('dashboard', ['role' => $role]);
     })->name('dashboard');
 });
 
@@ -107,6 +97,22 @@ Route::get('/test-email', function () {
     Mail::to('recipient@example.com')->queue(new \App\Mail\TestEmail($details));
     return 'Email sent successfully!';
 });
+
+
+
+// -------------INVESTOR ROUTES --------------------
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/investor_transactions', function () {
+        $role = Auth::user()->role;
+        return Inertia::render('Investor/InvestorTransaction', ['role' => $role]);
+    })->name('investor.InvestorTransaction');
+});
+// Route::inertia('/investors/annual-reports', 'Investors/AnnualReports')->name('investors.annual-reports');
+// Route::inertia('/investors/financials', 'Investors/Financials')->name('investors.financials');
+// Route::inertia('/investors/corporate-governance', 'Investors/CorporateGovernance')->name('investors.corporate-governance');
+// Route::inertia('/investors/stock-information', 'Investors/StockInformation')->name('investors.stock-information');
+// Route::inertia('/investors/news-and-events', 'Investors/NewsAndEvents')->name('investors.news-and-events');
+// -------------END INVESTOR ROUTES --------------------
 
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';

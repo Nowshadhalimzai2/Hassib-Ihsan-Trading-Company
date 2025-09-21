@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(DealingEntity::class)->constrained()->noActionOnDelete();
             $table->decimal('amount', 15, 2)->notNullable();
             $table->string('notes')->notNullable();
-            $table->foreignId('source_id')->notNullable()->constrained('users')->noActionOnDelete();
+            $table->foreignId('source_id')->nullable()->constrained('users')->noActionOnDelete();
             $table->foreignId('destination_id')->nullable()->constrained('users')->noActionOnDelete();
             $table->foreignIdFor(BusinessAccount::class)->nullable()->constrained()->noActionOnDelete();
             $table->timestamps();
