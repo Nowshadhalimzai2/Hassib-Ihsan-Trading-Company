@@ -6,7 +6,7 @@ import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { BookOpen, Folder } from 'lucide-react';
 import AppLogo from './app-logo';
-import { customerNavItems, employeeNavItems, investorNavItems } from './ui/NavItems';
+import { customerNavItems, employeeNavItems, investorNavItems, tellerNavItems, vendorNavItems } from './ui/NavItems';
 
 const footerNavItems: NavItem[] = [
     {
@@ -26,15 +26,20 @@ export function AppSidebar() {
 
     // every user's accessable items based on their role.
     //===========================     the role items are defined in NavItems.tsx   ===========
-    const role = usePage().props.role as { name: string };
-    if (role && role.name === 'customer') {
+    const role = (usePage().props.user as { role: { name: string } }).role.name; // ROLE NAME EXTRACTION
+
+    if (role === 'customer') {
         mainNavItems.push(...customerNavItems);
-    } else if (role && role.name === 'employee') {
+    } else if (role === 'employee') {
         mainNavItems.push(...employeeNavItems);
-    } else if (role && role.name === 'investor') {
+    } else if (role === 'investor') {
         mainNavItems.push(...investorNavItems);
+    } else if (role === 'teller') {
+        mainNavItems.push(...tellerNavItems);
+    } else if (role === 'vendor') {
+        mainNavItems.push(...vendorNavItems);
     }
-    console.log('Role:', usePage()); // Debugging line to check the current URL
+    // Debugging line to check the current URL
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>

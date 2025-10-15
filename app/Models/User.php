@@ -55,6 +55,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Transaction::class, 'source_id');
     }
+
     function transactionsAsDestination()
     {
         return $this->hasMany(Transaction::class, 'destination_id');
@@ -67,6 +68,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Order::class);
     }
+
     function invoices()
     {
         return $this->hasMany(Invoice::class);

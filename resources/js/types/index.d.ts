@@ -35,13 +35,17 @@ export interface User {
     id: number;
     name: string;
     email: string;
-    role_id: Role;
+    
+    role:Role;
     avatar?: string;
     email_verified_at: string | null;
-    source_id?: Transaction[];
-    destination_id?: Transaction[];
+    source_id?: number;
+    destination_id?: number[];
     created_at: string;
+    profit_percentage:number;
     updated_at: string;
+    transactions_as_source?: Transaction[];
+    transactions_as_destination?: Transaction[];
     [key: string]: unknown; // This allows for additional properties...
 }
 
@@ -52,15 +56,19 @@ interface Role {
 
 export interface Transaction{
     id: number;
-    dealing_entity_id: DealingEntity;
+    dealing_entity_id: number;
     amount: number;
-    currency: Currency;
-    source_id: User;
-    destination_id?: User;
+    currency_id: number;
+    source_id: number;
+   
+    destination_id?: number;
     business_account?: number;
     notes?: string;
     created_at: string;
     updated_at: string;
+    
+    dealingEntity?: DealingEntity;
+    [key: string]: unknown; // This allows for additional properties...
 }
 interface DealingEntity{
     id: number;
@@ -69,4 +77,20 @@ interface DealingEntity{
 interface Currency{
     id: number;
     name: string;
+}
+
+export interface Product{
+    id: number
+      user_id: number
+      name: string
+      description?: string
+      quantity_in_stock: number
+      unit_price: number
+      currency_id: number
+      category_id: number
+      is_featured: number
+      deleted_at?: date
+      created_at: date
+      updated_at: date
+    [key: string]: unknown; // This allows for additional properties...
 }

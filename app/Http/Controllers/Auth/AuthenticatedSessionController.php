@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,10 +30,16 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        $user = User::where("email", $request->email)->with("role:name,id")->first();
         $request->authenticate();
 
         $request->session()->regenerate();
-
+        if ($user->role->name == "customer")
+            return redirect()->intended(route('customer.dashboard', absolute: false));
+        else if ($user->role->name == "Investor")
+            return redirect()->intended(route('investor.dashboard', absolute: false));
+        else if ($user->role->name == "teller")
+            return redirect()->intended(route('teller.dashboard', absolute: false));
         return redirect()->intended(route('dashboard', absolute: false));
     }
 

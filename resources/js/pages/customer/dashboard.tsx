@@ -4,22 +4,22 @@ import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Dashboard',
-        href: '/dashboard',
+        title: 'Customer',
+        href: '/customer/dashboard',
     },
 ];
 
 export default function Dashboard() {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Dashboard" />
+            <Head title="Investor Transactions" />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
                 <div className="grid auto-rows-min gap-4 md:grid-cols-3">
                     <div
                         title="#01"
                         className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border"
                     >
-                        Hello World in dashboard
+                        Hello World in customer
                     </div>
 
                     <div
