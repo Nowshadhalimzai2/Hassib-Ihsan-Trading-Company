@@ -1,0 +1,5 @@
+1: how to calculate the sum of all transactions done with business account. based on currency stock in? 
+    (On admin dashboard and employee route files)// SOLVED SUCCESSFULLY 
+
+
+2: can't insert values to company, salary and profit percentage (On Register User file)

@@ -8,7 +8,7 @@ const TransactionRecordList = ({
 }: {
     className: string;
     transactions: Transaction[];
-    auth_user: { id: number; name: string };
+    auth_user?: { id: number; name: string };
 }) => {
     let minNoteLength: number | undefined = transactions[0] && transactions[0].notes?.length;
     transactions.forEach((transaction) => {
@@ -44,13 +44,13 @@ export const TransactionRecord = ({
 }: {
     transaction: Transaction;
     minNoteLength?: number;
-    auth_user: { id: number; name: string };
+    auth_user?: { id: number; name: string };
 }) => {
     return (
         <>
-            <a href={`teller/details/${transaction.id}`} className="">
+            <a href={`users/transaction-detail/${transaction.id}`} className="">
                 <div
-                    className={`mx-2 mt-1 flex w-full justify-between ${transaction.source_id === auth_user.id ? 'bg-green-50 hover:bg-green-100' : 'bg-red-50 hover:bg-red-100'} px-4 py-3 transition-all duration-300 hover:scale-101 hover:shadow-lg`}
+                    className={`mx-2 mt-1 flex w-full justify-between ${transaction.business_account_id === 1 || auth_user?.id === transaction.source_id ? 'bg-green-50 hover:bg-green-100' : 'bg-red-50 hover:bg-red-100'} px-4 py-3 transition-all duration-300 hover:scale-101 hover:shadow-lg`}
                 >
                     <span>{transaction.amount}</span>
                     <span>{transaction.currency_id == 1 ? 'Afg' : transaction.currency_id == 2 ? 'Pak' : 'USD'}</span>

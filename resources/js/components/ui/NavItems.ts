@@ -1,5 +1,5 @@
 import { NavItem } from "@/types";
-import { Goal, LayoutGrid, UserPlus } from "lucide-react";
+import { Goal, HandHelping, LayoutGrid, UserPlus } from "lucide-react";
 
 export const customerNavItems: NavItem[] = [
     {
@@ -21,13 +21,18 @@ export const customerNavItems: NavItem[] = [
 export const employeeNavItems: NavItem[] = [
     {
         title: 'Admin Dashboard',
-        href: '/admin/Dashboard',
+        href: '/admin/dashboard',
         icon: LayoutGrid,
     },
      {
         title: 'Registeration',
         href: '/admin/register-user',
         icon: UserPlus,
+    },
+     {
+        title: 'Transaction',
+        href: '/admin/transactions',
+        icon: HandHelping,
     },
 ];
 export const investorNavItems: NavItem[] = [

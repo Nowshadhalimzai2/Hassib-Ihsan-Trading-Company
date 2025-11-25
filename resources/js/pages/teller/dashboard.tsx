@@ -43,10 +43,7 @@ export default function Dashboard() {
                     </div>
                 </div>
 
-                <div
-                    title="#04"
-                    className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min"
-                >
+                <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min">
                     <TransactionRecordList auth_user={auth_user.user} className="mt-6" transactions={transactions} />
                 </div>
             </div>

@@ -8,13 +8,15 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Models\Users\Role;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
-    Route::get('register', [RegisteredUserController::class, 'create'])
-        ->name('register');
+    // Route::get('register', [RegisteredUserController::class, 'create'])
+    //     ->name('register');
 
-    Route::post('register', [RegisteredUserController::class, 'store']);
+    // Route::post('register', [RegisteredUserController::class, 'store']);
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
         ->name('login');
@@ -35,6 +37,24 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+    // 00000000000000   ENSURE ONLY ADMIN CAN REGISTER NEW USERS   00000000000000
+    Route::get('register', [RegisteredUserController::class, 'create'])
+        ->name('register');
+
+    Route::post('register-customer', [RegisteredUserController::class, 'storeCustomer'])
+        ->name('register-customer');
+
+    Route::post('register-employee', [RegisteredUserController::class, 'storeEmployee'])
+        ->name('register-employee');
+    Route::post('register-investor', [RegisteredUserController::class, 'storeInvestor'])
+        ->name('register-investor');
+    Route::post('register-teller', [RegisteredUserController::class, 'storeTeller'])
+        ->name('register-teller');
+    Route::post('register-vendor', [RegisteredUserController::class, 'storeVendor'])
+        ->name('register-vendor');
+    // 00000000000000   END OF ENSURE ONLY ADMIN CAN REGISTER NEW USERS   00000000000000
+
+
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
 

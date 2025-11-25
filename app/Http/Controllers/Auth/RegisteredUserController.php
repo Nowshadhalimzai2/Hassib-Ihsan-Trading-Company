@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Users\Role;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -25,14 +26,14 @@ class RegisteredUserController extends Controller
 
     /**
      * Handle an incoming registration request.
-     *
+     * 
      * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
+            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -47,5 +48,153 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         return to_route('dashboard');
+    }
+
+
+    public function storeCustomer(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
+            'phone' => 'required|string|max:15',
+            'address' => 'required|string|max:255',
+            'company' => 'sometimes|string|max:255',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+        $role_id = Role::where('name', 'customer')->first()->id; // Assuming 'customer' is the name of the role for customers
+        $user = User::create([
+            'name' => $request->first_name . ' ' . $request->last_name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'role_id' => $role_id, // Assuming '3' is the ID for the 'customer' role
+            'password' => Hash::make($request->password),
+        ]);
+        $user->company = $request->company ?? null;
+        $user->save();
+        event(new Registered($user));
+
+
+        return redirect()->back()->with('success', 'Customer registered successfully.');
+    }
+
+    public function storeEmployee(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
+            'phone' => 'required|string|max:15',
+            'address' => 'required|string|max:255',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'salary' => 'required|numeric',
+        ]);
+        $role_id = Role::where('name', 'employee')->first()->id; // Assuming 'customer' is the name of the role for customers
+        $user = User::create([
+            'name' => $request->first_name . ' ' . $request->last_name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'role_id' => $role_id,
+            'password' => Hash::make($request->password),
+        ]);
+
+        // Ensure salary is set even if it's not mass assignable in the User model
+        $user->salary = $request->salary;
+        $user->save();
+
+        event(new Registered($user));
+
+
+        return redirect()->back()->with('success', 'Employee registered successfully.');
+    }
+
+    public function storeInvestor(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
+            'phone' => 'required|string|max:15',
+            'address' => 'required|string|max:255',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'profit_percentage' => 'required|numeric|min:1|max:100',
+        ]);
+        $role_id = Role::where('name', 'investor')->first()->id; // Assuming 'Investor' is the name of the role for customers
+        $user = User::create([
+            'name' => $request->first_name . ' ' . $request->last_name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'role_id' => $role_id,
+            'password' => Hash::make($request->password),
+        ]);
+        $user->profit_percentage = $request->profit_percentage;
+        $user->save();
+        event(new Registered($user));
+
+
+        return redirect()->back()->with('success', 'Investor registered successfully.');
+    }
+
+    public function storeTeller(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
+            'phone' => 'required|string|max:15 |min:10',
+            'address' => 'required|string|max:255',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'company' => 'required|string| max:255| min:10'
+        ]);
+
+        $role_id = Role::where('name', 'teller')->first()->id; // Assuming 'Teller' is the name of the role for customers
+        $user = User::create([
+            'name' => $request->first_name . ' ' . $request->last_name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'role_id' => $role_id,
+
+            'password' => Hash::make($request->password),
+        ]);
+        $user->company = $request->company;
+        $user->save();
+        event(new Registered($user));
+
+
+        return redirect()->back()->with('success', $request->first_name . ' ' . $request->last_name . ' Teller registered successfully.');
+    }
+
+    public function storeVendor(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
+            'phone' => 'required|string|max:15 |min:10',
+            'address' => 'required|string|max:255',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'company' => 'required|string| max:255| min:10'
+        ]);
+
+        $role_id = Role::where('name', 'vendor')->first()->id; // Assuming 'Teller' is the name of the role for customers
+        $user = User::create([
+            'name' => $request->first_name . ' ' . $request->last_name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'role_id' => $role_id,
+
+            'password' => Hash::make($request->password),
+        ]);
+        $user->company = $request->company;
+        $user->save();
+        event(new Registered($user));
+
+
+        return redirect()->back()->with('success', $request->first_name . ' ' . $request->last_name . ' Vendor registered successfully.');
     }
 }

@@ -32,15 +32,20 @@ class AuthenticatedSessionController extends Controller
     {
         $user = User::where("email", $request->email)->with("role:name,id")->first();
         $request->authenticate();
-
         $request->session()->regenerate();
-        if ($user->role->name == "customer")
+
+        if ($user && $user->role && $user->role->name == "customer") {
             return redirect()->intended(route('customer.dashboard', absolute: false));
-        else if ($user->role->name == "Investor")
+        } else if ($user && $user->role && $user->role->name == "Investor") {
             return redirect()->intended(route('investor.dashboard', absolute: false));
-        else if ($user->role->name == "teller")
+        } else if ($user && $user->role && $user->role->name == "teller") {
             return redirect()->intended(route('teller.dashboard', absolute: false));
-        return redirect()->intended(route('dashboard', absolute: false));
+        } else if ($user && $user->role && $user->role->name == "employee") {
+            return redirect()->intended(route('admin.Dashboard', absolute: false));
+        } else if ($user && $user->role && $user->role->name == "vendor") {
+            return redirect()->intended(route('vendor.dashboard', absolute: false));
+        }
+        return redirect()->intended(route('login', absolute: false));
     }
 
     /**

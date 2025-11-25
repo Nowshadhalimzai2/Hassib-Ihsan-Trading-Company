@@ -60,7 +60,6 @@ export interface Transaction{
     amount: number;
     currency_id: number;
     source_id: number;
-   
     destination_id?: number;
     business_account?: number;
     notes?: string;

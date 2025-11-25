@@ -10,10 +10,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Mail;
-
+use phpDocumentor\Reflection\Types\Nullable;
 
 Route::get('/', function () {
     // sleep(2);
+
     return Inertia::render('Home/Home');
 })->name('home');
 Route::get("/about", function () {
@@ -116,6 +117,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
             return Inertia::render("vendor/dashboard", ['user' => $user, 'sumByCurrency' => $currencies, 'products' => $products_sold_by_vendor]);
         } else if ($user->role->name == "employee") {
+
+
+
             return Inertia::render('admin/Dashboard', ['user' => $user]);
         } else {
             return "No role assigned";
@@ -157,3 +161,4 @@ require __DIR__ . '/auth.php';
 require __DIR__ . '/customer_routes.php';
 require __DIR__ . '/investor_routes.php';
 require __DIR__ . '/teller_routes.php';
+require __DIR__ . '/employee_routes.php';

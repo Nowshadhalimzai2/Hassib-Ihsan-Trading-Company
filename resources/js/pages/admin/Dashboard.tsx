@@ -8,7 +8,9 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Dashboard() {
+export default function Dashboard({ curs }: { curs: { Afg?: number; Pak?: number; USD?: number } }) {
+    // const { Afg, Pak, USD } = curs;
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Admin Dashboard" />
@@ -19,7 +21,7 @@ export default function Dashboard() {
                         className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border bg-blue-50 pt-6 duration-300 hover:scale-103 hover:bg-blue-100 hover:shadow-lg"
                     >
                         <h2 className="my-2 text-center text-2xl font-semibold">Balance Afg</h2>
-                        {/* <p className="text-center text-xl font-semibold">{currencies.Afg ? currencies.Afg : 0}</p> */}
+                        <p className="text-center text-xl font-semibold">{curs?.Afg ? curs.Afg : 0}</p>
                     </div>
 
                     <div
@@ -27,14 +29,14 @@ export default function Dashboard() {
                         className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border bg-yellow-50 pt-6 duration-300 hover:scale-103 hover:bg-yellow-100 hover:shadow-lg"
                     >
                         <h2 className="my-2 text-center text-2xl font-semibold">Balance Pak</h2>
-                        {/* <p className="text-center text-xl font-semibold">{currencies.Pak ? currencies.Pak : 0}</p> */}
+                        <p className="text-center text-xl font-semibold">{curs?.Pak ? curs.Pak : 0}</p>
                     </div>
                     <div
                         title="#03"
                         className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border bg-cyan-50 pt-6 duration-300 hover:scale-103 hover:bg-cyan-100 hover:shadow-lg"
                     >
                         <h2 className="my-2 text-center text-2xl font-semibold">Balance USD</h2>
-                        {/* <p className="text-center text-xl font-semibold">{currencies.USD ? currencies.USD : 0}</p> */}
+                        <p className="text-center text-xl font-semibold">{curs?.USD ? curs.USD : 0}</p>
                     </div>
                 </div>
 
