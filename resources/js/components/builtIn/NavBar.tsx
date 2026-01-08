@@ -50,7 +50,7 @@ const NavBar = () => {
         },
         {
             title: 'Account',
-            url: '/dashboard',
+            url: '/admin/dashboard',
         },
     ];
     return (

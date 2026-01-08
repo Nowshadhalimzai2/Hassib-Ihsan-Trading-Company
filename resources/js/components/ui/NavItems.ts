@@ -1,5 +1,5 @@
 import { NavItem } from "@/types";
-import { Goal, HandHelping, LayoutGrid, UserPlus } from "lucide-react";
+import { Goal, HandHelping, LayoutGrid, UserPlus, ShoppingBasket } from "lucide-react";
 
 export const customerNavItems: NavItem[] = [
     {
@@ -25,14 +25,19 @@ export const employeeNavItems: NavItem[] = [
         icon: LayoutGrid,
     },
      {
-        title: 'Registeration',
+        title: 'Registerations',
         href: '/admin/register-user',
         icon: UserPlus,
     },
      {
-        title: 'Transaction',
+        title: 'Transactions',
         href: '/admin/transactions',
         icon: HandHelping,
+    },
+     {
+        title: 'Orders',
+        href: '/admin/orders',
+        icon: ShoppingBasket,
     },
 ];
 export const investorNavItems: NavItem[] = [

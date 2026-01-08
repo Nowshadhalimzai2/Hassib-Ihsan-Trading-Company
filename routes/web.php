@@ -12,6 +12,22 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Mail;
 use phpDocumentor\Reflection\Types\Nullable;
 
+
+// Products temp class
+class Products
+{
+    public static function all()
+    {
+        return collect([
+            ['id' => 0, 'name' => 'Laptop', 'price' => '999.99', 'description' => 'A high-performance laptop suitable for all your computing needs.'],
+            ['id' => 1, 'name' => 'Smartphone', 'price' => '699.99', 'description' => 'A sleek smartphone with the latest features and a stunning display.'],
+            ['id' => 2, 'name' => 'Headphones', 'price' => '199.99', 'description' => 'Noise-cancelling headphones for an immersive audio experience.'],
+            ['id' => 3, 'name' => 'Smartwatch', 'price' => '299.99', 'description' => 'A stylish smartwatch to keep you connected on the go.'],
+            ['id' => 4, 'name' => 'Tablet', 'price' => '499.99', 'description' => 'A versatile tablet perfect for work and entertainment.'],
+        ]);
+    }
+}
+
 Route::get('/', function () {
     // sleep(2);
 
@@ -27,44 +43,44 @@ Route::get("/contact", function () {
 //Route::view('/about', 'About')->name('about');
 
 // -------------PRODUCTS GROUPED ROUTES --------------------
-// Route::prefix('products')->group(function () {
-//     Route::get('/', function () {
+Route::prefix('products')->group(function () {
+    Route::get('/', function () {
 
-//         return Inertia::render("Products/Index");
-//     })->name('products.index');
-//     Route::post('/search', function () {
-//         $searchTerm = request('query');
-//         $products = Products::all()->filter(function ($product) use ($searchTerm) {
-//             return str_contains(strtolower($product['name']), strtolower($searchTerm));
-//         });
-//         return Inertia::render('Products/List', ['products' => $products, 'query' => $searchTerm]);
-//     })->name('products.search');
-//     Route::get('/productlist', function () {
-//         $products = Products::all();
-//         return Inertia::render('Products/List', ['products' => $products]);
-//     });
+        return Inertia::render("Products/Index");
+    })->name('products.index');
+    Route::post('/search', function () {
+        $searchTerm = request('query');
+        $products = Products::all()->filter(function ($product) use ($searchTerm) {
+            return str_contains(strtolower($product['name']), strtolower($searchTerm));
+        });
+        return Inertia::render('Products/List', ['products' => $products, 'query' => $searchTerm]);
+    })->name('products.search');
+    Route::get('/productlist', function () {
+        $products = Products::all();
+        return Inertia::render('Products/List', ['products' => $products]);
+    });
 
-//     Route::get('/{product}', function ($product) {
-//         $product = Products::all()[$product];
-//         return Inertia::render('Products/Order', ['product' => $product]);
-//     })->where('product', '[0-9]+')->name('products.show');
+    Route::get('/{product}', function ($product) {
+        $product = Products::all()[$product];
+        return Inertia::render('Products/Order', ['product' => $product]);
+    })->where('product', '[0-9]+')->name('products.show');
 
-//     Route::get('/categories', function () {
-//         $categories = collect(['Electronics', 'Books', 'Clothing', 'Home & Kitchen']);
-//         return Inertia::render('Products/Categories', ['categories' => $categories]);
-//     })->name('products.categories');
-//     Route::get('/categories/{category}', function ($category) {
-//         $products = collect(range(1, 10))->map(function ($id) use ($category) {
-//             return [
-//                 'id' => $id,
-//                 'name' => $category . ' Product ' . $id,
-//                 'price' => rand(10, 100) . '.00',
-//                 'description' => 'This is the description for ' . $category . ' product ' . $id,
-//             ];
-//         });
-//         return Inertia::render('Products/Category', ['category' => $category, 'products' => $products]);
-//     })->name('products.category');
-// });
+    Route::get('/categories', function () {
+        $categories = collect(['Electronics', 'Books', 'Clothing', 'Home & Kitchen']);
+        return Inertia::render('Products/Categories', ['categories' => $categories]);
+    })->name('products.categories');
+    Route::get('/categories/{category}', function ($category) {
+        $products = collect(range(1, 10))->map(function ($id) use ($category) {
+            return [
+                'id' => $id,
+                'name' => $category . ' Product ' . $id,
+                'price' => rand(10, 100) . '.00',
+                'description' => 'This is the description for ' . $category . ' product ' . $id,
+            ];
+        });
+        return Inertia::render('Products/Category', ['category' => $category, 'products' => $products]);
+    })->name('products.category');
+});
 // -------------END PRODUCTS GROUPED ROUTES --------------------
 
 

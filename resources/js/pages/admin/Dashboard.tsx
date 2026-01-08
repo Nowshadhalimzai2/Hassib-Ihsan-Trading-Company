@@ -15,6 +15,23 @@ export default function Dashboard({ curs }: { curs: { Afg?: number; Pak?: number
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Admin Dashboard" />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
+                <section className="tabs flex flex-col items-center justify-evenly">
+                    <span className="w-full rounded-sm bg-lime-100 p-3 text-center text-2xl font-bold text-slate-900">Balance</span>
+                    <div className="Balance flex w-full items-center justify-evenly p-3 font-bold text-slate-900">
+                        <div>
+                            <h2 className="my-2 text-center text-lg font-semibold">Afg</h2>
+                            <p className="text-center text-xl font-semibold">{curs?.Afg ? curs.Afg : 0}</p>
+                        </div>
+                        <div>
+                            <h2 className="my-2 text-center text-lg font-semibold">Pak</h2>
+                            <p className="text-center text-xl font-semibold">{curs?.Pak ? curs.Pak : 0}</p>
+                        </div>
+                        <div>
+                            <h2 className="my-2 text-center text-lg font-semibold">USD</h2>
+                            <p className="text-center text-xl font-semibold">{curs?.USD ? curs.USD : 0}</p>
+                        </div>
+                    </div>
+                </section>
                 <div className="grid auto-rows-min gap-4 md:grid-cols-3">
                     <div
                         title="#01"
