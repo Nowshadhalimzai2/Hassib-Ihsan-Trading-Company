@@ -1,5 +1,5 @@
 import { Transaction } from '@/types';
-import { Clock } from 'lucide-react';
+import { ArrowDown, ArrowUp, Clock } from 'lucide-react';
 
 const TransactionRecordList = ({
     className,
@@ -20,12 +20,12 @@ const TransactionRecordList = ({
 
     return (
         <>
-            <div className={`${className}`}>
+            <div className={`${className}`} title="Transaction Record List">
                 <div className="my-12 flex items-center justify-center space-x-3">
                     <Clock className="font-semibold"></Clock>
                     <h2 className="text-2xl font-semibold text-slate-900">Transactions History</h2>
                 </div>
-                <div className="HeadNames mx-2 mb-2 flex justify-between px-2 text-lg font-bold text-gray-600">
+                <div className="HeadNames mx-2 mb-2 flex justify-between px-2 text-lg font-bold text-gray-600 dark:text-white/80">
                     <span>Amount</span>
                     <span>Currency</span>
                     <span>Note</span>
@@ -50,9 +50,16 @@ export const TransactionRecord = ({
         <>
             <a href={route('admin.transaction.show', transaction.id)} className="">
                 <div
-                    className={`mx-2 mt-1 flex w-full justify-between ${transaction.business_account_id === 1 || auth_user?.id === transaction.source_id ? 'bg-green-50 hover:bg-green-100' : 'bg-red-50 hover:bg-red-100'} px-4 py-3 transition-all duration-300 hover:scale-101 hover:shadow-lg`}
+                    className={`mx-2 mt-1 flex w-full justify-between rounded-sm border-transparent px-4 py-3 transition-all duration-300 hover:scale-101 hover:border hover:border-white hover:shadow-lg`}
                 >
-                    <span>{transaction.amount}</span>
+                    <span>
+                        {transaction.business_account_id === 1 || auth_user?.id === transaction.source_id ? (
+                            <ArrowDown className="text-green-500" />
+                        ) : (
+                            <ArrowUp className="text-red-500" />
+                        )}
+                        {transaction.amount}
+                    </span>
                     <span>{transaction.currency_id == 1 ? 'Afg' : transaction.currency_id == 2 ? 'Pak' : 'USD'}</span>
                     <span>...{transaction?.notes?.slice(0, minNoteLength)}</span>
                     <span>{new Date(transaction.created_at).toLocaleDateString()}</span>

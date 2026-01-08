@@ -40,7 +40,7 @@ const Transactions = ({ transactions, users }: TransactionProps) => {
             <button
                 onClick={() => handleTabClick(tType.name)}
                 key={tType.id}
-                className={`${activeTTab === tType.name ? 'bg-slate-900 text-sm text-white' : 'text-[12px] text-slate-200'} w-full rounded-sm bg-slate-700 px-3 py-2 font-medium hover:bg-slate-900 hover:text-white dark:text-slate-300 dark:hover:text-white`}
+                className={`${activeTTab === tType.name ? 'bg-slate-900 text-white' : 'text-slate-200'} w-full rounded-sm border border-transparent bg-slate-700 px-3 py-2 text-sm font-medium hover:border hover:border-white/15 hover:bg-slate-900 hover:text-white dark:text-slate-300`}
             >
                 {tType.name.toUpperCase()}
             </button>

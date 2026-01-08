@@ -34,8 +34,8 @@ const B2T = ({ tellers }: { tellers: User[] }) => {
     };
     const fieldStyle: string = 'rounded-sm p-2 ring ring-slate-700 hover:ring-2';
     return (
-        <div className="mx-auto max-w-xl bg-white">
-            <h2 className="p-4 text-center text-xl font-semibold text-slate-950">Transaction From Business to Teller</h2>
+        <div className="mx-auto max-w-xl rounded-lg border border-white bg-white shadow-lg hover:shadow-white dark:bg-gray-800">
+            <h2 className="p-4 text-center text-xl font-semibold text-slate-950 dark:text-white">Transaction From Business to Teller</h2>
             <p className="px-6 text-sm text-red-500">Note: The amount of money will be debitted from Business Account!</p>
 
             <form className="flex flex-col rounded-lg p-6" onSubmit={submit}>

@@ -22,7 +22,7 @@ const Order = ({ product }: ProductProps) => {
                 <PageTitle title="Order" />
 
                 <div className="container mx-auto p-0 md:py-8 lg:px-8">
-                    <div className="flex flex-col items-center justify-center rounded-lg xl:flex-row dark:bg-[#f1f4ff]">
+                    <div className="flex flex-col items-center justify-center rounded-lg xl:flex-row">
                         <ProductImage product={product} />
                         <ProductDetails product={product} />
                     </div>
@@ -107,6 +107,10 @@ const ProductDetails = ({ product }: ProductProps) => {
     const text =
         'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vitae odit vel perspiciatis quo est! Ipsam totam voluptatum dolore excepturi facere atque impedit soluta at placeat tempore nam, distinctio ipsum sint.';
 
+    const orderNow = (e: React.FormEvent) => {
+        e.preventDefault();
+        console.log('Order Placed', data);
+    };
     return (
         <>
             <div className="h-full w-full rounded-lg py-6">
@@ -119,39 +123,43 @@ const ProductDetails = ({ product }: ProductProps) => {
                         {product.description}
                         {text.length > 200 ? text.slice(0, 200) + '...' : text}
                     </div>
-                    <div className="mb-4 space-y-2">
-                        <input
-                            type="text"
-                            placeholder="Quantity"
-                            value={data.quantity}
-                            onChange={(e) => setData('quantity', e.target.value)}
-                            className="w-full rounded-md bg-black/10 px-3 py-2"
-                        />
-                        <input
-                            type="text"
-                            disabled
-                            placeholder="Total"
-                            value={data.quantity ? parseInt(data.quantity) * product.price : 0}
-                            className="w-full rounded-md bg-black/10 px-3 py-2"
-                        />
-                        <textarea placeholder="Notes" className="w-full rounded-md bg-black/10 px-3 py-2" />
-                        <fieldset className="text-slate-300">
-                            <span className="text-red-500">Do you want to call you for varification?</span>
-                            <br />
-                            <div className="flex space-x-5">
-                                <label htmlFor="yes" className="space-x-2">
-                                    <span>Yes</span>
-                                    <input id="yes" className="" type="radio" name="call" />
-                                </label>
+                    <form onSubmit={orderNow} className="mt-4 flex flex-col">
+                        <div className="mb-4 space-y-2">
+                            <input
+                                type="text"
+                                placeholder="Quantity"
+                                value={data.quantity}
+                                onChange={(e) => setData('quantity', e.target.value)}
+                                className="w-full rounded-md bg-black/10 px-3 py-2"
+                            />
+                            <input
+                                type="text"
+                                disabled
+                                placeholder="Total"
+                                value={data.quantity ? parseInt(data.quantity) * product.price : 0}
+                                className="w-full rounded-md bg-black/10 px-3 py-2"
+                            />
+                            <textarea placeholder="Notes" className="w-full rounded-md bg-black/10 px-3 py-2" />
+                            <fieldset className="text-slate-300">
+                                <span className="text-red-500">Do you want to call you for varification?</span>
                                 <br />
-                                <label htmlFor="no" className="space-x-2">
-                                    <span>No</span>
-                                    <input type="radio" className="" id="no" name="call" />
-                                </label>
-                            </div>
-                        </fieldset>
-                    </div>
-                    <button className="rounded-md bg-lime-400 px-6 py-2 text-white transition duration-300 hover:bg-lime-500">Order Now</button>
+                                <div className="flex space-x-5">
+                                    <label htmlFor="yes" className="space-x-2">
+                                        <span>Yes</span>
+                                        <input id="yes" className="" type="radio" name="call" />
+                                    </label>
+                                    <br />
+                                    <label htmlFor="no" className="space-x-2">
+                                        <span>No</span>
+                                        <input type="radio" className="" id="no" name="call" />
+                                    </label>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" className="rounded-md bg-lime-400 px-6 py-2 text-white transition duration-300 hover:bg-lime-500">
+                            Order Now
+                        </button>
+                    </form>
                 </div>
             </div>
         </>
