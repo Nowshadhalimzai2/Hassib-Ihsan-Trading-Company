@@ -16,40 +16,17 @@ use Inertia\Response;
 
 class RegisteredUserController extends Controller
 {
+
     /**
-     * Show the registration page.
+     * Show the registration page for a specific user type.
      */
+
     public function create(): Response
     {
-        return Inertia::render('auth/register');
+        $roles = Role::all();
+        $role = Auth::user()->role;
+        return Inertia::render('admin/RegisterUser', ['roles' => $roles, 'role' => $role]);
     }
-
-    /**
-     * Handle an incoming registration request.
-     * 
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function store(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
-        event(new Registered($user));
-
-        Auth::login($user);
-
-        return to_route('dashboard');
-    }
-
 
     public function storeCustomer(Request $request): RedirectResponse
     {
@@ -196,5 +173,19 @@ class RegisteredUserController extends Controller
 
 
         return redirect()->back()->with('success', $request->first_name . ' ' . $request->last_name . ' Vendor registered successfully.');
+    }
+
+
+
+    // ======================= VIEW ALL USERS =========================
+    public function allCustomers(): Response
+    {
+        $customers = User::with('role')
+            ->whereHas('role', function ($query) {
+                $query->where('name', 'customer');
+            })
+            ->get();
+
+        return Inertia::render('admin/AllCustomers', ['customers' => $customers]);
     }
 }

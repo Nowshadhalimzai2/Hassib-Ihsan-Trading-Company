@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\EmployeeController;
-use App\Models\Transaction;
 use Illuminate\Support\Facades\Route;
 
 
@@ -11,10 +11,18 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 
 
     Route::get('/dashboard', [EmployeeController::class, 'dashboard'])->name('admin.dashboard');
-    Route::get('/register-user', [EmployeeController::class, 'registerUser'])->name('admin.register-user');
     Route::get('transactions', [EmployeeController::class, 'transactions'])->name('admin.transactions');
     Route::post('store-transaction', [EmployeeController::class, 'storeTransaction'])->name('transaction.post');
     Route::get('transactions/{transaction}', [EmployeeController::class, 'showTransaction'])->name('admin.transaction.show');
+
+
+    // ======================= REGISTER USER ROUTES =========================
+    Route::get('/register-user', [RegisteredUserController::class, 'create'])->name('admin.register-user');
+    Route::get('/all-customers', [RegisteredUserController::class, 'allCustomers'])->name('admin.all-customers');
+    Route::get('/all-employees', [RegisteredUserController::class, 'allEmployees'])->name('admin.all-employees');
+    Route::get('/all-investors', [RegisteredUserController::class, 'allInvestors'])->name('admin.all-investors');
+    Route::get('/all-tellers', [RegisteredUserController::class, 'allTellers'])->name('admin.all-tellers');
+    Route::get('/all-vendors', [RegisteredUserController::class, 'allVendors'])->name('admin.all-vendors');
 
     // ======================= ORDERS ROUTES =========================
     Route::get('/orders', fn() => "hello");

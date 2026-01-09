@@ -18,7 +18,7 @@ interface RoleProps {
     roles: { name: string }[];
 }
 const RegisterUser = ({ roles }: RoleProps) => {
-    const [active, setActive] = React.useState(localStorage.getItem('active'));
+    const [active, setActive] = React.useState<string>(localStorage.getItem('active') || '' || roles[0].name);
     const handleTabClick = (tab: string) => {
         setActive(tab);
         localStorage.setItem('active', tab);
@@ -54,16 +54,26 @@ const RegisterUser = ({ roles }: RoleProps) => {
     );
 };
 
-const UserForm = ({ userType }: { userType: string | null }) => {
+const UserForm = ({ userType }: { userType: string }) => {
     return (
         <div className="rounded-lg bg-slate-100 p-6 md:m-4 dark:border-gray-700 dark:bg-gray-800">
-            <h2 className="mb-4 text-center text-xl font-semibold">Create New {userType}</h2>
-            {/* Add your form fields here based on userType */}
-            {userType === 'customer' && <CustomerForm />}
-            {userType === 'employee' && <EmployeeForm />}
-            {userType === 'investor' && <InvestorForm />}
-            {userType === 'teller' && <TellerForm />}
-            {userType === 'vendor' && <VendorForm />}
+            <div className="flex justify-center py-6 md:justify-end md:py-0">
+                <a
+                    href={`/admin/all-${userType}s`}
+                    className="rounded-sm border border-white px-3 py-2 hover:bg-gray-950 hover:shadow hover:shadow-white"
+                >
+                    List of {userType}s
+                </a>
+            </div>
+            <div>
+                <h2 className="mb-8 text-center text-2xl font-semibold">Create {userType?.charAt(0).toUpperCase() + userType?.slice(1)}</h2>
+                {/* Add your form fields here based on userType */}
+                {userType === 'customer' && <CustomerForm />}
+                {userType === 'employee' && <EmployeeForm />}
+                {userType === 'investor' && <InvestorForm />}
+                {userType === 'teller' && <TellerForm />}
+                {userType === 'vendor' && <VendorForm />}
+            </div>
         </div>
     );
 };
@@ -83,6 +93,7 @@ type ExmployeeFormType = RegisterFormType & {
 type FormType = RegisterFormType & {
     company: string;
 };
+
 const CustomerForm = () => {
     const { data, setData, post, processing, errors, reset } = useForm<Required<FormType>>({
         first_name: '',
@@ -102,7 +113,7 @@ const CustomerForm = () => {
         });
     };
     return (
-        <div className="mx-auto max-w-xl bg-white">
+        <div className="mx-auto max-w-xl rounded-md border border-gray-700 bg-white shadow-md shadow-white dark:bg-gray-900">
             <form className="flex flex-col rounded-lg p-6" onSubmit={submit}>
                 <div className="">
                     <div className="grid gap-2">
@@ -260,7 +271,7 @@ const EmployeeForm = () => {
         });
     };
     return (
-        <div className="mx-auto max-w-xl bg-white">
+        <div className="mx-auto max-w-xl rounded-md border border-gray-700 bg-white shadow-md shadow-white dark:bg-gray-900">
             <form className="flex flex-col rounded-lg p-6" onSubmit={submit}>
                 <div className="">
                     <div className="grid gap-2">
@@ -423,7 +434,7 @@ const InvestorForm = () => {
         });
     };
     return (
-        <div className="mx-auto max-w-xl bg-white">
+        <div className="mx-auto max-w-xl rounded-md border border-gray-700 bg-white shadow-md shadow-white dark:bg-gray-900">
             <form className="flex flex-col rounded-lg p-6" onSubmit={submit}>
                 <div className="">
                     <div className="grid gap-2">
@@ -583,7 +594,7 @@ const TellerForm = () => {
         });
     };
     return (
-        <div className="mx-auto max-w-xl bg-white">
+        <div className="mx-auto max-w-xl rounded-md border border-gray-700 bg-white shadow-md shadow-white dark:bg-gray-900">
             <form className="flex flex-col rounded-lg p-6" onSubmit={submit}>
                 <div className="">
                     <div className="grid gap-2">
@@ -743,7 +754,7 @@ const VendorForm = () => {
         });
     };
     return (
-        <div className="mx-auto max-w-xl bg-white">
+        <div className="mx-auto max-w-xl rounded-md border border-gray-700 bg-white shadow-md shadow-white dark:bg-gray-900">
             <form className="flex flex-col rounded-lg p-6" onSubmit={submit}>
                 <div className="">
                     <div className="grid gap-2">

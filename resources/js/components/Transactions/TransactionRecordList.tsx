@@ -23,7 +23,7 @@ const TransactionRecordList = ({
             <div className={`${className}`} title="Transaction Record List">
                 <div className="my-12 flex items-center justify-center space-x-3">
                     <Clock className="font-semibold"></Clock>
-                    <h2 className="text-2xl font-semibold text-slate-900">Transactions History</h2>
+                    <h2 className="text-2xl font-semibold text-slate-900 dark:text-white">Transactions History</h2>
                 </div>
                 <div className="HeadNames mx-2 mb-2 flex justify-between px-2 text-lg font-bold text-gray-600 dark:text-white/80">
                     <span>Amount</span>
