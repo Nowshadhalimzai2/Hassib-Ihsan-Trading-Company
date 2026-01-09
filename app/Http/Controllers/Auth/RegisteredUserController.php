@@ -24,8 +24,9 @@ class RegisteredUserController extends Controller
     public function create(): Response
     {
         $roles = Role::all();
-        $role = Auth::user()->role;
-        return Inertia::render('admin/RegisterUser', ['roles' => $roles, 'role' => $role]);
+        $user = User::with('role')->find(Auth::id());
+
+        return Inertia::render('admin/RegisterUser', ['roles' => $roles, 'user' => $user]);
     }
 
     public function storeCustomer(Request $request): RedirectResponse
@@ -186,6 +187,13 @@ class RegisteredUserController extends Controller
             })
             ->get();
 
-        return Inertia::render('admin/AllCustomers', ['customers' => $customers]);
+        return Inertia::render('customer/AllCustomers', ['customers' => $customers]);
+    }
+    public function showCustomer(User $customer): Response
+    {
+        // Load any related data if necessary
+        // example: $customer->load('orders');
+
+        return Inertia::render('customer/ShowCustomer', ['customer' => $customer]);
     }
 }

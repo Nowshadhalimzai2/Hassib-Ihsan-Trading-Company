@@ -24,13 +24,16 @@ const footerNavItems: NavItem[] = [
 export function AppSidebar() {
     const mainNavItems: NavItem[] = [];
     // every user's accessable items based on their role.
+    console.log('Role ID name', usePage().props.user);
+
     //===========================     the role items are defined in NavItems.tsx   ===========
-    const role = (usePage().props as any)?.role?.name; // ROLE NAME EXTRACTION
+    const role = (usePage().props.user as { role: { name: string } }).role.name; // ROLE NAME EXTRACTION
 
     if (role === 'customer') {
         mainNavItems.push(...customerNavItems);
     } else if (role === 'employee') {
         mainNavItems.push(...employeeNavItems);
+        console.log('Items: ', mainNavItems);
     } else if (role === 'investor') {
         mainNavItems.push(...investorNavItems);
     } else if (role === 'teller') {

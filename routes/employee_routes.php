@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\EmployeeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EmployeeController;
 
 
 
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth')->prefix('admin')->group(function () {
 
 
-    Route::get('/dashboard', [EmployeeController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/dashboard', [EmployeeController::class,  'dashboard'])->name('admin.dashboard');
     Route::get('transactions', [EmployeeController::class, 'transactions'])->name('admin.transactions');
     Route::post('store-transaction', [EmployeeController::class, 'storeTransaction'])->name('transaction.post');
     Route::get('transactions/{transaction}', [EmployeeController::class, 'showTransaction'])->name('admin.transaction.show');
@@ -18,7 +18,11 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 
     // ======================= REGISTER USER ROUTES =========================
     Route::get('/register-user', [RegisteredUserController::class, 'create'])->name('admin.register-user');
+    // ----------------------- CUSTOMER RELATED ROUTES ------------------------
     Route::get('/all-customers', [RegisteredUserController::class, 'allCustomers'])->name('admin.all-customers');
+    Route::get('/customers/{customer}', [RegisteredUserController::class, 'showCustomer'])->name('admin.customers.show');
+
+    // ----------------------- EMPLOYEE RELATED ROUTES ------------------------
     Route::get('/all-employees', [RegisteredUserController::class, 'allEmployees'])->name('admin.all-employees');
     Route::get('/all-investors', [RegisteredUserController::class, 'allInvestors'])->name('admin.all-investors');
     Route::get('/all-tellers', [RegisteredUserController::class, 'allTellers'])->name('admin.all-tellers');
