@@ -1,25 +1,27 @@
 import { Delete, Edit } from 'lucide-react';
 
-interface ShowCustomerProps {
-    customer: {
+interface Props {
+    employee: {
         name: string;
         email: string;
         phone: string;
         address: string;
         id: number;
+        salary?: number;
     };
 }
 
-const ShowCustomer = ({ customer }: ShowCustomerProps) => {
+const ShowEmployee = ({ employee }: Props) => {
     return (
         <div className="min-h-screen pt-8 dark:bg-gray-900">
             <div className="mx-auto mb-4 max-w-5xl rounded-md border border-white p-2 shadow-md dark:border-gray-700 dark:bg-gray-800">
-                <h1 className="p-8 text-center text-3xl">Customer Details</h1>
+                <h1 className="p-8 text-center text-3xl">Employee Details</h1>
                 <div className="block border-b p-4 shadow hover:shadow-white dark:border-gray-700 dark:hover:bg-gray-900">
-                    <h2 className="text-xl font-semibold">{customer.name}</h2>
-                    <p className="text-gray-600">Email: {customer.email}</p>
-                    <p className="text-gray-600">Phone: {customer.phone}</p>
-                    <p className="text-gray-600">Address: {customer.address}</p>
+                    <h2 className="text-xl font-semibold">{employee.name}</h2>
+                    <p className="text-gray-600">Email: {employee.email}</p>
+                    <p className="text-gray-600">Phone: {employee.phone}</p>
+                    <p className="text-gray-600">Address: {employee.address}</p>
+                    <p className="text-gray-600">{employee.salary && `Salary: ${employee.salary}`}</p>
                 </div>
                 <section className="DeleteUpdateSection flex justify-end">
                     <a
@@ -30,9 +32,9 @@ const ShowCustomer = ({ customer }: ShowCustomerProps) => {
                     </a>
                     <form
                         method="POST"
-                        action={route('admin.customer.delete', customer.id)}
+                        action={route('admin.employee.delete', employee.id)}
                         onSubmit={(e) => {
-                            if (!confirm('Are you sure you want to delete this customer?')) {
+                            if (!confirm('Are you sure you want to delete this employee?')) {
                                 e.preventDefault();
                             }
                         }}
@@ -48,4 +50,4 @@ const ShowCustomer = ({ customer }: ShowCustomerProps) => {
     );
 };
 
-export default ShowCustomer;
+export default ShowEmployee;

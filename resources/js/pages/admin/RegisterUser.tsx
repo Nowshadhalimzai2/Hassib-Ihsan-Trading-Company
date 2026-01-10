@@ -31,7 +31,7 @@ const RegisterUser = ({ roles }: RoleProps) => {
         return (
             <button
                 onClick={() => handleTabClick(role.name)}
-                className={`${active === role.name ? 'py-0 text-sm text-black' : 'py-3 text-[12px] text-slate-600'} font-medium hover:text-black dark:text-slate-300 dark:hover:text-white`}
+                className={`${active === role.name ? 'py-0 text-sm text-black dark:text-white' : 'py-3 text-[12px] text-slate-600'} font-medium hover:text-black dark:text-slate-300 dark:hover:text-white`}
             >
                 {role.name.toUpperCase()}
             </button>

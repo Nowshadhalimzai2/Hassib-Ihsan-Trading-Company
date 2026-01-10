@@ -201,4 +201,92 @@ class RegisteredUserController extends Controller
 
         return redirect()->route('admin.all-customers')->with('success', 'Customer deleted successfully.');
     }
+
+    public function allEmployees(): Response
+    {
+        $employees = User::with('role')
+            ->whereHas('role', function ($query) {
+                $query->where('name', 'employee');
+            })
+            ->get();
+
+        return Inertia::render('admin/AllEmployees', ['employees' => $employees]);
+    }
+    public function showEmployee(User $employee): Response
+    {
+        // Load any related data if necessary
+        // example: $employee->load('projects');
+        return Inertia::render('admin/ShowEmployee', ['employee' => $employee]);
+    }
+    public function deleteEmployee(User $employee): RedirectResponse
+    {
+        $employee->delete();
+        return redirect()->route('admin.all-employees')->with('success', 'Employee deleted successfully.');
+    }
+
+    public function allInvestors(): Response
+    {
+        $investors = User::with('role')
+            ->whereHas('role', function ($query) {
+                $query->where('name', 'investor');
+            })
+            ->get();
+
+        return Inertia::render('Investor/AllInvestors', ['investors' => $investors]);
+    }
+    public function showInvestor(User $investor): Response
+    {
+        // Load any related data if necessary
+        // example: $investor->load('projects');
+        return Inertia::render('Investor/ShowInvestor', ['investor' => $investor]);
+    }
+    public function deleteInvestor(User $investor): RedirectResponse
+    {
+        $investor->delete();
+        return redirect()->route('admin.all-investors')->with('success', 'Investor deleted successfully.');
+    }
+
+    public function allTellers(): Response
+    {
+        $tellers = User::with('role')
+            ->whereHas('role', function ($query) {
+                $query->where('name', 'teller');
+            })
+            ->get();
+
+        return Inertia::render('teller/AllTellers', ['tellers' => $tellers]);
+    }
+    public function showTeller(User $teller): Response
+    {
+        // Load any related data if necessary
+        // example: $teller->load('projects');
+        return Inertia::render('teller/ShowTeller', ['teller' => $teller]);
+    }
+    public function deleteTeller(User $teller): RedirectResponse
+    {
+        $teller->delete();
+        return redirect()->route('admin.all-tellers')->with('success', 'Teller deleted successfully.');
+    }
+
+    public function allVendors(): Response
+    {
+        $vendors = User::with('role')
+            ->whereHas('role', function ($query) {
+                $query->where('name', 'vendor');
+            })
+            ->get();
+
+        return Inertia::render('vendor/AllVendors', ['vendors' => $vendors]);
+    }
+    public function showVendor(User $vendor): Response
+    {
+        // Load any related data if necessary
+        // example: $vendor->load('projects');
+        return Inertia::render('vendor/ShowVendor', ['vendor' => $vendor]);
+    }
+    public function deleteVendor(User $vendor): RedirectResponse
+    {
+        $vendor->delete();
+        return redirect()->route('admin.all-vendors')->with('success', 'Vendor deleted successfully.');
+    }
 }

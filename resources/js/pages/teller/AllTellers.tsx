@@ -10,47 +10,50 @@ interface Props {
     address: string;
     phone: string;
 }
-const AllCustomers = () => {
-    const [customers, setCustomers] = React.useState(usePage().props.customers as Props[]);
-    const allCustomer = usePage().props.customers as Props[];
+const AllTellers = () => {
+    const [tellers, setTellers] = React.useState(usePage().props.tellers as Props[]);
+    console.log(usePage().props);
+
+    const allTellers = usePage().props.tellers as Props[];
     // Search functionality based on name or phone number
     const [searchTerm, setSearchTerm] = React.useState('');
     React.useEffect(() => {
         if (searchTerm === '') {
-            setCustomers(allCustomer);
+            setTellers(allTellers);
         } else {
-            const filteredCustomers = allCustomer.filter(
-                (customer) =>
-                    customer.name.toLowerCase().includes(searchTerm.toLowerCase()) || customer.phone.toLowerCase().includes(searchTerm.toLowerCase()),
+            const filteredTellers = allTellers.filter(
+                (teller) =>
+                    teller.name.toLowerCase().includes(searchTerm.toLowerCase()) || teller.phone.toLowerCase().includes(searchTerm.toLowerCase()),
             );
-            setCustomers(filteredCustomers);
+            setTellers(filteredTellers);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchTerm]);
 
     return (
-        <div className="pt-8 dark:bg-gray-900">
+        <div className="min-h-screen pt-8 dark:bg-gray-900">
             <div className="mx-auto mb-4 max-w-5xl">
                 <div className="relative">
                     <Search className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-gray-400" />
                     <Input
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
                         className="h-12 w-full rounded-sm bg-gray-950 px-3 pl-10"
-                        placeholder="Search Customer"
+                        placeholder="Search Investor"
                         tabIndex={1}
                     />
                 </div>
                 <div className="mx-auto max-w-5xl rounded-md border border-white p-2 shadow-md dark:border-gray-700 dark:bg-gray-800">
-                    <h1 className="p-8 text-center text-3xl">All Customers</h1>
-                    {customers.map((customer) => (
+                    <h1 className="p-8 text-center text-3xl">All Tellers</h1>
+                    {tellers.map((teller) => (
                         <a
-                            href={route('admin.customer.show', customer.id)}
-                            key={customer.id}
+                            href={route('admin.teller.show', teller.id)}
+                            key={teller.id}
                             className="block border-b p-4 shadow hover:shadow-white dark:border-gray-700 dark:hover:bg-gray-900"
                         >
-                            <h2 className="text-xl font-semibold">{customer.name}</h2>
-                            <p className="text-gray-600">{customer.email}</p>
-                            <p className="text-gray-600">{customer.phone}</p>
+                            <h2 className="text-xl font-semibold">{teller.name}</h2>
+                            <p className="text-gray-600">{teller.email}</p>
+                            <p className="text-gray-600">{teller.phone}</p>
+                            {/* <p className="text-gray-600">{teller.company}</p> */}
 
                             {/* <p className="text-gray-600">{customer.address}</p> */}
                         </a>
@@ -61,4 +64,4 @@ const AllCustomers = () => {
     );
 };
 
-export default AllCustomers;
+export default AllTellers;
