@@ -25,6 +25,7 @@ const AllCustomers = () => {
             );
             setCustomers(filteredCustomers);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchTerm]);
 
     return (
@@ -33,7 +34,7 @@ const AllCustomers = () => {
                 <div className="relative">
                     <Search className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-gray-400" />
                     <Input
-                        onKeyUp={(e) => setSearchTerm(e.target.value)}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
                         className="h-12 w-full rounded-sm bg-gray-950 px-3 pl-10"
                         placeholder="Search Customer"
                         tabIndex={1}

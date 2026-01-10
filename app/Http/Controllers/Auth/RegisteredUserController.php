@@ -193,7 +193,12 @@ class RegisteredUserController extends Controller
     {
         // Load any related data if necessary
         // example: $customer->load('orders');
-
         return Inertia::render('customer/ShowCustomer', ['customer' => $customer]);
+    }
+    public function deleteCustomer(User $customer): RedirectResponse
+    {
+        $customer->delete();
+
+        return redirect()->route('admin.all-customers')->with('success', 'Customer deleted successfully.');
     }
 }

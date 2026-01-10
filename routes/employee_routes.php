@@ -18,9 +18,11 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 
     // ======================= REGISTER USER ROUTES =========================
     Route::get('/register-user', [RegisteredUserController::class, 'create'])->name('admin.register-user');
+
     // ----------------------- CUSTOMER RELATED ROUTES ------------------------
     Route::get('/all-customers', [RegisteredUserController::class, 'allCustomers'])->name('admin.all-customers');
     Route::get('/customers/{customer}', [RegisteredUserController::class, 'showCustomer'])->name('admin.customers.show');
+    Route::delete('/customers/{customer}', [RegisteredUserController::class, 'deleteCustomer'])->name('admin.customers.delete');
 
     // ----------------------- EMPLOYEE RELATED ROUTES ------------------------
     Route::get('/all-employees', [RegisteredUserController::class, 'allEmployees'])->name('admin.all-employees');
