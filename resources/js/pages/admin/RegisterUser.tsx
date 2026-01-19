@@ -61,7 +61,7 @@ const UserForm = ({ userType }: { userType: string }) => {
             <div className="flex justify-center py-6 md:justify-end md:py-0">
                 <a
                     href={`/admin/all-${userType}s`}
-                    className="rounded-sm border border-white px-3 py-2 hover:bg-gray-950 hover:shadow hover:shadow-white"
+                    className="rounded-sm border border-white px-3 py-2 hover:bg-gray-950 hover:text-white hover:shadow"
                 >
                     List of {userType}s
                 </a>

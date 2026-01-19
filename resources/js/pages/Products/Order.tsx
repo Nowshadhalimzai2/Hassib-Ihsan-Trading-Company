@@ -139,7 +139,7 @@ const ProductDetails = ({ product }: ProductProps) => {
                                 value={data.quantity ? parseInt(data.quantity) * product.price : 0}
                                 className="w-full rounded-md bg-black/10 px-3 py-2"
                             />
-                            <textarea placeholder="Notes" className="w-full rounded-md bg-black/10 px-3 py-2" />
+                            <textarea placeholder="Delivery Address" className="w-full rounded-md bg-black/10 px-3 py-2" name="delivery-address" />
                             <fieldset className="text-slate-300">
                                 <span className="text-red-500">Do you want to call you for varification?</span>
                                 <br />
