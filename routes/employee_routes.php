@@ -3,9 +3,10 @@
 use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeeController;
-
-
-
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TransactionController;
+use App\Models\Product;
+use Inertia\Inertia;
 
 Route::middleware('auth')->prefix('admin')->group(function () {
 
@@ -13,10 +14,8 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/dashboard', [EmployeeController::class,  'dashboard'])->name('admin.dashboard');
 
     // ----------------------- TRANSACTIONS RELATED ROUTES -----------------------------
-    Route::get('transactions', [EmployeeController::class, 'transactions'])->name('admin.transactions');
-    Route::post('store-transaction', [EmployeeController::class, 'storeTransaction'])->name('transaction.post');
-    Route::get('transactions/{transaction}', [EmployeeController::class, 'showTransaction'])->name('admin.transaction.show');
-    Route::delete('transactions/{transaction', [EmployeeController::class, 'deleteTransaction'])->name('admin.transaction.delete');
+    Route::resource('transactions', TransactionController::class);
+
 
     // ======================= REGISTER USER ROUTES =========================
     Route::get('/register-user', [RegisteredUserController::class, 'create'])->name('admin.register-user');
@@ -46,6 +45,10 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/vendors/{vendor}', [RegisteredUserController::class, 'showVendor'])->name('admin.vendor.show');
     Route::delete('/vendors/{vendor}', [RegisteredUserController::class, 'deleteVendor'])->name('admin.vendor.delete');
 
+
+    // ======================= PRODUCTS RELATED ROUTES =========================
+
+    Route::resource('products', ProductController::class);
 
     // ======================= ORDERS ROUTES =========================
     Route::get('/orders', fn() => "hello");

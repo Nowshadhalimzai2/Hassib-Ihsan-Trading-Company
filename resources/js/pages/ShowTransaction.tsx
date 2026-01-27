@@ -1,10 +1,12 @@
+import DeleteButton from '@/components/DeleteButton';
+import EditButton from '@/components/EditButton';
 import { Transaction } from '@/types';
-import { Delete, DollarSign, Edit } from 'lucide-react';
+import { DollarSign } from 'lucide-react';
 interface UserTransaction extends Transaction {
     source: { name: string };
     destination: { name: string };
 }
-const TransactionDetails = ({ transaction }: { transaction: UserTransaction }) => {
+const Show = ({ transaction }: { transaction: UserTransaction }) => {
     return (
         <div className="flex h-screen w-full items-center justify-center bg-blue-50 p-4 dark:bg-gray-800">
             <div className="mx-auto max-w-4xl rounded-md border border-white px-6 py-6 shadow-lg shadow-white md:px-16 dark:bg-gray-900">
@@ -33,30 +35,12 @@ const TransactionDetails = ({ transaction }: { transaction: UserTransaction }) =
 
                 {/*---------------------- Delete and Edit actions ----------------------- */}
                 <section className="DeleteUpdateSection flex justify-end">
-                    <a
-                        href="#" //{route('admin.transaction.edit', transaction.id)}
-                        className="mt-4 mr-4 inline-block rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-                    >
-                        <Edit className="mr-2 inline-block" />
-                    </a>
-                    <form
-                        method="POST"
-                        action={route('admin.transaction.delete', transaction.id)}
-                        onSubmit={(e) => {
-                            if (!confirm('Are you sure you want to delete the Transaction?')) {
-                                e.preventDefault();
-                            }
-                        }}
-                    >
-                        <input type="hidden" name="_method" value="DELETE" />
-                        <button type="submit" className="mt-4 inline-block rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600">
-                            <Delete className="mr-2 inline-block" />
-                        </button>
-                    </form>
+                    <EditButton item="transaction" EditableId={transaction.id} />
+                    <DeleteButton item="transaction" DeletableId={transaction.id} />
                 </section>
             </div>
         </div>
     );
 };
 
-export default TransactionDetails;
+export default Show;

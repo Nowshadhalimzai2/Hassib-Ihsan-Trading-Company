@@ -1,25 +1,34 @@
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Currency } from '@/types';
+import { Currency, Transaction } from '@/types';
 import { useForm } from '@inertiajs/react';
 import { Label } from '@radix-ui/react-label';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
 import { User } from '../builtIn/TransactionTypes';
+
+interface Props {
+    vendors: User[];
+    transaction?: Transaction;
+}
 type RegisterFormType = {
-    amount: string;
+    amount: string | number;
     currency_id: number;
     destination_id: number;
     notes: string;
+    entities?: string | undefined;
 };
 
-const B2V = ({ vendors }: { vendors: User[] }) => {
-    const { data, setData, post, processing, errors, reset } = useForm<Required<RegisterFormType>>({
-        amount: '',
-        currency_id: 1,
-        destination_id: 0,
-        notes: '',
+const B2V = ({ vendors, transaction }: Props) => {
+    console.log('transaction', transaction);
+
+    const { data, setData, post, put, processing, errors, reset } = useForm<Required<RegisterFormType>>({
+        amount: transaction ? transaction.amount : '',
+        currency_id: transaction ? transaction.currency_id : 1,
+        destination_id: transaction ? Number(transaction.destination_id) : vendors[0].id,
+        notes: transaction?.notes ? transaction.notes : '',
+        entities: transaction?.dealing_entity ? transaction.dealing_entity.name : 'B2V',
     });
     const currencies: Currency[] = [
         { id: 1, name: 'Afghani' },
@@ -28,9 +37,15 @@ const B2V = ({ vendors }: { vendors: User[] }) => {
     ];
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        post(route('transaction.post'), {
-            onFinish: () => reset('amount', 'currency_id', 'destination_id', 'notes'),
-        });
+        if (transaction)
+            put(route('transactions.update', transaction.id), {
+                onFinish: () => reset('amount', 'currency_id', 'destination_id', 'notes'),
+            });
+        else {
+            post(route('transactions.store'), {
+                onFinish: () => reset('amount', 'currency_id', 'destination_id', 'notes'),
+            });
+        }
     };
     const fieldStyle: string = 'rounded-sm p-2 ring ring-slate-700 hover:ring-2';
     return (
@@ -49,12 +64,15 @@ const B2V = ({ vendors }: { vendors: User[] }) => {
                                 id="destination_id"
                                 onChange={(e) => setData('destination_id', Number(e.target.value))}
                                 className={fieldStyle}
+                                value={transaction && transaction.id}
                             >
-                                <option value="" className="text-gray-400">
-                                    Select vendor...
-                                </option>
+                                {!transaction && (
+                                    <option value="" className="text-gray-400">
+                                        Select vendor...
+                                    </option>
+                                )}
                                 {vendors.map((vendor) => (
-                                    <option key={vendor.id} value={vendor.id} className="">
+                                    <option key={vendor.id} value={vendor.id} className="py-0.5 dark:bg-slate-800">
                                         {vendor.name}
                                     </option>
                                 ))}
@@ -90,7 +108,7 @@ const B2V = ({ vendors }: { vendors: User[] }) => {
                                 disabled={processing}
                             >
                                 {currencies.map((currency) => (
-                                    <option key={currency.id} value={currency.id}>
+                                    <option key={currency.id} value={currency.id} className="py-0.5 dark:bg-slate-800">
                                         {currency.name}
                                     </option>
                                 ))}

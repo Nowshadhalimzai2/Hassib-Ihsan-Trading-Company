@@ -48,7 +48,7 @@ export const TransactionRecord = ({
 }) => {
     return (
         <>
-            <a href={route('admin.transaction.show', transaction.id)} className="">
+            <a href={'/admin/transactions/' + transaction.id} className="">
                 <div
                     className={`mx-2 mt-1 flex w-full justify-between rounded-sm border-transparent px-4 py-3 transition-all duration-300 hover:scale-101 hover:border hover:border-white hover:shadow-lg`}
                 >

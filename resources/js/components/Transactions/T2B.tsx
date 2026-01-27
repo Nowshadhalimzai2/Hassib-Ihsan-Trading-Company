@@ -1,25 +1,33 @@
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Currency } from '@/types';
+import { Currency, Transaction } from '@/types';
 import { useForm } from '@inertiajs/react';
 import { Label } from '@radix-ui/react-label';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
 import { User } from '../builtIn/TransactionTypes';
+
+interface Props {
+    tellers: User[];
+    transaction?: Transaction;
+}
+
 type RegisterFormType = {
-    amount: string;
+    amount: string | number;
     currency_id: number;
     source_id: number;
     notes: string;
+    entities?: string | undefined;
 };
 
-const T2B = ({ tellers }: { tellers: User[] }) => {
-    const { data, setData, post, processing, errors, reset } = useForm<Required<RegisterFormType>>({
-        amount: '',
-        currency_id: 0,
-        source_id: 0,
-        notes: '',
+const T2B = ({ tellers, transaction }: Props) => {
+    const { data, setData, post, put, processing, errors, reset } = useForm<Required<RegisterFormType>>({
+        amount: transaction ? transaction.amount : '',
+        currency_id: transaction ? transaction.currency_id : 1,
+        source_id: transaction ? Number(transaction.destination_id) : tellers[0].id,
+        notes: transaction?.notes ? transaction.notes : '',
+        entities: transaction?.dealing_entity ? transaction.dealing_entity.name : 'T2B',
     });
     const currencies: Currency[] = [
         { id: 1, name: 'Afghani' },
@@ -28,9 +36,15 @@ const T2B = ({ tellers }: { tellers: User[] }) => {
     ];
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        post(route('transaction.post'), {
-            onFinish: () => reset('amount', 'currency_id', 'source_id', 'notes'),
-        });
+        if (transaction)
+            put(route('transactions.update', transaction.id), {
+                onFinish: () => reset('amount', 'currency_id', 'source_id', 'notes'),
+            });
+        else {
+            post(route('transactions.store'), {
+                onFinish: () => reset('amount', 'currency_id', 'source_id', 'notes'),
+            });
+        }
     };
     const fieldStyle: string = 'rounded-sm p-2 ring ring-slate-700 hover:ring-2';
     return (
@@ -54,7 +68,9 @@ const T2B = ({ tellers }: { tellers: User[] }) => {
                                 className={fieldStyle}
                             >
                                 {tellers.map((teller) => (
-                                    <option value={teller.id}>{teller.name}</option>
+                                    <option value={teller.id} className="py-0.5 dark:bg-slate-800">
+                                        {teller.name}
+                                    </option>
                                 ))}
                             </select>
                             <InputError message={errors.source_id} />
@@ -89,7 +105,9 @@ const T2B = ({ tellers }: { tellers: User[] }) => {
                                 disabled={processing}
                             >
                                 {currencies.map((currecny) => (
-                                    <option value={currecny.id}>{currecny.name}</option>
+                                    <option value={currecny.id} className="py-0.5 dark:bg-slate-800">
+                                        {currecny.name}
+                                    </option>
                                 ))}
                             </select>
                             <InputError message={errors.currency_id} />

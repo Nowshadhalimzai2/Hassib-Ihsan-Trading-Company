@@ -50,45 +50,4 @@ class EmployeeController extends Controller
 
         return Inertia::render('admin/RegisterUser', ['user' => $user, 'roles' => $roles]);
     }
-    public function transactions()
-    {
-        $user = User::with(['role:name,id'])->findOrFail(Auth::id());
-        $transactions = Transaction::orderBy('created_at', 'desc')->get();
-        // dd($transactions);
-
-        $users = User::with('role:id,name')->get(['id', 'name', 'role_id'])->groupBy('role.name');
-
-
-        return Inertia::render("admin/Transactions", ['user' => $user, 'transactions' => $transactions, 'users' => $users]);
-    }
-    public function storeTransaction(Request $request)
-    {
-        dd($request->all());
-        $request->validate([
-            'amount' => 'required|numeric',
-            'currency_id' => 'required|exists:currencies,id',
-            'source_id' => 'nullable|exists:dealing_entities,id',
-            'destination_id' => 'nullable|exists:dealing_entities,id',
-            'business_account_id' => 'required|exists:business_accounts,id',
-            'description' => 'nullable|string',
-        ]);
-
-        Transaction::create([
-            'amount' => $request->amount,
-            'currency_id' => $request->currency_id,
-            'source_id' => $request->source_id,
-            'destination_id' => $request->destination_id,
-            'business_account_id' => $request->business_account_id,
-            'description' => $request->description,
-            'created_by' => Auth::id(),
-        ]);
-
-        return redirect()->route('admin.transactions')->with('success', 'Transaction recorded successfully.');
-    }
-    public function showTransaction(Transaction $transaction)
-    {
-        $transaction = Transaction::with(["source", 'destination'])->findOrFail($transaction->id);
-
-        return Inertia::render("TransactionDetails", ['transaction' => $transaction]);
-    }
 }

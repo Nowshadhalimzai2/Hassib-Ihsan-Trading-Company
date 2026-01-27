@@ -1,26 +1,35 @@
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Currency } from '@/types';
+import { Currency, Transaction } from '@/types';
 import { useForm } from '@inertiajs/react';
 import { Label } from '@radix-ui/react-label';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
 import { User } from '../builtIn/TransactionTypes';
+
+interface Props {
+    tellers: User[];
+    transaction?: Transaction;
+}
+
 type RegisterFormType = {
-    amount: string;
+    amount: string | number;
     currency_id: number;
     destination_id: number;
     notes: string;
+    entities?: string | undefined;
 };
 
-const B2T = ({ tellers }: { tellers: User[] }) => {
-    const { data, setData, post, processing, errors, reset } = useForm<Required<RegisterFormType>>({
-        amount: '',
-        currency_id: 0,
-        destination_id: 0,
-        notes: '',
+const B2T = ({ tellers, transaction }: Props) => {
+    const { data, setData, post, put, processing, errors, reset } = useForm<RegisterFormType>({
+        amount: transaction ? transaction.amount : '',
+        currency_id: transaction ? transaction.currency_id : 1,
+        destination_id: transaction ? Number(transaction.destination_id) : tellers[0].id,
+        notes: transaction?.notes ? transaction.notes : '',
+        entities: transaction?.dealing_entity ? transaction.dealing_entity.name : 'B2T',
     });
+
     const currencies: Currency[] = [
         { id: 1, name: 'Afghani' },
         { id: 2, name: 'Pakistani' },
@@ -28,10 +37,17 @@ const B2T = ({ tellers }: { tellers: User[] }) => {
     ];
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        post(route('transaction.post'), {
-            onFinish: () => reset('amount', 'currency_id', 'destination_id', 'notes'),
-        });
+        if (transaction)
+            put(route('transactions.update', transaction.id), {
+                onFinish: () => reset('amount', 'currency_id', 'destination_id', 'notes'),
+            });
+        else {
+            post(route('transactions.store'), {
+                onFinish: () => reset('amount', 'currency_id', 'destination_id', 'notes'),
+            });
+        }
     };
+
     const fieldStyle: string = 'rounded-sm p-2 ring ring-slate-700 hover:ring-2';
     return (
         <div className="mx-auto max-w-xl rounded-lg border border-white bg-white shadow-lg hover:shadow-white dark:bg-gray-900">
@@ -52,7 +68,7 @@ const B2T = ({ tellers }: { tellers: User[] }) => {
                                 className={fieldStyle}
                             >
                                 {tellers.map((teller) => (
-                                    <option key={teller.id} value={teller.id}>
+                                    <option key={teller.id} value={teller.id} className="py-0.5 dark:bg-slate-800">
                                         {teller.name}
                                     </option>
                                 ))}
@@ -88,7 +104,7 @@ const B2T = ({ tellers }: { tellers: User[] }) => {
                                 disabled={processing}
                             >
                                 {currencies.map((currecny) => (
-                                    <option key={currecny.id} value={currecny.id}>
+                                    <option key={currecny.id} value={currecny.id} className="py-0.5 dark:bg-slate-800">
                                         {currecny.name}
                                     </option>
                                 ))}

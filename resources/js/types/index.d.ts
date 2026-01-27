@@ -66,7 +66,7 @@ export interface Transaction{
     created_at: string;
     updated_at: string;
     
-    dealingEntity?: DealingEntity;
+    dealing_entity?: DealingEntity;
     [key: string]: unknown; // This allows for additional properties...
 }
 interface DealingEntity{
@@ -80,16 +80,17 @@ interface Currency{
 
 export interface Product{
     id: number
-      user_id: number
-      name: string
-      description?: string
-      quantity_in_stock: number
-      unit_price: number
-      currency_id: number
-      category_id: number
-      is_featured: number
-      deleted_at?: date
-      created_at: date
-      updated_at: date
-    [key: string]: unknown; // This allows for additional properties...
+    user: {id:number,name:string,company_name:string}
+    name: string
+    description?: string
+    quantity_in_stock: number
+    unit_price: number
+    currency_id: number
+    category_id: number
+    is_featured: number
+    deleted_at?: date
+    created_at: date
+    updated_at: date
+    category:{name:string}
+    [key: string]: string; // This allows for additional properties...
 }
