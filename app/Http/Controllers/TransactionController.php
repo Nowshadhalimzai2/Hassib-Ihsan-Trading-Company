@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DealingEntity;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -33,8 +34,10 @@ class TransactionController extends Controller
      */
     public function create()
     {
+        $entities = DealingEntity::all(['id', 'name']);
+
         $users = User::with('role:id,name')->get(['id', 'name', 'role_id'])->groupBy('role.name');
-        return Inertia::render("admin/Transaction/Create", ['users' => $users]);
+        return Inertia::render("admin/Transaction/Create", ['users' => $users, 'entities' => $entities]);
     }
 
     /**
@@ -44,16 +47,15 @@ class TransactionController extends Controller
     {
 
         $validate = new ValidateTransaction($request);
-
-        $entities = $request->entities;
-        if ($entities == "B2T" || $entities == "T2B") {
-            $validate->B2T();
-        } else if ($entities == "T2V" || $entities == "V2T")
-            $validate->T2V();
-        else if ($entities == "B2V" || $entities == "V2B")
-            $validate->B2V();
-
-        Transaction::create($request->all());
+        $transaction = new Transaction();
+        $entity = $request->entities['name'];
+        // dd($request->all());
+        if ($entity == "B2T" || $entity == "T2B") {
+            $validate->B2T($transaction);
+        } else if ($entity == "T2V" || $entity == "V2T")
+            $validate->T2V($transaction);
+        else if ($entity == "B2V" || $entity == "V2B")
+            $validate->B2V($transaction);
 
         return redirect()->route('transactions.index')->with('success', 'Transaction recorded successfully.');
     }
@@ -74,26 +76,29 @@ class TransactionController extends Controller
      */
     public function edit(Transaction $transaction)
     {
+        $entities = DealingEntity::all(['id', 'name']);
         $users = User::with('role:id,name')->get(['id', 'name', 'role_id'])->groupBy('role.name');
         $transaction = Transaction::with('dealingEntity:id,name')->findOrFail($transaction->id);
 
-        return Inertia::render("admin/Transaction/Edit", ['transaction' => $transaction, 'users' => $users]);
+        return Inertia::render("admin/Transaction/Edit", ['transaction' => $transaction, 'users' => $users, 'entities' => $entities]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        $data = $request->validate([
-            'amount' => 'required|numeric',
-            'currency_id' => 'required|exists:currencies,id',
-            'source_id' => 'nullable|exists:dealing_entities,id',
-            'destination_id' => 'nullable|exists:dealing_entities,id',
-            'business_account_id' => 'required|exists:business_accounts,id',
-            'description' => 'nullable|string',
-        ]);
-        $transaction = Transaction::findOrFail($id)->update($data);
+        $validate = new ValidateTransaction($request);
+        $transaction = Transaction::findOrFail($id);
+        // dd($request->all());
+        $entity = $request->entities['name'];
+        if ($entity == "B2T" || $entity == "T2B") {
+            $validate->B2T($transaction);
+        } else if ($entity == "T2V" || $entity == "V2T")
+            $validate->T2V($transaction);
+        else if ($entity == "B2V" || $entity == "V2B")
+            $validate->B2V($transaction);
+
         return redirect()->route('transactions.show', $transaction)->with('success', 'Transaction updated successfully.');
     }
 

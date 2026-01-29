@@ -5,10 +5,14 @@ import T2B from '@/components/Transactions/T2B';
 import T2V from '@/components/Transactions/T2V';
 import V2B from '@/components/Transactions/V2B';
 import V2T from '@/components/Transactions/V2T';
-import { User } from '@/types';
+import { DealingEntity, User } from '@/types';
 import React from 'react';
-
-const Create = ({ users }: { users: User[] }) => {
+interface Props {
+    users: User[];
+    entities: DealingEntity[];
+    transactionType: string | null;
+}
+const Create = ({ users, entities }: Props) => {
     const [activeTTab, setActiveTTab] = React.useState(localStorage.getItem('activeTTab'));
     const handleTabClick = (tab: string) => {
         setActiveTTab(tab);
@@ -34,25 +38,29 @@ const Create = ({ users }: { users: User[] }) => {
             <section className="">
                 <div className="Tabs my-6 flex items-center justify-evenly">{registerationTabs}</div>
                 <div>
-                    <TransactionForm transactionType={activeTTab} users={users} />
+                    <TransactionForm transactionType={activeTTab} users={users} entities={entities} />
                 </div>
             </section>
         </div>
     );
 };
 
-const TransactionForm = ({ transactionType, users }: { transactionType: string | null; users: User[] }) => {
+const TransactionForm = ({ transactionType, users, entities }: Props) => {
     return (
         <div className="rounded-lg bg-slate-100 p-6 md:m-4 dark:border-gray-700 dark:bg-gray-800">
             {/* Add your form fields here based on transactionType */}
 
-            {transactionType === 'B2T' && <B2T tellers={users['teller']} />}
-            {transactionType === 'B2V' && <B2V vendors={users['vendor']} />}
-            {transactionType === 'T2B' && <T2B tellers={users['teller']} />}
-            {transactionType === 'T2V' && <T2V tellers={users['teller']} vendors={users['vendor']} />}
-            {transactionType === 'V2B' && <V2B vendors={users['vendor']} />}
+            {transactionType === 'B2T' && <B2T tellers={users['teller']} dealing_entity={entities.filter((en) => en.name === 'B2T')[0]} />}
 
-            {transactionType === 'V2T' && <V2T tellers={users['teller']} vendors={users['vendor']} />}
+            {transactionType === 'B2V' && <B2V vendors={users['vendor']} dealing_entity={entities.filter((en) => en.name === 'B2V')[0]} />}
+            {transactionType === 'T2B' && <T2B tellers={users['teller']} dealing_entity={entities.filter((en) => en.name === 'T2B')[0]} />}
+            {transactionType === 'T2V' && (
+                <T2V tellers={users['teller']} vendors={users['vendor']} dealing_entity={entities.filter((en) => en.name === 'T2V')[0]} />
+            )}
+            {transactionType === 'V2B' && <V2B vendors={users['vendor']} dealing_entity={entities.filter((en) => en.name === 'V2B')[0]} />}
+            {transactionType === 'V2T' && (
+                <V2T tellers={users['teller']} vendors={users['vendor']} dealing_entity={entities.filter((en) => en.name === 'V2T')[0]} />
+            )}
         </div>
     );
 };

@@ -1,7 +1,7 @@
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Currency, Transaction } from '@/types';
+import { Currency, DealingEntity, Transaction } from '@/types';
 import { useForm } from '@inertiajs/react';
 import { Label } from '@radix-ui/react-label';
 import { LoaderCircle } from 'lucide-react';
@@ -11,6 +11,7 @@ import { User } from '../builtIn/TransactionTypes';
 interface Props {
     tellers: User[];
     transaction?: Transaction;
+    dealing_entity: DealingEntity;
 }
 
 type RegisterFormType = {
@@ -18,16 +19,16 @@ type RegisterFormType = {
     currency_id: number;
     source_id: number;
     notes: string;
-    entities?: string | undefined;
+    entities: { id: number; name: string };
 };
 
-const T2B = ({ tellers, transaction }: Props) => {
+const T2B = ({ tellers, transaction, dealing_entity }: Props) => {
     const { data, setData, post, put, processing, errors, reset } = useForm<Required<RegisterFormType>>({
         amount: transaction ? transaction.amount : '',
         currency_id: transaction ? transaction.currency_id : 1,
-        source_id: transaction ? Number(transaction.destination_id) : tellers[0].id,
+        source_id: transaction ? Number(transaction.source_id) : tellers[0].id,
         notes: transaction?.notes ? transaction.notes : '',
-        entities: transaction?.dealing_entity ? transaction.dealing_entity.name : 'T2B',
+        entities: dealing_entity,
     });
     const currencies: Currency[] = [
         { id: 1, name: 'Afghani' },
@@ -68,7 +69,7 @@ const T2B = ({ tellers, transaction }: Props) => {
                                 className={fieldStyle}
                             >
                                 {tellers.map((teller) => (
-                                    <option value={teller.id} className="py-0.5 dark:bg-slate-800">
+                                    <option key={teller.id} value={teller.id} className="py-0.5 dark:bg-slate-800">
                                         {teller.name}
                                     </option>
                                 ))}
@@ -105,7 +106,7 @@ const T2B = ({ tellers, transaction }: Props) => {
                                 disabled={processing}
                             >
                                 {currencies.map((currecny) => (
-                                    <option value={currecny.id} className="py-0.5 dark:bg-slate-800">
+                                    <option key={currecny.id} value={currecny.id} className="py-0.5 dark:bg-slate-800">
                                         {currecny.name}
                                     </option>
                                 ))}

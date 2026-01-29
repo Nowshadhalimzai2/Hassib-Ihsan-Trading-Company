@@ -1,7 +1,7 @@
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Currency, Transaction } from '@/types';
+import { Currency, DealingEntity, Transaction } from '@/types';
 import { useForm } from '@inertiajs/react';
 import { Label } from '@radix-ui/react-label';
 import { LoaderCircle } from 'lucide-react';
@@ -11,6 +11,7 @@ import { User } from '../builtIn/TransactionTypes';
 interface Props {
     tellers: User[];
     transaction?: Transaction;
+    dealing_entity: DealingEntity;
 }
 
 type RegisterFormType = {
@@ -18,16 +19,16 @@ type RegisterFormType = {
     currency_id: number;
     destination_id: number;
     notes: string;
-    entities?: string | undefined;
+    entities?: { id: number; name: string | undefined };
 };
 
-const B2T = ({ tellers, transaction }: Props) => {
+const B2T = ({ tellers, transaction, dealing_entity }: Props) => {
     const { data, setData, post, put, processing, errors, reset } = useForm<RegisterFormType>({
         amount: transaction ? transaction.amount : '',
         currency_id: transaction ? transaction.currency_id : 1,
         destination_id: transaction ? Number(transaction.destination_id) : tellers[0].id,
         notes: transaction?.notes ? transaction.notes : '',
-        entities: transaction?.dealing_entity ? transaction.dealing_entity.name : 'B2T',
+        entities: dealing_entity,
     });
 
     const currencies: Currency[] = [
