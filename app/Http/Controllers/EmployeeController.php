@@ -8,36 +8,24 @@ use App\Models\Users\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use App\Component\TotalAmountBA;
 
 class EmployeeController extends Controller
 {
     // ===================== FUNCTIONS ===================== //
 
-    private function calculateBusinessAccountSubBasedONCurrency()
-    {
-
-
-        $total = Transaction::selectRaw('currencies.name, SUM(CASE
-		WHEN transactions.source_id IS NULL
-         THEN -transactions.amount
-		ELSE transactions.amount
-		END) as total',)->join('currencies', 'transactions.currency_id', '=', 'currencies.id')
-            ->where(function ($q) {
-                $q->where('business_account_id', 1);
-            })->groupBy('currencies.name')
-            ->pluck('total', 'name');
-
-        return $total;
-    }
 
 
     //          PUBLIC FUNCTIONS          //
 
     public function dashboard()
     {
+
+        $total = new TotalAmountBA;
+
         $user = User::with(['role:name,id', 'transactionsAsSource', 'transactionsAsDestination'])->findOrFail(Auth::id());
 
-        $curs = $this->calculateBusinessAccountSubBasedONCurrency();
+        $curs = $total->BABadget();
 
         return Inertia::render('admin/Dashboard', ['user' => $user, 'curs' => $curs]);
     }

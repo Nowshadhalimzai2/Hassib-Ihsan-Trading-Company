@@ -1,7 +1,8 @@
+import FlashMessage from '@/components/builtIn/FlashMessage';
 import TransactionRecordList from '@/components/Transactions/TransactionRecordList';
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem, Transaction } from '@/types';
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -21,10 +22,11 @@ interface User {
 }
 
 const Index = ({ transactions }: TransactionProps) => {
+    const message = usePage().props.flash as { success: string };
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="transactions" />
-
             {/* ============   TRANSACTION Create Button  ============== */}
             <div className="flex justify-end py-6">
                 <a
@@ -40,6 +42,9 @@ const Index = ({ transactions }: TransactionProps) => {
                     title="#04"
                     className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min"
                 >
+                    <div className="p-1">
+                        <FlashMessage message={message} duration={3000} />
+                    </div>
                     <TransactionRecordList className="mt-6" transactions={transactions} />
                 </div>
             </section>

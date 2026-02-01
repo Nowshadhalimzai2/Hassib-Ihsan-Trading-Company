@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Validate\ValidateTransaction;
 
-
+// Next Task is to validate the transactions if any trnasction
+//  need check amount rule.
 class TransactionController extends Controller
 {
     /**
@@ -51,11 +52,13 @@ class TransactionController extends Controller
         $entity = $request->entities['name'];
         // dd($request->all());
         if ($entity == "B2T" || $entity == "T2B") {
-            $validate->B2T($transaction);
+            if (!$validate->B2T($transaction))
+                return back()->with('error', 'please check the balance of Business Account and try again!!!');
         } else if ($entity == "T2V" || $entity == "V2T")
             $validate->T2V($transaction);
         else if ($entity == "B2V" || $entity == "V2B")
-            $validate->B2V($transaction);
+            if (!$validate->B2V($transaction))
+                return back()->with('error', 'please check the balance of Business Account and try again!!!');
 
         return redirect()->route('transactions.index')->with('success', 'Transaction recorded successfully.');
     }
@@ -105,11 +108,12 @@ class TransactionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        $transaction = Transaction::findOrFail($id);
-        $transaction->destroy();
 
-        return redirect()->route('transactions.index')->with('success', 'Transaction deleted successfully.');
+        $transaction = Transaction::findOrFail($id);
+        if ($transaction->delete())
+            return redirect()->route('transactions.index')->with('success', 'Transaction deleted successfully.');
+        return back()->withInput()->with('error', "transaction could not be deleted");
     }
 }

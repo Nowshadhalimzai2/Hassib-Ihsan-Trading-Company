@@ -25,7 +25,7 @@ const V2B = ({ vendors, transaction, dealing_entity }: Props) => {
     const { data, setData, post, put, processing, errors, reset } = useForm<Required<RegisterFormType>>({
         amount: transaction ? transaction.amount : '',
         currency_id: transaction ? transaction.currency_id : 1,
-        source_id: transaction ? Number(transaction.destination_id) : vendors[0].id,
+        source_id: transaction ? Number(transaction.source_id) : vendors[0].id,
         notes: transaction?.notes ? transaction.notes : '',
         entities: dealing_entity,
     });

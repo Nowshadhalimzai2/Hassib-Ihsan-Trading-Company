@@ -1,3 +1,4 @@
+import { router } from '@inertiajs/react';
 import { Delete } from 'lucide-react';
 interface Props {
     item: string;
@@ -8,10 +9,13 @@ const DeleteButton = ({ item, DeletableId }: Props) => {
         <>
             <form
                 method="POST"
-                action={route(item + 's.destroy', DeletableId)}
+                // action={}
                 onSubmit={(e) => {
-                    if (!confirm(`Are you sure you want to delete the ${item}`)) {
+                    const userResponse = confirm(`Are you sure you want to delete the ${item}`);
+                    if (userResponse) {
                         e.preventDefault();
+
+                        router.delete(route(item + 's.destroy', DeletableId));
                     }
                 }}
             >
