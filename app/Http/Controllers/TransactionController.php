@@ -20,7 +20,6 @@ class TransactionController extends Controller
     public function index()
     {
 
-
         $user = User::with(['role:name,id'])->findOrFail(Auth::id());
         $transactions = Transaction::orderBy('created_at', 'desc')->get();
         // dd($transactions);
