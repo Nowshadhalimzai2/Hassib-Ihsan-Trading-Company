@@ -46,7 +46,9 @@ const Edit = ({ transaction, users, entities }: Props) => {
     return (
         <>
             <SectionTitle title="Edit Vendor" />
-            <div className="flex h-screen items-center justify-center bg-slate-800">{TransactionForm}</div>
+            <div className="flex h-screen items-center justify-center dark:bg-slate-800">
+                <div className="shadow-xl">{TransactionForm}</div>
+            </div>
         </>
     );
 };

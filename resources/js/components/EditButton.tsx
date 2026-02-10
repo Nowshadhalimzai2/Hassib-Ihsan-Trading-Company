@@ -10,7 +10,7 @@ const EditButton = ({ EditableId, item }: Props) => {
                 href={route(item + 's.edit', EditableId)}
                 className="mt-4 mr-4 inline-block rounded-md border-2 border-white px-4 py-1 hover:border-blue-500"
             >
-                <Edit className="mr-2 inline-block" />
+                <Edit className="mr-2 inline-block text-white" />
             </a>
         </div>
     );

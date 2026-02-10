@@ -56,12 +56,14 @@ interface Role {
 
 export interface Transaction{
     id: number;
+    source:{id:number;name:string};
+    destination:{id:number;name:string};
     dealing_entity_id: number;
     amount: number;
     currency_id: number;
     source_id: number;
     destination_id?: number;
-    business_account?: number;
+    business_account_id?: number;
     notes?: string;
     created_at: string;
     updated_at: string;

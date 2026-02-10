@@ -9,7 +9,7 @@ interface Props {
 const GrayCard = ({ productImage, itemName, itemDescription, id }: Props) => {
     const navigateToDetails = () => {
         // Implement navigation logic here, e.g., using React Router or any other navigation library
-        router.get(`/products/${5}`);
+        router.get(`/products/${id}`);
     };
     // display the feildset block whenever the user hovers over the card
     function handleMouseEnter(id: number) {

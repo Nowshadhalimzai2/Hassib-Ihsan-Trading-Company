@@ -37,15 +37,12 @@ const Index = ({ transactions }: TransactionProps) => {
                 </a>
             </div>
             {/* Transaction List */}
-            <section>
-                <div
-                    title="#04"
-                    className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min"
-                >
+            <section className="bg-white">
+                <div title="#04" className="border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden border md:min-h-min">
                     <div className="p-1">
                         <FlashMessage message={message} duration={3000} />
                     </div>
-                    <TransactionRecordList className="mt-6" transactions={transactions} />
+                    <TransactionRecordList className="mt-6 px-3" transactions={transactions} />
                 </div>
             </section>
         </AppLayout>

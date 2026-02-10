@@ -21,9 +21,8 @@ class TransactionController extends Controller
     {
 
         $user = User::with(['role:name,id'])->findOrFail(Auth::id());
-        $transactions = Transaction::orderBy('created_at', 'desc')->get();
+        $transactions = Transaction::with(['source:id,name', 'destination:id,name'])->orderBy('created_at', 'desc')->get();
         // dd($transactions);
-
 
 
         return Inertia::render("admin/Transaction/Index", ['user' => $user, 'transactions' => $transactions]);
@@ -100,6 +99,7 @@ class TransactionController extends Controller
             $validate->T2V($transaction);
         else if ($entity == "B2V" || $entity == "V2B")
             $validate->B2V($transaction);
+
 
         return redirect()->route('transactions.show', $transaction)->with('success', 'Transaction updated successfully.');
     }
