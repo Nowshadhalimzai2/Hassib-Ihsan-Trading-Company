@@ -3,14 +3,15 @@
 use App\Http\Controllers\Comment\CommentController;
 use App\Http\Controllers\Post\PostController;
 use App\Models\Product;
+use App\Models\Subscriber;
 use App\Models\Transaction;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Mail;
-use phpDocumentor\Reflection\Types\Nullable;
 
 
 // Products temp class
@@ -29,7 +30,6 @@ class Products
 }
 
 Route::get('/', function () {
-    // sleep(2);
 
     return Inertia::render('Home/Home');
 })->name('home');
@@ -40,7 +40,15 @@ Route::get("/contact", function () {
     return Inertia::render("Contact");
 })->name('contact');
 
-//Route::view('/about', 'About')->name('about');
+Route::post('/subscribe', function (Request $request) {
+    // dd($request->all());
+    $data = $request->validate([
+        'name' => 'string|min:3|max:25|required',
+        'email' => 'email|required',
+    ]);
+    Subscriber::create($data);
+    return back()->with('success', 'you will receive our regular updates');
+})->name('subscribe');
 
 // -------------PRODUCTS GROUPED ROUTES --------------------
 Route::prefix('products')->group(function () {
@@ -98,9 +106,6 @@ Route::prefix('blog')->group(function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
-        //return authenticated user
-        // $transactions = Transaction::with('dealingEntity')->get();
-        // $role = Auth::user()->role->name;
 
 
         $user = User::with(['role:name,id', 'transactionsAsSource', 'transactionsAsDestination'])->findOrFail(Auth::id());
@@ -133,9 +138,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
             return Inertia::render("vendor/dashboard", ['user' => $user, 'sumByCurrency' => $currencies, 'products' => $products_sold_by_vendor]);
         } else if ($user->role->name == "employee") {
-
-
-
             return Inertia::render('admin/Dashboard', ['user' => $user]);
         } else {
             return "No role assigned";
@@ -143,7 +145,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 });
 
-Route::inertia('/services', 'Service')->name('service');
 
 
 // 3333333333333333333333333333333333333333333333333333333333
@@ -159,12 +160,12 @@ Route::get('/test-email', function () {
 
 
 // -------------INVESTOR ROUTES --------------------
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/investor_transactions', function () {
-        $user = User::with(['role:name,id', 'transactionsAsSource', 'transactionsAsDestination'])->findOrFail(Auth::id());
-        return Inertia::render('Investor/InvestorTransaction', ['user' => $user]);
-    })->name('investor.InvestorTransaction');
-});
+// Route::middleware(['auth', 'verified'])->group(function () {
+//     Route::get('/investor_transactions', function () {
+//         $user = User::with(['role:name,id', 'transactionsAsSource', 'transactionsAsDestination'])->findOrFail(Auth::id());
+//         return Inertia::render('Investor/InvestorTransaction', ['user' => $user]);
+//     })->name('investor.InvestorTransaction');
+// });
 // Route::inertia('/investors/annual-reports', 'Investors/AnnualReports')->name('investors.annual-reports');
 // Route::inertia('/investors/financials', 'Investors/Financials')->name('investors.financials');
 // Route::inertia('/investors/corporate-governance', 'Investors/CorporateGovernance')->name('investors.corporate-governance');
@@ -174,7 +175,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';
-require __DIR__ . '/customer_routes.php';
-require __DIR__ . '/investor_routes.php';
-require __DIR__ . '/teller_routes.php';
-require __DIR__ . '/employee_routes.php';
+// require __DIR__ . '/customer_routes.php';
+// require __DIR__ . '/investor_routes.php';
+// require __DIR__ . '/teller_routes.php';
+// require __DIR__ . '/employee_routes.php';

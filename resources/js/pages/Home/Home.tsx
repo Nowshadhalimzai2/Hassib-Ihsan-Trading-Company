@@ -4,11 +4,13 @@ import MYLayout from '@/layouts/MYLayout';
 import liquid_chocolate from '../../../../public/videos/liquid_choculate_vid.mp4';
 
 import Testimonial from '@/components/builtIn/Testimonial';
+import { usePage } from '@inertiajs/react';
 import CTE from './CTE';
 
 const Home = () => {
     // Observer for image visibility
-
+    const message = usePage().props.flash;
+    console.log('flash message', message);
     return (
         <MYLayout>
             <CTE />

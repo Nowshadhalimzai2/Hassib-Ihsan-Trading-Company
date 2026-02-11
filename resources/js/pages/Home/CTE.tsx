@@ -2,8 +2,12 @@ import CTEButtons from '@/components/Home/CTEButtons';
 
 import CTEImage from '@/components/Home/CTEImage';
 import CTETags from '@/components/Home/CTETags';
+import Subscription from '@/components/Home/Subscription';
+import { useState } from 'react';
 
 const CTE = () => {
+    const [showSubscription, setShowSubscription] = useState<boolean>(false);
+
     return (
         <>
             <section className="min-h-screen w-full bg-slate-900 px-4 md:px-0 md:pl-8">
@@ -18,7 +22,10 @@ const CTE = () => {
                             </p>
                         </div>
                         {/* Buttons  */}
-                        <CTEButtons />
+                        <CTEButtons setSubscription={setShowSubscription} />
+
+                        {/* ----------- SUBSCRIPTION FIELD -------------*/}
+                        {showSubscription && <Subscription />}
 
                         <CTETags />
                     </div>

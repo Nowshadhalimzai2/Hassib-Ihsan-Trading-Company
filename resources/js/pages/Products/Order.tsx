@@ -156,8 +156,8 @@ const ProductDetails = ({ product }: ProductProps) => {
                                 </div>
                             </fieldset>
                         </div>
-                        <button type="submit" className="rounded-md bg-lime-400 px-6 py-2 text-white transition duration-300 hover:bg-lime-500">
-                            Order Now
+                        <button type="submit" disabled className="rounded-md bg-gray-400 px-6 py-2 text-white">
+                            Service is not availible
                         </button>
                     </form>
                 </div>
