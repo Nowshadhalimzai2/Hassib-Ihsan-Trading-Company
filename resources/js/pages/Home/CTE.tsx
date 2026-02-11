@@ -22,7 +22,7 @@ const CTE = () => {
                             </p>
                         </div>
                         {/* Buttons  */}
-                        <CTEButtons setSubscription={setShowSubscription} />
+                        <CTEButtons showSubscription={showSubscription} setSubscription={setShowSubscription} />
 
                         {/* ----------- SUBSCRIPTION FIELD -------------*/}
                         {showSubscription && <Subscription />}

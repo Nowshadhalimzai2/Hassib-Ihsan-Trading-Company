@@ -9,7 +9,11 @@ const FlashMessage = ({ message, duration = 5000 }: Props) => {
     useEffect(() => {
         setDisplayMessage(message.error ? message.error : message.success);
         if (message.error || message.success) setTimeout(() => setDisplayMessage(null), duration);
-    }, [message.error, message.success, duration]);
+        return () => {
+            message.error = null;
+            message.success = null;
+        };
+    }, [message, duration]);
 
     return (
         <>

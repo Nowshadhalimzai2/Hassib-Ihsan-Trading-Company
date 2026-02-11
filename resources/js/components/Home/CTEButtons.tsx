@@ -1,7 +1,13 @@
 import { useEffect, useState } from 'react';
 import OnLoadTransimition from '../builtIn/OnLoadTransmition';
 
-const CTEButtons = ({ setSubscription }: { setSubscription: React.Dispatch<React.SetStateAction<boolean>> }) => {
+const CTEButtons = ({
+    setSubscription,
+    showSubscription,
+}: {
+    setSubscription: React.Dispatch<React.SetStateAction<boolean>>;
+    showSubscription: boolean;
+}) => {
     const [transimited, setTransimited] = useState(false);
 
     useEffect(() => {
@@ -20,7 +26,7 @@ const CTEButtons = ({ setSubscription }: { setSubscription: React.Dispatch<React
                     className={`border border-white px-4 py-2 text-sm text-white transition duration-300 hover:border-lime-400 hover:text-lime-400 md:text-[16px] lg:px-6 ${transimited ? 'translate-x-0 opacity-100' : 'translate-x-50 opacity-0'}`}
                     onClick={() => setSubscription((pre) => !pre)}
                 >
-                    Subscribe!
+                    {showSubscription ? 'Cancel' : 'Subscribe!'}
                 </button>
             </div>
         </>

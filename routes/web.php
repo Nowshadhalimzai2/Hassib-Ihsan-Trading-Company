@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Comment\CommentController;
 use App\Http\Controllers\Post\PostController;
-use App\Models\Product;
 use App\Models\Subscriber;
 use App\Models\Transaction;
 use App\Models\User;
