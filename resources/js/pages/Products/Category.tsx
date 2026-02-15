@@ -10,7 +10,7 @@ interface ProductListProps {
 const Category = ({ category }: ProductListProps) => {
     return (
         <Section className="">
-            <PageTitle title="Category Name" />
+            <PageTitle title={category.name} />
             <div className="">
                 <p className="border-b-2 px-3 py-3 text-center text-gray-600 shadow">{category.description}</p>
                 {category.products.map((product) => (

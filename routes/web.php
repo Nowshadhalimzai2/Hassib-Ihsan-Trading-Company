@@ -179,7 +179,7 @@ Route::get('/test-email', function () {
 
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';
-// require __DIR__ . '/customer_routes.php';
-// require __DIR__ . '/investor_routes.php';
-// require __DIR__ . '/teller_routes.php';
-// require __DIR__ . '/employee_routes.php';
+require __DIR__ . '/customer_routes.php';
+require __DIR__ . '/investor_routes.php';
+require __DIR__ . '/teller_routes.php';
+require __DIR__ . '/employee_routes.php';
