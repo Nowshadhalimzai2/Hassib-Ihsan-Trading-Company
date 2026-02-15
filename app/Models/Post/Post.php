@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class Post extends Model
 {
     use HasFactory;
-    protected $guard = [];
+    protected $fillable = ['content', 'user_id', 'file_path'];
 
 
     function user()

@@ -21,6 +21,7 @@ interface Props {
 }
 const Index = ({ products, categories }: Props) => {
     // This component can be used to display a list of products, product details, etc.
+    console.log('products: ', products);
 
     const images = [b1, b2, b3];
     const toprankcards = images.map((img, index) => {

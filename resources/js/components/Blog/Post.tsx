@@ -11,7 +11,8 @@ const Post = (post: AuthID) => {
 
     function path(path: string): string {
         if (path.startsWith('http')) {
-            return path + 5 / 480;
+            const random = Math.floor(Math.random() * 1000);
+            return path + `${random}/480`; // Append a random query parameter to prevent caching
         }
         return path;
     }
@@ -45,7 +46,7 @@ const Post = (post: AuthID) => {
                         </button>
                     )}
                 </p>
-                {post.file_path && <img className="h-full w-full rounded-md" src={`${path(post.file_path)}`} />}
+                {post.file_path && <img className="h-full w-full rounded-md" src={`${post.file_path}`} />}
             </div>
             <Reactions {...post} isShowComments={isShowComments} setIsShowComments={setIsShowComments} />
             {/* This is the comment show fields */}

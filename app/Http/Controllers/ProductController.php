@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Post\Post;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\Users\Role;
 use GuzzleHttp\Handler\Proxy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Pest\Support\Arr;
 
@@ -48,7 +50,6 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->product_images);
         $request->validate([
             'name' => "required|min:2|string",
             'user_id' => "required|integer|exists:users,id",
@@ -60,9 +61,10 @@ class ProductController extends Controller
 
         ]);
 
-        $product = Product::create([
+
+        Product::create([
             'name' => $request->name,
-            'user_id' => $request->user_id,
+            'user_id' => Auth::id(),
             'unit_price' => $request->unit_price,
             'quantity_in_stock' => $request->quantity_in_stock,
             'currency_id' => $request->currency_id,
@@ -70,7 +72,14 @@ class ProductController extends Controller
             'description' => $request->description,
             'is_featured' => $request->is_featured,
         ]);
-        dd($product);
+        Post::create([
+            'user_id' => Auth::id(),
+            'content' => $request->description,
+            'file_path' => 'https://picsum.photos/seed/430/480',
+        ]);
+
+
+        return redirect(route('products.index'))->with('success', 'Product added successfully');
     }
 
     /**
