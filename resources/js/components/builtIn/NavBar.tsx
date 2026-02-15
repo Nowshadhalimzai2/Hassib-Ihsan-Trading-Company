@@ -55,10 +55,10 @@ const NavBar = () => {
             title: 'Contact',
             url: '/contact',
         },
-        // {
-        //     title: 'Account',
-        //     url: '/admin/dashboard',
-        // },
+        {
+            title: 'Account',
+            url: '/admin/dashboard',
+        },
     ];
     return (
         <>
