@@ -1,17 +1,17 @@
 import PageTitle from '@/components/builtIn/PageTitle';
 import setupObserver from '@/components/builtIn/transition';
 import Section from '@/components/Section';
+import { Image } from '@/types';
 import { useForm } from '@inertiajs/react';
 import { useEffect, useRef, useState } from 'react';
-import cake1 from '../../../../public/images/cake1.png';
-import cake2 from '../../../../public/images/cake2.png';
-import cake3 from '../../../../public/images/cake3.png';
 interface ProductProps {
     product: {
         id: number;
         name: string;
+        images: Image[];
         description: string;
-        price: number;
+        unit_price: number;
+        currency_id: number;
     };
 }
 // Main container Product
@@ -36,7 +36,7 @@ const Order = ({ product }: ProductProps) => {
 const ProductImage = ({ product }: ProductProps) => {
     const [transimited, setTransimited] = useState(false);
     const imgRef = useRef<HTMLImageElement | null>(null);
-    const [mainImage, setMainImage] = useState(cake1);
+    const [mainImage, setMainImage] = useState(product.images.filter((img) => img.is_primary == true)[0]);
 
     useEffect(() => {
         setupObserver(setTransimited, imgRef, 0.1);
@@ -46,7 +46,7 @@ const ProductImage = ({ product }: ProductProps) => {
             <div className="ProductTypes relative mx-auto h-full w-full max-w-xl py-3 pr-0 lg:pr-18">
                 <div className="mb-4 flex h-100 w-full items-center justify-center overflow-hidden rounded-lg bg-[#f1f4ff] object-cover shadow-lg md:mb-0 md:ml-2 lg:h-116 lg:w-144 dark:bg-slate-900">
                     <img
-                        src={mainImage}
+                        src={mainImage.image_path}
                         ref={imgRef}
                         alt={product.name}
                         className={`h-full w-full object-cover ${transimited ? 'opacity-100 transition-opacity duration-1000 ease-in' : 'opacity-0'}`}
@@ -54,15 +54,22 @@ const ProductImage = ({ product }: ProductProps) => {
                     />
                 </div>
                 <div className="absolute bottom-5 left-[25%] grid grid-cols-3 space-x-5 md:bottom-1 md:left-[30%]">
-                    <SubImage
-                        src={cake1}
-                        alt=""
-                        onClick={() => {
-                            setMainImage(cake1);
-                            setTransimited(false);
-                        }}
-                    />
-                    <SubImage
+                    {product.images.map((img) => {
+                        return (
+                            <>
+                                {' '}
+                                <SubImage
+                                    src={img.image_path}
+                                    alt=""
+                                    onClick={() => {
+                                        setMainImage(img);
+                                        setTransimited(false);
+                                    }}
+                                />
+                            </>
+                        );
+                    })}
+                    {/* <SubImage
                         src={cake2}
                         alt=""
                         onClick={() => {
@@ -77,7 +84,7 @@ const ProductImage = ({ product }: ProductProps) => {
                             setMainImage(cake3);
                             setTransimited(false);
                         }}
-                    />
+                    /> */}
                 </div>
             </div>
         </>
@@ -104,8 +111,6 @@ const ProductDetails = ({ product }: ProductProps) => {
         quantity: '1',
         notes: '',
     });
-    const text =
-        'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vitae odit vel perspiciatis quo est! Ipsam totam voluptatum dolore excepturi facere atque impedit soluta at placeat tempore nam, distinctio ipsum sint.';
 
     const orderNow = (e: React.FormEvent) => {
         e.preventDefault();
@@ -117,12 +122,11 @@ const ProductDetails = ({ product }: ProductProps) => {
                 <div className="mx-auto w-full rounded-lg bg-white/15 px-4 py-4 shadow-lg md:w-4/5">
                     <div className="flex items-center justify-between rounded-lg bg-lime-400/20 px-3 py-2 lg:px-6">
                         <h1 className="text-xl font-bold text-lime-400 lg:text-2xl">{product.name}</h1>
-                        <p className="text-lg font-semibold text-lime-400 lg:text-xl">Price: ${product.price}</p>
+                        <p className="text-lg font-semibold text-lime-400 lg:text-xl">
+                            Price: {product.unit_price} {product.currency_id == 1 ? 'Afg' : product.currency_id == 2 ? 'Pak' : 'USD'}
+                        </p>
                     </div>
-                    <div className="mb-4 py-3 text-sm text-wrap">
-                        {product.description}
-                        {text.length > 200 ? text.slice(0, 200) + '...' : text}
-                    </div>
+                    <div className="mb-4 py-3 text-end text-sm text-wrap">{product.description}</div>
                     <form onSubmit={orderNow} className="mt-4 flex flex-col">
                         <div className="mb-4 space-y-2">
                             <input
@@ -136,7 +140,7 @@ const ProductDetails = ({ product }: ProductProps) => {
                                 type="text"
                                 disabled
                                 placeholder="Total"
-                                value={data.quantity ? parseInt(data.quantity) * product.price : 0}
+                                value={data.quantity ? parseInt(data.quantity) * product.unit_price : 0}
                                 className="w-full rounded-md bg-black/10 px-3 py-2"
                             />
                             <textarea placeholder="Delivery Address" className="w-full rounded-md bg-black/10 px-3 py-2" name="delivery-address" />

@@ -19,12 +19,16 @@ class CommentController extends Controller
 
         $data = $request->validate([
             'content' => 'required| max:250',
+            'email' => 'nullable|email',
         ]);
         $comment = new Comment();
         $comment->content = $data['content'];
-        $comment->user_id = Auth::user()->id;
+        if (Auth::id())
+            $comment->user_id = Auth::user()->id;
+        $comment->email = $data['email'] ?? null;
         $comment->post_id = $request['id'];
-        $comment->save();
+        if (!$comment->save())
+            return redirect()->back()->with('error', 'comment not added');
         return redirect()->back()->with('message', 'comment added');
     }
 

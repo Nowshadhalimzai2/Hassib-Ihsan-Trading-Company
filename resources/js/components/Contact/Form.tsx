@@ -6,18 +6,26 @@ import { LoaderCircle } from 'lucide-react';
 import React from 'react';
 
 import InputError from '@/components/input-error';
-
-const Form = () => {
+type FormType = {
+    name: string;
+    phone?: string;
+    email: string;
+    message: string;
+    post_id?: number;
+};
+const Form = ({ message, post_id }: { message?: string; post_id?: number }) => {
     const submit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         post(route('contact.store'), {
-            onFinish: () => reset(),
+            onFinish: () => reset('email', 'message', 'name', 'phone', 'post_id'),
         });
     };
-    const { data, setData, post, processing, errors, reset } = useForm({
+    const { data, setData, post, processing, errors, reset } = useForm<FormType>({
         name: '',
         phone: '',
-        message: '',
+        message: message || '',
+        email: '',
+        post_id: post_id,
     });
     return (
         <>
@@ -30,7 +38,6 @@ const Form = () => {
                                 id="name"
                                 className="bg-white/15"
                                 type="text"
-                                required
                                 tabIndex={1}
                                 autoComplete="name"
                                 value={data.name}
@@ -42,12 +49,29 @@ const Form = () => {
                         </div>
 
                         <div className="grid gap-2">
+                            <Label htmlFor="email">Email</Label>
+                            <Input
+                                id="email"
+                                type="email"
+                                required
+                                tabIndex={2}
+                                className="bg-white/15"
+                                autoComplete="email"
+                                value={data.email}
+                                onChange={(e) => setData('email', e.target.value)}
+                                disabled={processing}
+                                placeholder="halimzai@example.com"
+                            />
+                            <InputError message={errors.email} />
+                        </div>
+
+                        <div className="grid gap-2">
                             <Label htmlFor="phone">Phone No</Label>
                             <Input
                                 id="phone"
                                 type="text"
                                 required
-                                tabIndex={2}
+                                tabIndex={3}
                                 className="bg-white/15"
                                 autoComplete="phone"
                                 value={data.phone}

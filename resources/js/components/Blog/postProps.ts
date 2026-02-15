@@ -9,7 +9,7 @@ interface Post {
         published_at: Date;
         images: string;
         comments: Array<Comment>;
-        comments_count: number;
+        contacts_count: number;
         likes_count: number;
         likes: Like[];
 }

@@ -88,11 +88,21 @@ export interface Product{
     quantity_in_stock: number
     unit_price: number
     currency_id: number
-    category_id: number
-    is_featured: number
-    deleted_at?: date
-    created_at: date
-    updated_at: date
+    is_featured: number 
+    images:Image[];
+    created_at: Date;
     category:{name:string}
-    [key: string]: string; // This allows for additional properties...
+   
+}
+export interface Category{
+    id:number;
+    name:string;
+    description:string;
+    products:Product[];
+    images:Image[];
+}
+export interface Image{
+    id:number;
+    image_path:string;
+    is_primary:boolean;
 }

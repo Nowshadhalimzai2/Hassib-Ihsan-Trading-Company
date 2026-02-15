@@ -17,9 +17,7 @@ class PostController extends Controller
     public function index()
     {
         // Eager load the 'likes' relationship
-        $posts = Post::latest()->with('likes', 'comments', 'comments.user:id,name',)->withCount('comments', 'likes')->paginate(10);
-
-
+        $posts = Post::latest()->with('likes', 'contacts:id,message', 'comments', 'comments.user:id,name',)->withCount('comments', 'likes', 'contacts')->paginate(10);
         return Inertia::render('Blog/Index', ['posts' => $posts]);
     }
 

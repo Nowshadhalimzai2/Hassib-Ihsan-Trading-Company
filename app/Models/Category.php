@@ -14,4 +14,8 @@ class Category extends Model
     {
         return $this->hasMany(Product::class);
     }
+    public function images()
+    {
+        return $this->hasManyThrough(ProductImage::class, Product::class);
+    }
 }

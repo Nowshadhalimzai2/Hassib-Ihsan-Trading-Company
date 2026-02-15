@@ -17,7 +17,7 @@ const CardSection = () => {
         return (
             <div
                 ref={divRef}
-                className={`grid grid-cols-1 space-y-4 space-x-2 sm:grid-cols-2 md:grid-cols-3 md:space-y-0 ${isVisible ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500`}
+                className={`grid grid-cols-1 space-y-4 space-x-2 sm:grid-cols-2 md:space-y-0 lg:grid-cols-3 ${isVisible ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500`}
             >
                 <SwiperSlide key={index} className="rounded-lg bg-white/50 p-4">
                     <GrayCard
@@ -32,7 +32,7 @@ const CardSection = () => {
     });
 
     useEffect(() => {
-        setupObserver(setIsVisible, divRef as React.RefObject<HTMLElement>, 0);
+        setupObserver(setIsVisible, divRef as React.RefObject<HTMLDivElement>, 0);
     }, []);
 
     return (
@@ -41,7 +41,7 @@ const CardSection = () => {
                 ref={divRef}
                 className={`container mx-auto rounded-lg border-b-2 px-6 py-8 transition-all duration-1000 ease-in-out ${isVisible ? 'scale-100 opacity-100' : 'scale-20 opacity-0'}`}
             >
-                <h1 className="pb-20 text-center text-lg font-bold text-gray-800 md:text-3xl">Top Trendings</h1>
+                <h1 className="pb-20 text-center text-lg font-bold text-gray-800 md:text-3xl dark:text-white">Top Trendings</h1>
                 <Swiper
                     modules={[Autoplay, Pagination, Navigation]}
                     spaceBetween={20}

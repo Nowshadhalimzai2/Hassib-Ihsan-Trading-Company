@@ -25,7 +25,6 @@ interface PaginatedPosts {
 
 const Index = () => {
     const posts = usePage().props.posts as PaginatedPosts;
-    // console.log(posts[1].post_media_id.img_path);
 
     const { flash } = usePage().props as { flash?: Flash };
     const { auth } = usePage().props as { auth?: { user: { id: number } } };
@@ -56,7 +55,7 @@ const Index = () => {
                     </div>
                 )}
                 {/* Create new Post */}
-                <NewPost />
+                {auth_id && <NewPost />}
 
                 {/* all post */}
 

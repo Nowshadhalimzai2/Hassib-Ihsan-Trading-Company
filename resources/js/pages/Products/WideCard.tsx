@@ -1,13 +1,7 @@
 import setupObserver from '@/components/builtIn/transition';
+import { Product } from '@/types';
 import { useEffect, useRef, useState } from 'react';
-import cake from '../../../../public/images/img2.jpg';
 
-interface Product {
-    id: number;
-    name: string;
-    price: number;
-    description: string;
-}
 const WideCard = ({ product }: { product: Product }) => {
     const observerRef = useRef<HTMLDivElement | null>(null);
     const [isVisible, setIsVisible] = useState(false);
@@ -23,7 +17,7 @@ const WideCard = ({ product }: { product: Product }) => {
         >
             <div className="ImageBox flex items-center px-1 md:pl-4">
                 <img
-                    src={cake}
+                    src={product.images && product.images[0].image_path}
                     alt="Product"
                     className="mb-6 h-24 w-24 rounded-lg object-cover shadow-xl transition-all duration-300 md:mr-10 md:mb-0 md:h-32 md:w-32 dark:ring-green-700"
                 />
@@ -37,7 +31,7 @@ const WideCard = ({ product }: { product: Product }) => {
                 </div>
                 <div className="flex items-start justify-between gap-4">
                     <span className="rounded-md bg-green-100 px-2 py-1 text-lg font-bold text-green-800 shadow md:px-3 md:py-2 md:text-2xl dark:bg-green-900 dark:text-green-200">
-                        ${product.price}
+                        Price: {product.unit_price} {product.currency_id == 1 ? 'Afg' : product.currency_id == 2 ? 'Pak' : 'USD'}
                     </span>
                     <a
                         className="rounded-md border-2 border-white/10 bg-gradient-to-r from-[#1d5757] to-[#1c3d3d] px-2 py-1 text-lg font-semibold text-white shadow-lg transition-all duration-200 hover:border-lime-400 hover:from-10% hover:to-50% hover:text-lime-400 focus:ring-2 focus:ring-green-400 focus:outline-none md:px-3 md:py-2 dark:hover:border-[#1c3d3d] dark:hover:from-lime-500 dark:hover:to-lime-600"

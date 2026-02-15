@@ -2,6 +2,7 @@
 
 namespace App\Models\Post;
 
+use App\Models\Contact;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -35,8 +36,8 @@ class Post extends Model
     {
         return $this->comments()->count();
     }
-    // function images()
-    // {
-    //     return $this->hasMany(PostMedia::class);
-    // }
+    function contacts()
+    {
+        return $this->hasMany(Contact::class);
+    }
 }

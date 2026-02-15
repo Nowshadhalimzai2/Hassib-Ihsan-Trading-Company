@@ -9,14 +9,19 @@ import CircleCard from '@/components/products/CircleCard';
 import 'swiper/css/pagination';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import cake from '../../../.../../../public/images/cake1.png';
 
 import Hero from '@/components/products/Hero';
+import { Category, Product } from '@/types';
 import b1 from '../../../../public/images/g_eathing.jpg';
 import b2 from '../../../../public/images/img1.jpg';
 import b3 from '../../../../public/images/img2.jpg';
-const Index = () => {
+interface Props {
+    products: Product[];
+    categories: Category[];
+}
+const Index = ({ products, categories }: Props) => {
     // This component can be used to display a list of products, product details, etc.
+
     const images = [b1, b2, b3];
     const toprankcards = images.map((img, index) => {
         return (
@@ -27,8 +32,8 @@ const Index = () => {
             </div>
         );
     });
-    const ourproducts = Array.from({ length: 4 }).map((_, index) => {
-        return <Card key={index} img={cake} />;
+    const ourproducts = products.map((product, index) => {
+        return <Card product={product} key={index} img={product.images.filter((img) => img.is_primary == true)[0]} />;
     });
     return (
         <>
@@ -62,12 +67,10 @@ const Index = () => {
                         </div>
                         <div className="Contents my-4 px-2 py-8">
                             <div className="Category">
-                                <div className="grid grid-cols-3 gap-x-3 gap-y-6">
-                                    <CircleCard />
-                                    <CircleCard />
-                                    <CircleCard />
-                                    <CircleCard />
-                                    <CircleCard />
+                                <div className="grid grid-cols-2 gap-x-3 gap-y-6 md:grid-cols-3">
+                                    {categories.map((category) => (
+                                        <CircleCard key={category.id} category={category} />
+                                    ))}
                                 </div>
                                 <div className="ViewAll mt-6 text-center">
                                     <a href={`/products/categories`} className="text-md text-center hover:text-lime-400">
@@ -91,7 +94,7 @@ const Index = () => {
                                         clickable: true,
                                         dynamicBullets: true,
                                         renderBullet: (index, className) => {
-                                            return `<span class="${className}"></span>`;
+                                            return `<span key="${index}" class="${className}"></span>`;
                                         },
                                     }}
                                     autoplay={{ delay: 2000, disableOnInteraction: false }}

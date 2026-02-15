@@ -1,11 +1,18 @@
 import NavLink from '@/components/builtIn/NavLink';
 import Ul from '@/components/builtIn/Ul';
-import { usePage } from '@inertiajs/react';
+import { router, usePage } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import logo from '../../../../public/images/nobgLogo.png';
 import DarkModeButton from './DarkModeButton';
-
+type Auth = {
+    user: { id: number };
+};
 const NavBar = () => {
+    const auth = usePage().props.auth as Auth;
+    let auth_id: null | number = null;
+    if (auth['user']) {
+        auth_id = auth['user'].id;
+    }
     const [showMenu, setShowMenu] = useState(false);
     // set Menu status to false while the screen size is more than Medium size
     useEffect(() => {
@@ -72,12 +79,24 @@ const NavBar = () => {
 
                             <div className="flex items-center text-sm">
                                 <span className="">
-                                    <a
-                                        href="/login"
-                                        className="rounded-md bg-[#1c3d3d] px-3 py-2 text-lime-400 transition-all duration-300 ease-out hover:text-white dark:bg-lime-400 dark:text-[#1c3d3d] dark:hover:bg-[#1c3d3d] dark:hover:text-white"
-                                    >
-                                        Log in
-                                    </a>
+                                    {!auth_id ? (
+                                        <a
+                                            href="/login"
+                                            className="rounded-md bg-[#1c3d3d] px-3 py-2 text-lime-400 transition-all duration-300 ease-out hover:text-white dark:bg-lime-400 dark:text-[#1c3d3d] dark:hover:bg-[#1c3d3d] dark:hover:text-white"
+                                        >
+                                            Log in
+                                        </a>
+                                    ) : (
+                                        <button
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                if (confirm('Do want to log you out?')) router.post(route('logout'));
+                                            }}
+                                            className="rounded-md bg-[#1c3d3d] px-3 py-2 text-lime-400 transition-all duration-300 ease-out hover:text-white dark:bg-lime-400 dark:text-[#1c3d3d] dark:hover:bg-[#1c3d3d] dark:hover:text-white"
+                                        >
+                                            Log out
+                                        </button>
+                                    )}
                                 </span>
                             </div>
                         </div>
@@ -126,7 +145,7 @@ const CloseButton = ({ setShowMenu, isShowMenu }: ButtonProps) => {
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
-                className="h-10 transition-all duration-300 ease-in-out hover:text-lime-400"
+                className="h-10 text-white transition-all duration-300 ease-in-out"
             >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
             </svg>
@@ -143,7 +162,7 @@ const MenuButton = ({ setShowMenu, isShowMenu }: ButtonProps) => {
                 viewBox="0 0 24 24"
                 strokeWidth="1.5"
                 stroke="currentColor"
-                className="h-10 transition-all duration-300 ease-in-out hover:text-lime-400"
+                className="h-10 text-white transition-all duration-300 ease-in-out"
                 onClick={() => setShowMenu(!isShowMenu)}
             >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />

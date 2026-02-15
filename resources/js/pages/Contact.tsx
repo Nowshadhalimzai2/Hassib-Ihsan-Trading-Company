@@ -1,15 +1,29 @@
+import FlashMessage from '@/components/builtIn/FlashMessage';
 import PageTitle from '@/components/builtIn/PageTitle';
 import Form from '@/components/Contact/Form';
 import OfficeOnMap from '@/components/Contact/OfficeOnMap';
 import Section from '@/components/Section';
 import MYLayout from '@/layouts/MYLayout';
+import { usePage } from '@inertiajs/react';
 import { MapPin, Pin } from 'lucide-react';
-const Contact = () => {
+import { useEffect } from 'react';
+const Contact = ({ comment, post }: { comment?: string; post?: number }) => {
+    const message = usePage().props.flash as { success: string | null; error: string | null };
+
+    useEffect(() => {
+        if (comment) {
+            const section = document.getElementById('message-us');
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    }, [comment]);
     return (
         <>
             <MYLayout>
                 <Section className="bg-lime-50">
                     <PageTitle title="Contact Us" />
+                    <FlashMessage message={message} />
                     <div className="container mx-auto max-w-2xl px-4 py-6">
                         <h2 className="text-xl font-semibold text-slate-900 dark:text-white/90">Our Physical Address </h2>
                     </div>
@@ -35,13 +49,13 @@ const Contact = () => {
                 </Section>
 
                 <Section className="bg-accent dark:bg-white/5">
-                    <div className="w-full">
+                    <div className="w-full" id="message-us">
                         <div className="container mx-auto max-w-2xl px-4 py-6">
                             <h2 className="text-xl font-semibold text-slate-900 dark:text-white/90">
                                 Fill the form and send us. we will respond to you as soon as possible
                             </h2>
                         </div>
-                        <Form />
+                        <Form message={comment} post_id={post} />
                     </div>
                 </Section>
                 <Section className="bg-[#f0f4ff]">

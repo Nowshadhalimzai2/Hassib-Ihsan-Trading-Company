@@ -12,13 +12,13 @@ const Footer = () => {
                                 <h3 className="mb-2 text-[16px] font-semibold text-white md:text-lg">Quick Links</h3>
                                 <ul className="list-none p-0 text-center">
                                     <li className="mb-1">
-                                        <a href="/about" className="text-slate-300 hover:underline">
-                                            About Us
+                                        <a href="/" className="text-slate-300 hover:underline">
+                                            Home
                                         </a>
                                     </li>
                                     <li className="mb-1">
-                                        <a href="/services" className="text-slate-300 hover:underline">
-                                            Services
+                                        <a href="/about" className="text-slate-300 hover:underline">
+                                            About Us
                                         </a>
                                     </li>
                                     <li className="mb-1">
@@ -32,7 +32,7 @@ const Footer = () => {
                                 {/* Social Links with logoes */}
                                 <h3 className="mb-2 text-[16px] font-semibold text-white md:text-lg">Follow Us</h3>
                                 <div className="flex justify-center space-x-4">
-                                    <a href="#">
+                                    <a href="https://facebook.com">
                                         <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" className="h-8 w-8" viewBox="0 0 48 48">
                                             <path fill="#039be5" d="M24 5A19 19 0 1 0 24 43A19 19 0 1 0 24 5Z"></path>
                                             <path

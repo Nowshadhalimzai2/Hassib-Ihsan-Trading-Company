@@ -19,7 +19,7 @@ const Home = () => {
             {/* BEAUTIFUL SCENES */}
             <div className="bg-beautiful-scenery overflow-hidden">
                 <div>
-                    <h1 className="mb-4 py-8 text-center text-3xl font-bold text-slate-800">Beautiful Scenery</h1>
+                    <h1 className="mb-4 py-8 text-center text-3xl font-bold text-slate-800 dark:text-white">Beautiful Scenery</h1>
                     <video src={liquid_chocolate} autoPlay loop muted className="mx-auto w-full px-4" />
                 </div>
             </div>

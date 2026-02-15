@@ -16,27 +16,13 @@ function Reactions({ isShowComments, setIsShowComments, ...post }: ReactionsProp
     const [isLiked, setIsLiked] = useState(() => post.likes.some((like) => like.pivot.user_id === post.auth_id && like.pivot.post_id === post.id)); ////
     const [message, setMessage] = useState<string>('');
     const [likesCount, setLikesCount] = useState(post.likes_count);
-    console.log('likes count', likesCount);
+    console.log('likes count', post.contacts_count);
 
     useEffect(() => {
         const liked = post.likes.some((like) => like.pivot.user_id === post.auth_id && like.pivot.post_id === post.id);
         setIsLiked(liked);
     }, [post.likes, post.auth_id, post.id]);
 
-    const submit = () => {
-        if (message) {
-            // send message to backend
-            router.post(
-                route('comment.post', { content: message, id: post.id }),
-                {},
-                {
-                    onSuccess: () => {
-                        setMessage('');
-                    },
-                },
-            );
-        }
-    };
     const sentLikeToBackend = () => {
         const newIsLiked = !isLiked; // flip the current value
 
@@ -85,10 +71,13 @@ function Reactions({ isShowComments, setIsShowComments, ...post }: ReactionsProp
                                 onChange={(e) => setMessage(e.target.value)}
                                 tabIndex={0}
                             />
-                            <p className="dark:bg-slate-8 px-2 text-gray-600">{post.comments_count}</p>
-                            <button onClick={submit}>
+                            <p className="dark:bg-slate-8 px-2 text-gray-600">{post.contacts_count}</p>
+                            {/* <button onClick={submit}>
                                 <Send className="size-5 text-gray-600 hover:text-lime-400 md:size-7 dark:text-lime-400" />
-                            </button>
+                            </button> */}
+                            <a href={route('message_us', [post, message])} onClick={(e) => !message && e.preventDefault()}>
+                                <Send className="size-5 text-gray-600 hover:text-lime-400 md:size-7 dark:text-lime-400" />
+                            </a>
                         </div>
                     </div>
                 </div>

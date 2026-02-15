@@ -30,9 +30,11 @@ const Post = (post: AuthID) => {
                         <p className="text-sm text-black/40 dark:text-gray-400">{new Date(post.published_at).toLocaleDateString()}</p>
                     </div>
                 </div>
-                <a tabIndex={2} href={route('blog.edit', post.id)} className="hover:text-blue-500">
-                    Edit
-                </a>
+                {post.auth_id && (
+                    <a tabIndex={2} href={route('blog.edit', post.id)} className="hover:text-blue-500">
+                        Edit
+                    </a>
+                )}
             </div>
             <div className="Contents">
                 <p className="mb-3 text-gray-600 dark:text-gray-400">

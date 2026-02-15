@@ -10,14 +10,14 @@ const Testimonial = () => {
                     </div>
                     <div className="Testimonials flex flex-col">
                         <div className="Overview grow">
-                            <h3 className="py-4 text-center text-xl font-bold text-[#1c3d3d] hover:text-red-500 md:text-3xl">Testimonial</h3>
-                            <p className="px-4 py-3">
+                            <h3 className="py-4 text-center text-xl font-bold text-[#1c3d3d] md:text-3xl dark:text-white">Testimonial</h3>
+                            <p className="px-4 py-3 text-gray-300">
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat optio inventore saepe qui accusantium, vitae sequi
                                 porro amet. Dolorem voluptates, doloribus nihil nostrum quos hic sapiente ea dicta vitae alias?
                             </p>
                         </div>
                         <div className="Profile mb-4 flex flex-col items-center justify-center px-5 lg:pb-0">
-                            <img src={me} alt="" className="mx-auto h-12 w-12 rounded-full border-2 border-lime-600" />
+                            <img src={me} alt="" className="mx-auto h-16 w-16 rounded-full border-2 border-lime-600" />
                             <h5 className="text-sm text-lime-400">Nowshad Halimzai</h5>
                             <p className="text-sm text-gray-300">Jalalabad,Afghanistan</p>
                         </div>

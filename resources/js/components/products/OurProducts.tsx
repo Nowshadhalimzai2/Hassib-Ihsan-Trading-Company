@@ -32,8 +32,8 @@ const OurProducts = () => {
     });
     return (
         <>
-            <section className="bg-[#f0f0f0] py-16">
-                <h1 className="mb-20 text-center text-xl font-extrabold text-slate-900 md:text-3xl">
+            <section className="bg-[#f0f0f0] py-16 dark:bg-slate-800/10">
+                <h1 className="mb-20 text-center text-xl font-extrabold text-slate-900 md:text-3xl dark:text-white">
                     Discover our Delicious Range of Items for Every Occasion
                 </h1>
 
@@ -69,8 +69,8 @@ const OurProduct = ({ productimg, title, description, index }: Props) => {
                     <img src={productimg} className={`max-w-107`} alt="" />
                 </div>
                 <div className="px-3 md:px-6">
-                    <h2 className="mb-6 text-2xl font-bold text-wrap text-slate-800">{title}</h2>
-                    <p className="text-sm text-gray-600 md:text-[16px]">{description}</p>
+                    <h2 className="mb-6 font-serif text-2xl font-bold text-wrap text-slate-800 dark:text-white">{title}</h2>
+                    <p className="font-serif text-sm text-gray-600 md:text-[16px] dark:text-gray-300">{description}</p>
                 </div>
             </div>
         </>

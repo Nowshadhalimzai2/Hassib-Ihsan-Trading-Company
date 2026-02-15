@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\Comment\CommentController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Post\PostController;
+use App\Models\Category;
+use App\Models\Product;
 use App\Models\Subscriber;
 use App\Models\Transaction;
 use App\Models\User;
@@ -38,6 +41,12 @@ Route::get("/about", function () {
 Route::get("/contact", function () {
     return Inertia::render("Contact");
 })->name('contact');
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+
+Route::get('/contact-us/{post}/{message}', function ($post, $message) {
+
+    return Inertia::render('Contact', ['post' => $post, 'comment' => $message]);
+})->name('message_us');
 
 Route::post('/subscribe', function (Request $request) {
     // dd($request->all());
@@ -46,46 +55,42 @@ Route::post('/subscribe', function (Request $request) {
         'email' => 'email|required',
     ]);
     Subscriber::create($data);
-    return back()->with('success', 'you will receive our regular updates');
+    return back()->with('success', 'Subscribed! you will receive our regular updates');
 })->name('subscribe');
 
 // -------------PRODUCTS GROUPED ROUTES --------------------
 Route::prefix('products')->group(function () {
     Route::get('/', function () {
-
-        return Inertia::render("Products/Index");
+        // $categories = Category::with(['products', 'products.images'])->get();
+        $categories = Category::with('images')->take(6)->get();
+        $products = Product::with('images')->get(['id', 'name', 'unit_price', 'created_at', 'description']);
+        // dd($products);
+        return Inertia::render("Products/Index", ['products' => $products, 'categories' => $categories]);
     })->name('products.index');
     Route::post('/search', function () {
         $searchTerm = request('query');
-        $products = Products::all()->filter(function ($product) use ($searchTerm) {
+        $products = Product::with('images')->get()->filter(function ($product) use ($searchTerm) {
             return str_contains(strtolower($product['name']), strtolower($searchTerm));
         });
         return Inertia::render('Products/List', ['products' => $products, 'query' => $searchTerm]);
     })->name('products.search');
     Route::get('/productlist', function () {
-        $products = Products::all();
+        $products = Product::with('images')->get();
         return Inertia::render('Products/List', ['products' => $products]);
     });
 
-    Route::get('/{product}', function ($product) {
-        $product = Products::all()[$product];
-        return Inertia::render('Products/Order', ['product' => $product]);
-    })->where('product', '[0-9]+')->name('products.show');
-
     Route::get('/categories', function () {
-        $categories = collect(['Electronics', 'Books', 'Clothing', 'Home & Kitchen']);
+        $categories = Category::with(['products', 'images'])->get();
         return Inertia::render('Products/Categories', ['categories' => $categories]);
     })->name('products.categories');
+    Route::get('/{product}', function ($product) {
+
+        $product = Product::with('images')->findOrFail($product);
+        return Inertia::render('Products/Order', ['product' => $product]);
+    })->name('product.show');
+
     Route::get('/categories/{category}', function ($category) {
-        $products = collect(range(1, 10))->map(function ($id) use ($category) {
-            return [
-                'id' => $id,
-                'name' => $category . ' Product ' . $id,
-                'price' => rand(10, 100) . '.00',
-                'description' => 'This is the description for ' . $category . ' product ' . $id,
-            ];
-        });
-        return Inertia::render('Products/Category', ['category' => $category, 'products' => $products]);
+        return Inertia::render('Products/Category', ['category' => Category::with(['products', 'products.images'])->findOrFail($category)]);
     })->name('products.category');
 });
 // -------------END PRODUCTS GROUPED ROUTES --------------------
