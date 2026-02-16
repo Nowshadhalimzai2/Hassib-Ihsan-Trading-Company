@@ -1,3 +1,4 @@
+import FlashMessage from '@/components/builtIn/FlashMessage';
 import InputError from '@/components/input-error';
 import Section from '@/components/Section';
 import { Button } from '@/components/ui/button';
@@ -5,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem } from '@/types';
-import { useForm } from '@inertiajs/react';
+import { useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
 
@@ -30,6 +31,7 @@ export type ProductType = {
     unit_price: number;
 };
 const Index = ({ vendors, categories }: Props) => {
+    const message = usePage().props.flash as { error: string | null; success: string | null };
     const { data, setData, post, processing, errors, reset } = useForm<ProductType>({
         name: '',
         user_id: null,
@@ -64,6 +66,7 @@ const Index = ({ vendors, categories }: Props) => {
         <AppLayout breadcrumbs={breadcrumbs}>
             {/* ===================== PRODUCT FORM SECTION ======================= */}
             <Section className="to-yellow-5 0 bg-gradient-to-bl from-pink-50 via-sky-50 dark:from-gray-950 dark:via-slate-900 dark:to-black">
+                <FlashMessage duration={5000} message={message} />
                 <div>
                     <h1 className="my-6 py-4 text-center text-2xl font-bold">Purchase Product</h1>
                 </div>

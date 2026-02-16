@@ -62,21 +62,29 @@ class ProductController extends Controller
         ]);
 
 
-        Product::create([
-            'name' => $request->name,
-            'user_id' => Auth::id(),
-            'unit_price' => $request->unit_price,
-            'quantity_in_stock' => $request->quantity_in_stock,
-            'currency_id' => $request->currency_id,
-            'category_id' => $request->category_id,
-            'description' => $request->description,
-            'is_featured' => $request->is_featured,
-        ]);
-        Post::create([
-            'user_id' => Auth::id(),
-            'content' => $request->description,
-            'file_path' => 'https://picsum.photos/seed/430/480',
-        ]);
+        DB::beginTransaction();
+        try {
+
+            Product::create([
+                'name' => $request->name,
+                'user_id' => Auth::id(),
+                'unit_price' => $request->unit_price,
+                'quantity_in_stock' => $request->quantity_in_stock,
+                'currency_id' => $request->currency_id,
+                'category_id' => $request->category_id,
+                'description' => $request->description,
+                'is_featured' => $request->is_featured,
+            ]);
+            Post::create([
+                'user_id' => Auth::id(),
+                'content' => $request->description,
+                'file_path' => 'https://picsum.photos/seed/130/480',
+            ]);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', "Error:" . $e->getMessage());
+        }
 
 
         return redirect(route('products.index'))->with('success', 'Product added successfully');

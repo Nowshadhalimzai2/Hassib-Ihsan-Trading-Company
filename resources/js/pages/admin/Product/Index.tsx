@@ -1,8 +1,10 @@
+import FlashMessage from '@/components/builtIn/FlashMessage';
 import AppLayout from '@/layouts/app-layout';
 import { Product as ProductType } from '@/types';
+import { usePage } from '@inertiajs/react';
 
 const Index = ({ products }: { products: ProductType[] }) => {
-    console.log(products);
+    const message = usePage().props.flash as { error: string | null; success: string | null };
 
     const product_list = products.map((product) => {
         return <ProductItem product={product} />;
@@ -10,6 +12,7 @@ const Index = ({ products }: { products: ProductType[] }) => {
     return (
         <>
             <AppLayout>
+                <FlashMessage duration={5000} message={message} />
                 <div>
                     <h1 className="my-5 py-3 text-center font-bold sm:text-2xl md:my-8 md:py-6 md:text-3xl lg:text-4xl">Products in Stock</h1>
                     <div className="m-3">{product_list}</div>
