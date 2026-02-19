@@ -119,7 +119,7 @@ const ProductDetails = ({ product }: ProductProps) => {
     return (
         <>
             <div className="h-full w-full rounded-lg py-6">
-                <div className="mx-auto w-full rounded-lg bg-white/15 px-4 py-4 shadow-lg md:w-4/5">
+                <div className="mx-auto w-full rounded-lg bg-white/15 px-4 py-4 shadow-lg md:w-4/5 dark:bg-slate-900">
                     <div className="flex items-center justify-between rounded-lg bg-lime-400/20 px-3 py-2 lg:px-6">
                         <h1 className="text-xl font-bold text-lime-400 lg:text-2xl">{product.name}</h1>
                         <p className="text-lg font-semibold text-lime-400 lg:text-xl">

@@ -18,7 +18,6 @@ const Card = ({ img, product }: Props) => {
     useEffect(() => {
         setupObserver(setIsVisible, observerRef, 0.5);
     }, []);
-    console.log('pathhhh: ', img);
 
     return (
         <>
@@ -28,7 +27,7 @@ const Card = ({ img, product }: Props) => {
                 className={`relative w-full rounded-lg border-1 bg-[#f0f4ff] px-3 py-2 hover:scale-102 hover:cursor-pointer hover:border-1 hover:shadow-lg dark:bg-white/5 ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-30 opacity-0'} transition-all duration-700`}
             >
                 <img src={img && img.image_path} alt="Product 1" className="object-cover" />
-                <div className="rounded-lg px-3 pb-4">
+                <div className="rounded-lg px-3 py-4">
                     <div className="ExpiryDateAndPrice">
                         <div className="absolute top-3 right-3 rounded-2xl bg-lime-300 px-2 py-1 text-white dark:text-slate-800">
                             <p className="" title="Price">

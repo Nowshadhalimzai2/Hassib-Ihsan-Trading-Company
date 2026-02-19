@@ -2,38 +2,30 @@
 
 use App\Http\Controllers\Comment\CommentController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\OtpController;
 use App\Http\Controllers\Post\PostController;
+use App\Http\Requests\Auth\LoginRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Subscriber;
 use App\Models\Transaction;
 use App\Models\User;
+use Illuminate\Http\Client\Request as ClientRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Mail;
 
 
-// Products temp class
-class Products
-{
-    public static function all()
-    {
-        return collect([
-            ['id' => 0, 'name' => 'Laptop', 'price' => '999.99', 'description' => 'A high-performance laptop suitable for all your computing needs.'],
-            ['id' => 1, 'name' => 'Smartphone', 'price' => '699.99', 'description' => 'A sleek smartphone with the latest features and a stunning display.'],
-            ['id' => 2, 'name' => 'Headphones', 'price' => '199.99', 'description' => 'Noise-cancelling headphones for an immersive audio experience.'],
-            ['id' => 3, 'name' => 'Smartwatch', 'price' => '299.99', 'description' => 'A stylish smartwatch to keep you connected on the go.'],
-            ['id' => 4, 'name' => 'Tablet', 'price' => '499.99', 'description' => 'A versatile tablet perfect for work and entertainment.'],
-        ]);
-    }
-}
+
 
 Route::get('/', function () {
-
-    return Inertia::render('Home/Home');
+    // dd(Cache::get('otp_nawshadhalimzai@gmail.com'));
+    $product = Product::with('images')->where('is_featured', true)->latest()->take(5)->get();
+    return Inertia::render('Home/Home', ['products' => $product]);
 })->name('home');
 Route::get("/about", function () {
     return Inertia::render("About");
@@ -64,16 +56,9 @@ Route::prefix('products')->group(function () {
         // $categories = Category::with(['products', 'products.images'])->get();
         $categories = Category::with('images')->take(6)->get();
         $products = Product::with('images')->get(['id', 'name', 'unit_price', 'created_at', 'description']);
-        // dd($products);
         return Inertia::render("Products/Index", ['products' => $products, 'categories' => $categories]);
     })->name('products.index');
-    Route::post('/search', function () {
-        $searchTerm = request('query');
-        $products = Product::with('images')->get()->filter(function ($product) use ($searchTerm) {
-            return str_contains(strtolower($product['name']), strtolower($searchTerm));
-        });
-        return Inertia::render('Products/List', ['products' => $products, 'query' => $searchTerm]);
-    })->name('products.search');
+
     Route::get('/productlist', function () {
         $products = Product::with('images')->get();
         return Inertia::render('Products/List', ['products' => $products]);
@@ -162,6 +147,8 @@ Route::get('/test-email', function () {
 });
 
 
+Route::post('/otp-verify', [OtpController::class, 'verify'])->name('otp.post');
+Route::get('/otp-show', [OtpController::class, 'show'])->name('otp.show');
 
 // -------------INVESTOR ROUTES --------------------
 // Route::middleware(['auth', 'verified'])->group(function () {

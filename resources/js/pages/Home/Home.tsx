@@ -5,10 +5,13 @@ import liquid_chocolate from '../../../../public/videos/liquid_choculate_vid.mp4
 
 import FlashMessage from '@/components/builtIn/FlashMessage';
 import Testimonial from '@/components/builtIn/Testimonial';
+import { Product } from '@/types';
 import { usePage } from '@inertiajs/react';
 import CTE from './CTE';
-
-const Home = () => {
+interface Props {
+    products: Product[];
+}
+const Home = ({ products }: Props) => {
     const message = usePage().props.flash as { success: string };
 
     return (
@@ -25,7 +28,7 @@ const Home = () => {
             </div>
 
             {/* TOP TRENDINGS Cards Section */}
-            <CardSection />
+            <CardSection products={products} />
 
             {/* POPULAR Products Section */}
             {/* <PopularProducts /> */}

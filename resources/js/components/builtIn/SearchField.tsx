@@ -1,11 +1,15 @@
-import { router } from '@inertiajs/react';
+import { Product } from '@/types';
 import { Search } from 'lucide-react';
-const SearchField = () => {
-    // const [searchTerm, setSearchTerm] = useState('');
+import { useRef } from 'react';
+const SearchField = ({ setProducts, products }: { setProducts: React.Dispatch<React.SetStateAction<Product[]>>; products: Product[] }) => {
+    const originalProductsRef = useRef<Product[]>(products);
+
     function handleSearchChange(search: string) {
-        router.post(route('products.search'), {
-            query: search,
-        });
+        if (search) {
+            setProducts(originalProductsRef.current.filter((product) => product.name.toLowerCase().includes(search.toLowerCase())));
+        } else {
+            setProducts([...originalProductsRef.current]);
+        }
     }
     return (
         <div className="SearchField w-full md:w-1/4">
@@ -15,7 +19,7 @@ const SearchField = () => {
                     type="text"
                     placeholder="Search products..."
                     className="w-full rounded-md bg-transparent p-2 outline-none dark:border-gray-700 dark:bg-transparent dark:text-white"
-                    onChange={(e) => handleSearchChange(e.target.value)}
+                    onKeyUp={(e) => handleSearchChange((e.target as HTMLInputElement).value)}
                 />
             </div>
         </div>

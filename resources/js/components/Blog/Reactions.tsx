@@ -63,7 +63,7 @@ function Reactions({ isShowComments, setIsShowComments, ...post }: ReactionsProp
                             <MessageCircle className="size-6 text-gray-600 md:size-8 dark:text-lime-400" />
                         </button>
 
-                        <div className="flex h-10 flex-1 items-center rounded-md bg-white focus:outline-lime-400">
+                        <div className="flex h-10 flex-1 items-center rounded-md border-l bg-white focus:outline-lime-400 dark:border-white/15 dark:bg-slate-800">
                             <input
                                 className="h-full flex-1 px-0 pl-1 placeholder:text-gray-400 focus:outline-lime-400 md:px-4 dark:bg-slate-800"
                                 placeholder="Type your Message"
@@ -71,13 +71,12 @@ function Reactions({ isShowComments, setIsShowComments, ...post }: ReactionsProp
                                 onChange={(e) => setMessage(e.target.value)}
                                 tabIndex={0}
                             />
-                            <p className="dark:bg-slate-8 px-2 text-gray-600">{post.contacts_count}</p>
-                            {/* <button onClick={submit}>
-                                <Send className="size-5 text-gray-600 hover:text-lime-400 md:size-7 dark:text-lime-400" />
-                            </button> */}
-                            <a href={route('message_us', [post, message])} onClick={(e) => !message && e.preventDefault()}>
-                                <Send className="size-5 text-gray-600 hover:text-lime-400 md:size-7 dark:text-lime-400" />
-                            </a>
+                            <div className="flex items-center justify-center border-l dark:border-white/15">
+                                <p className="dark:bg-slate-8 px-2 text-gray-600">{post.contacts_count}</p>
+                                <a href={route('message_us', [post, message])} onClick={(e) => !message && e.preventDefault()}>
+                                    <Send className="size-5 text-gray-600 hover:text-lime-400 md:size-7 dark:text-lime-400" />
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -43,7 +43,7 @@ const Index = ({ products, categories }: Props) => {
 
                 {/* top and featured Product page content goes here */}
 
-                <section className="px-4 py-12">
+                <section className="px-0 py-16 md:px-24">
                     <h1 className="mb-6 py-4 text-center text-3xl font-bold">Our Products</h1>
                     <div className="mb-4 w-full py-8">
                         {/* Example product cards */}

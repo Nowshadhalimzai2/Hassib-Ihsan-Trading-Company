@@ -38,17 +38,17 @@ const GrayCard = ({ productImage, itemName, itemDescription, id }: Props) => {
             {/* Card */}
             <div
                 title="For Details click the button"
-                className="flex w-full flex-col items-center justify-center rounded-md px-3 py-2 transition-all duration-300 duration-1000 ease-out hover:scale-110 hover:bg-slate-300"
+                className="mx-auto w-full overflow-hidden rounded-md transition-all duration-300 duration-1000 ease-out hover:scale-105 hover:bg-slate-300"
                 onMouseEnter={() => handleMouseEnter(id)}
                 onMouseLeave={() => handleMouseLeave(id)}
             >
-                <div className="ProductImage size-72">
+                <div className="ProductImage w-full">
                     <img src={productImage} className="h-full w-full object-cover" alt="sliding images" />
                 </div>
-                <fieldset id={`fieldset${id}`} className="mt-4 hidden transition-all duration-500 ease-in-out">
+                <fieldset id={`fieldset${id}`} className="my-4 hidden transition-all duration-500 ease-in-out">
                     <div className="Details px-2 pb-4">
                         <h2 className="text-center text-xl font-bold text-lime-400">{itemName}</h2>
-                        <p className="description py-1 text-sm text-slate-800">{itemDescription}</p>
+                        <p className="description px-2 py-1 text-center text-sm text-slate-800">{itemDescription}</p>
                     </div>
                     <button
                         onClick={() => navigateToDetails()}

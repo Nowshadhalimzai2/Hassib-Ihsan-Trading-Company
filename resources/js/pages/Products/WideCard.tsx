@@ -13,7 +13,7 @@ const WideCard = ({ product }: { product: Product }) => {
     return (
         <div
             ref={observerRef}
-            className={`mx-auto my-3 flex max-w-3xl items-center rounded-xl bg-[#effa] p-3 ring-1 ring-gray-200 transition-all duration-300 hover:shadow-2xl md:my-6 md:flex-row md:items-stretch md:p-8 dark:from-white/15 dark:to-white/10 dark:ring-gray-700 ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-50 opacity-0'} transition-all duration-700`}
+            className={`mx-auto my-3 flex max-w-3xl items-center rounded-xl bg-[#effa] p-3 ring-1 ring-gray-200 transition-all duration-300 hover:shadow-2xl md:my-6 md:flex-row md:items-stretch md:p-8 dark:bg-slate-900 dark:ring-gray-700 ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-50 opacity-0'} transition-all duration-700`}
         >
             <div className="ImageBox flex items-center px-1 md:pl-4">
                 <img
