@@ -32,7 +32,7 @@ const Footer = () => {
                                 {/* Social Links with logoes */}
                                 <h3 className="mb-2 text-[16px] font-semibold text-white md:text-lg">Follow Us</h3>
                                 <div className="flex justify-center space-x-4">
-                                    <a href="https://facebook.com">
+                                    <a href="https://facebook.com/share/p/1AfKNmqySj" target="_blank" rel="noopener noreferrer">
                                         <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" className="h-8 w-8" viewBox="0 0 48 48">
                                             <path fill="#039be5" d="M24 5A19 19 0 1 0 24 43A19 19 0 1 0 24 5Z"></path>
                                             <path
@@ -41,7 +41,7 @@ const Footer = () => {
                                             ></path>
                                         </svg>
                                     </a>
-                                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+                                    <a href="https://x.com/HalimzaiNo86252" target="_blank" rel="noopener noreferrer">
                                         <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" className="h-9 w-9" viewBox="0 0 48 48">
                                             <path
                                                 fill="#03A9F4"
@@ -49,7 +49,7 @@ const Footer = () => {
                                             ></path>
                                         </svg>
                                     </a>
-                                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                                    <a href="https://wa.me/93786363634" target="_blank" rel="noopener noreferrer">
                                         <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" className="h-8 w-8" viewBox="0 0 48 48">
                                             <path
                                                 fill="#fff"
@@ -97,6 +97,7 @@ const Footer = () => {
                                                 +93 782 641 141
                                             </a>
                                         </p>
+
                                         <p className="mb-1 space-x-2 text-slate-900">
                                             <Map className="inline h-4 w-4 text-lime-400" />{' '}
                                             <span className="text-gray-300">Nangarhar, Afghanistan</span>

@@ -57,7 +57,7 @@ Route::prefix('products')->group(function () {
         $categories = Category::with('images')->take(6)->get();
         $products = Product::with('images')->get(['id', 'name', 'unit_price', 'created_at', 'description']);
         return Inertia::render("Products/Index", ['products' => $products, 'categories' => $categories]);
-    })->name('products.index');
+    })->name('public.products.index');
 
     Route::get('/productlist', function () {
         $products = Product::with('images')->get();

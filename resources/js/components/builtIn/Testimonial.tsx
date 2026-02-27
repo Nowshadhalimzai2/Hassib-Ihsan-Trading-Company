@@ -11,7 +11,7 @@ const Testimonial = () => {
                     <div className="Testimonials flex flex-col">
                         <div className="Overview grow">
                             <h3 className="py-4 text-center text-xl font-bold text-[#1c3d3d] md:text-3xl dark:text-white">Testimonial</h3>
-                            <p className="px-4 py-3 text-gray-300">
+                            <p className="px-4 py-3 text-gray-600 dark:text-gray-300">
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat optio inventore saepe qui accusantium, vitae sequi
                                 porro amet. Dolorem voluptates, doloribus nihil nostrum quos hic sapiente ea dicta vitae alias?
                             </p>

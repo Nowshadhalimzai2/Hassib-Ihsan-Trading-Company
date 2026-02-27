@@ -3,10 +3,9 @@
 interface Post {
   
         id: number;
-       
         content: string;
         file_path: string;
-        published_at: Date;
+        created_at: Date;
         images: string;
         comments: Array<Comment>;
         contacts_count: number;

@@ -62,8 +62,11 @@ const About = () => {
                         </p>
                         <h2 className="mt-4 text-2xl font-bold">Get In Touch</h2>
                         <p className="mt-4 text-gray-700 dark:text-gray-300">
-                            If you have any questions or feedback, feel free to reach out to us through our contact page. We value your input and are
-                            here to help!
+                            If you have any questions or feedback, feel free to reach out to us through our{' '}
+                            <a href={route('contact')} className="text-blue-400 italic underline">
+                                contact page
+                            </a>
+                            . We value your input and are here to help!
                         </p>
                     </div>
                 </div>

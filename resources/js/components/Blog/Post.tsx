@@ -8,16 +8,8 @@ interface AuthID extends PostProps {
 
 const Post = (post: AuthID) => {
     const [isShowText, setIsShowText] = useState(false);
-
-    function path(path: string): string {
-        if (path.startsWith('http')) {
-            const random = Math.floor(Math.random() * 1000);
-            return path + `${random}/480`; // Append a random query parameter to prevent caching
-        }
-        return path;
-    }
-
     const [isShowComments, setIsShowComments] = useState(false);
+
     return (
         <div
             className="relative mx-auto max-w-xl rounded-lg bg-white/10 p-2 shadow-lg sm:p-4"
@@ -27,8 +19,8 @@ const Post = (post: AuthID) => {
                 <div className="flex items-center gap-2">
                     <img src={logo} className="size-13"></img>
                     <div>
-                        <h5 className="text-[#1c3d3d]">Basit Ishaq Ltd</h5>
-                        <p className="text-sm text-black/40 dark:text-gray-400">{new Date(post.published_at).toLocaleDateString()}</p>
+                        <h5 className="active underline-0 mb-1">Basit Ishaq Ltd</h5>
+                        <p className="text-sm text-black/40 dark:text-gray-400">{new Date(post.created_at).toLocaleDateString()}</p>
                     </div>
                 </div>
                 {post.auth_id && (
