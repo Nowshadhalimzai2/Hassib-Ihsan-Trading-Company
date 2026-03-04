@@ -146,6 +146,13 @@ Route::get('/test-email', function () {
     return 'Email sent successfully!';
 });
 
+Route::get('lang/{locale}', function ($locale) {
+
+    if (in_array($locale, ['en', 'ps'])) {
+        session(['locale' => $locale]);
+    }
+    return back();
+})->name('lang');
 
 Route::post('/otp-verify', [OtpController::class, 'verify'])->name('otp.post');
 Route::get('/otp-show', [OtpController::class, 'show'])->name('otp.show');

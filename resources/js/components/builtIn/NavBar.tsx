@@ -1,19 +1,24 @@
 import NavLink from '@/components/builtIn/NavLink';
 import Ul from '@/components/builtIn/Ul';
 import { router, usePage } from '@inertiajs/react';
+import { Earth } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import logo from '../../../../public/images/nobgLogo.png';
-import DarkModeButton from './DarkModeButton';
+import { Links as links } from '../links';
+import LanguageList from './LanguageList';
 type Auth = {
     user: { id: number };
 };
+
 const NavBar = () => {
     const auth = usePage().props.auth as Auth;
+
+    const [showMenu, setShowMenu] = useState(false);
+    const [IsShowLanguageList, setIsShowLanguageList] = useState<boolean>(false);
     let auth_id: null | number = null;
     if (auth['user']) {
         auth_id = auth['user'].id;
     }
-    const [showMenu, setShowMenu] = useState(false);
     // set Menu status to false while the screen size is more than Medium size
     useEffect(() => {
         const handleResize = () => {
@@ -34,32 +39,7 @@ const NavBar = () => {
         };
     }, []);
     const page = usePage();
-    const links = [
-        {
-            title: 'Home',
-            url: '/',
-        },
-        {
-            title: 'Product',
-            url: '/products',
-        },
-        {
-            title: 'Blog',
-            url: '/blog',
-        },
-        {
-            title: 'About',
-            url: '/about',
-        },
-        {
-            title: 'Contact',
-            url: '/contact',
-        },
-        {
-            title: 'Account',
-            url: '/admin/dashboard',
-        },
-    ];
+
     return (
         <>
             <div className="relative border-b border-slate-700 bg-slate-900">
@@ -77,8 +57,16 @@ const NavBar = () => {
                                 ))}
                             </Ul>
 
-                            <div className="flex items-center text-sm">
-                                <span className="">
+                            <div className="flex items-center gap-x-3 text-sm">
+                                <div className="LanguageOption">
+                                    <Earth className="size-7 text-blue-500" onClick={() => setIsShowLanguageList((pre) => !pre)} />
+                                    {IsShowLanguageList && (
+                                        <div className="absolute top-15 right-20 rounded-lg border bg-white/20 px-3 py-2">
+                                            <LanguageList />
+                                        </div>
+                                    )}
+                                </div>
+                                <span className="flex items-center justify-center space-x-3 text-blue-500">
                                     {!auth_id ? (
                                         <a
                                             href="/login"
@@ -121,11 +109,20 @@ const NavBar = () => {
                 {showMenu && (
                     <>
                         <ul className="flex flex-col items-center text-lg">
-                            {links.map((link) => (
-                                <NavLink text={link.title} ismobile={true} isActive={link.url == page.url} href={link.url} />
+                            {links.map((link, ind) => (
+                                <NavLink key={ind} text={link.title} ismobile={true} isActive={link.url == page.url} href={link.url} />
                             ))}
                         </ul>
-                        <DarkModeButton className="w-full" />
+                        <div className="LanuagesOption translate-all px-3 py-2 text-lg duration-300 ease-in">
+                            <span className="text-white" onClick={() => setIsShowLanguageList((pre) => !pre)}>
+                                Language
+                            </span>
+                            {IsShowLanguageList && (
+                                <div className="ml-4">
+                                    <LanguageList />
+                                </div>
+                            )}
+                        </div>
                     </>
                 )}
             </div>

@@ -31,10 +31,7 @@ class AppServiceProvider extends ServiceProvider
             "flash" => function () {
                 return [
                     "success" => session("success"),
-                    "error" => session("error"),
-                    "warning" => session("warning"),
-                    "info" => session("info"),
-                    "status" => session("status"),
+                    "error" => session("error"),                   
                     "message" => session("message"),
                 ];
             },
@@ -42,7 +39,9 @@ class AppServiceProvider extends ServiceProvider
                 return [
                     "previous" => URL::previous(),
                 ];
-            }
+            },
+            "locale" => app()->getLocale(),
+            'translation' => fn() => trans('navbar'),
         ]);
     }
 }
