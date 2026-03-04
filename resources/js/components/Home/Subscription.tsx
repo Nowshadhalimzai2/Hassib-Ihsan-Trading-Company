@@ -21,7 +21,7 @@ const Subscription = () => {
             <div>
                 <form onSubmit={(e) => subscribeNow(e)}>
                     <div className="mt-3 flex flex-col items-center justify-center space-y-2 p-3">
-                        <div className="w-2/3 rounded-md border border-gray-200">
+                        <div className="w-2/3 rounded-md border border-gray-200 text-white">
                             <input
                                 value={data.name}
                                 onChange={(e) => setData('name', e.target.value)}
@@ -33,7 +33,7 @@ const Subscription = () => {
                             />
                             <p className="text-sm text-red-500">{errors.name}</p>
                         </div>
-                        <div className="w-2/3 rounded-md border border-gray-200">
+                        <div className="w-2/3 rounded-md border border-gray-200 text-white">
                             <input
                                 value={data.email}
                                 onChange={(e) => setData('email', e.target.value)}

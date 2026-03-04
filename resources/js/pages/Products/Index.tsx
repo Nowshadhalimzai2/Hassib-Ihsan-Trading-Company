@@ -48,7 +48,7 @@ const Index = ({ products, categories }: Props) => {
                     <div className="mb-4 w-full py-8">
                         {/* Example product cards */}
 
-                        <div className="grid space-y-4 gap-x-3 md:grid-cols-3">{ourproducts}</div>
+                        <div className="grid space-y-4 gap-x-4 md:grid-cols-3 lg:grid-cols-4">{ourproducts}</div>
 
                         <div className="mt-4 flex w-full pt-3">
                             <a href="/products/productlist" className="w-full text-center hover:text-lime-400">

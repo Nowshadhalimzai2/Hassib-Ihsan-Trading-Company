@@ -17,7 +17,7 @@ const Testimonial = () => {
                             </p>
                         </div>
                         <div className="Profile mb-4 flex flex-col items-center justify-center px-5 lg:pb-0">
-                            <img src={me} alt="" className="mx-auto h-16 w-16 rounded-full border-2 border-lime-600" />
+                            <img src={me} alt="" className="mx-auto h-16 w-16 rounded-full border-2 border-slate-900 dark:border-white" />
                             <h5 className="text-sm text-lime-400">Nowshad Halimzai</h5>
                             <p className="text-sm text-gray-300">Jalalabad,Afghanistan</p>
                         </div>

@@ -19,6 +19,7 @@ const CardSection = ({ products }: { products: Product[] }) => {
             <div
                 ref={divRef}
                 className={`grid grid-cols-1 space-y-4 space-x-2 sm:grid-cols-2 md:space-y-0 lg:grid-cols-3 ${isVisible ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500`}
+                key={index}
             >
                 <SwiperSlide key={index} className="w-64 rounded-lg bg-slate-900">
                     <GrayCard
