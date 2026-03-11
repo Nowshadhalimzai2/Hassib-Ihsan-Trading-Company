@@ -187,7 +187,7 @@ class RegisteredUserController extends Controller
             })
             ->get();
 
-        return Inertia::render('customer/AllCustomers', ['customers' => $customers]);
+        return Inertia::render('UserIndex', ['title' => "Customers", 'users' => $customers]);
     }
     public function showCustomer(User $customer): Response
     {
@@ -210,7 +210,7 @@ class RegisteredUserController extends Controller
             })
             ->get();
 
-        return Inertia::render('admin/AllEmployees', ['employees' => $employees]);
+        return Inertia::render('UserIndex', ['title' => "Employees", 'users' => $employees]);
     }
     public function showEmployee(User $employee): Response
     {
@@ -232,7 +232,7 @@ class RegisteredUserController extends Controller
             })
             ->get();
 
-        return Inertia::render('Investor/AllInvestors', ['investors' => $investors]);
+        return Inertia::render('UserIndex', ['title' => "Investors", 'users' => $investors]);
     }
     public function showInvestor(User $investor): Response
     {
@@ -254,7 +254,7 @@ class RegisteredUserController extends Controller
             })
             ->get();
 
-        return Inertia::render('teller/AllTellers', ['tellers' => $tellers]);
+        return Inertia::render('UserIndex', ['title' => "Tellers", 'users' => $tellers]);
     }
     public function showTeller(User $teller): Response
     {
@@ -276,7 +276,7 @@ class RegisteredUserController extends Controller
             })
             ->get();
 
-        return Inertia::render('vendor/AllVendors', ['vendors' => $vendors]);
+        return Inertia::render('UserIndex', ['title' => "Vendors", 'users' => $vendors]);
     }
     public function showVendor(User $vendor): Response
     {

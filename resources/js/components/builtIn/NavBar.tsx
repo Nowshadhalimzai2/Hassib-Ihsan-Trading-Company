@@ -1,5 +1,6 @@
 import NavLink from '@/components/builtIn/NavLink';
 import Ul from '@/components/builtIn/Ul';
+import { NavBarTranslation } from '@/types/trans_types';
 import { router, usePage } from '@inertiajs/react';
 import { Earth } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -12,7 +13,7 @@ type Auth = {
 
 const NavBar = () => {
     const auth = usePage().props.auth as Auth;
-
+    const translation = usePage().props.translation as NavBarTranslation;
     const [showMenu, setShowMenu] = useState(false);
     const [IsShowLanguageList, setIsShowLanguageList] = useState<boolean>(false);
     let auth_id: null | number = null;
@@ -46,14 +47,20 @@ const NavBar = () => {
                 <div className="flex items-center justify-between px-3 text-2xl lg:px-6">
                     <div className="flex items-center">
                         <img src={logo} alt="Logo" className="h-18 w-18" />
-                        <h3 className="active border-0 text-xl md:text-2xl">Basit Ishaq Ltd</h3>
+                        <h3 className="active border-0 text-xl md:text-2xl">{translation.navbar.website}</h3>
                     </div>
                     {/* LLLLLLLLLLLLLLLLLL   LARGE SCREEN MENU  LLLLLLLLLLLLLLLLL */}
-                    <div className="hidden grow md:block">
+                    <div className="hidden grow lg:block">
                         <div className="flex justify-between">
                             <Ul>
                                 {links.map((link) => (
-                                    <NavLink key={link.title} text={link.title} isActive={link.url == page.url} href={link.url} />
+                                    <NavLink
+                                        key={link.title}
+                                        text={link.title}
+                                        isActive={link.url == page.url}
+                                        href={link.url}
+                                        translation={translation}
+                                    />
                                 ))}
                             </Ul>
 
@@ -61,7 +68,9 @@ const NavBar = () => {
                                 <div className="LanguageOption">
                                     <Earth className="size-7 text-blue-500" onClick={() => setIsShowLanguageList((pre) => !pre)} />
                                     {IsShowLanguageList && (
-                                        <div className="absolute top-15 right-20 rounded-lg border bg-white/20 px-3 py-2">
+                                        <div
+                                            className={`absolute ${page.props.locale === 'en' ? 'right-20' : 'left-20'} top-15 rounded-lg border bg-white/20 px-3 py-2`}
+                                        >
                                             <LanguageList />
                                         </div>
                                     )}
@@ -92,7 +101,7 @@ const NavBar = () => {
                     {/* LLLLLLLLLLLLLLLLLL  end Large screen menu LLLLLLLLLLLLLLLLL */}
 
                     {/* SSSSSSSSSSSSSSSSSS SMALL SCREEN MENU sssssssssssssssss*/}
-                    <div className="block md:hidden">
+                    <div className="block lg:hidden">
                         <div>
                             {/* THE MENU ICON represents as three lines */}
                             {showMenu ? (
@@ -110,7 +119,14 @@ const NavBar = () => {
                     <>
                         <ul className="flex flex-col items-center text-lg">
                             {links.map((link, ind) => (
-                                <NavLink key={ind} text={link.title} ismobile={true} isActive={link.url == page.url} href={link.url} />
+                                <NavLink
+                                    key={ind}
+                                    text={link.title}
+                                    ismobile={true}
+                                    isActive={link.url == page.url}
+                                    href={link.url}
+                                    translation={translation}
+                                />
                             ))}
                         </ul>
                         <div className="LanuagesOption translate-all px-3 py-2 text-lg duration-300 ease-in">

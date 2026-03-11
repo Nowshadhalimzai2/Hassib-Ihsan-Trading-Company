@@ -2,10 +2,10 @@
 
 return [
     'home' => 'Home',
-    'product' => 'Products',
+    'product' => 'Product',
     'blog' => 'Blog',
     'about' => 'About',
-    'contact_us' => 'Contact Us',
+    'contact' => 'Contacts',
     'account' => 'Account',
-
+    'website' => "Basit Ishaq LTD"
 ];

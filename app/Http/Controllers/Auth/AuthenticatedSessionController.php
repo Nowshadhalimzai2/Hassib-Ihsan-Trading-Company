@@ -36,12 +36,7 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
         $request->session()->regenerate();
 
-        $user = Auth::user(); // authenticated user         
-        $otp = rand(100000, 999999);
-        Cache::put("otp_" . $user->email, $otp, now()->addMinutes(5));
-        Mail::to($user->email)->send(new \App\Mail\OTPMail(['otp' => $otp, 'name' => $user->name]));
-
-        return Inertia::render("OTP", ['email' => $user->email]);
+        return redirect(route('admin.dashboard'));
     }
 
     /**

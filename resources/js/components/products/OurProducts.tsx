@@ -1,30 +1,28 @@
 import 'swiper/css';
 import 'swiper/css/navigation';
 
+import { HomeSec4Types } from '@/types/trans_types';
 import { useEffect, useRef, useState } from 'react';
 import gcake from '../../../../public/images/g_eathing.jpg';
 import cake1 from '../../../../public/images/img1.jpg';
 import cake2 from '../../../../public/images/img2.jpg';
 import setupObserver from '../builtIn/transition';
-const OurProducts = () => {
+const OurProducts = ({ translation }: { translation: HomeSec4Types }) => {
     const categories = [
         {
+            title: `${translation.home.sec4_title1}`,
+            description: `${translation.home.sec4_para1}`,
             img: cake1,
-            title: 'Indulge in Our Crunchy and Flavorfull Biscuits',
-            description:
-                'Each biscuit is a delightful experience, baked to perfection with a golden crunch and rich flavors. Perfect for daily treats, tea-time snacks, or sharing with loved ones. Discover a variety of options to satisfy every craving.',
         },
         {
+            title: `${translation.home.sec4_title2}`,
+            description: `${translation.home.sec4_para2}`,
             img: cake2,
-            title: 'Refresh Yourself with Our Exquisite Juice Selection',
-            description:
-                'Our juices are made from fresh, handpicked fruits, delivering a burst of natural flavors in every sip. Enjoy a refreshing and healthy beverage, ideal for any time of the day. Choose from a wide range of delicious and nutritious options.',
         },
         {
+            title: `${translation.home.sec4_title3}`,
+            description: `${translation.home.sec4_para3}`,
             img: gcake,
-            title: 'Explore Our Unique Flavors and Varieties of Cakes',
-            description:
-                'Our cakes are crafted with the finest ingredients to ensure quality and taste. From classic favorites to innovative creations, each cake is moist, flavorful, and beautifully decorated—perfect for celebrations or a sweet treat any day.',
         },
     ];
     const ourproducts = categories.map((category, index) => {
@@ -33,9 +31,7 @@ const OurProducts = () => {
     return (
         <>
             <section className="bg-[#f0f0f0] py-16 dark:bg-slate-800/10">
-                <h1 className="mb-20 text-center text-xl font-extrabold text-slate-900 md:text-3xl dark:text-white">
-                    Discover our Delicious Range of Items for Every Occasion
-                </h1>
+                <h1 className="mb-20 text-center text-xl font-extrabold text-slate-900 md:text-3xl dark:text-white">{translation.home.sec4_title}</h1>
 
                 <div className="">{ourproducts}</div>
             </section>
@@ -70,7 +66,7 @@ const OurProduct = ({ productimg, title, description, index }: Props) => {
                 </div>
                 <div className="px-3 md:px-6">
                     <h2 className="mb-6 font-serif text-2xl font-bold text-wrap text-slate-800 dark:text-white">{title}</h2>
-                    <p className="font-serif text-sm text-gray-600 md:text-[16px] dark:text-gray-300">{description}</p>
+                    <p className="text-md font-serif text-gray-600 md:text-lg md:text-[16px] dark:text-gray-300">{description}</p>
                 </div>
             </div>
         </>

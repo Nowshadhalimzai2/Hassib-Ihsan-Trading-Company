@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Inertia\Inertia;
 
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -31,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
             "flash" => function () {
                 return [
                     "success" => session("success"),
-                    "error" => session("error"),                   
+                    "error" => session("error"),
                     "message" => session("message"),
                 ];
             },
@@ -40,8 +41,11 @@ class AppServiceProvider extends ServiceProvider
                     "previous" => URL::previous(),
                 ];
             },
-            "locale" => app()->getLocale(),
-            'translation' => fn() => trans('navbar'),
+            "locale" => fn() => app()->getLocale(),
+            'translation' => fn() => [
+                'navbar' => trans('navbar'),
+                'home' => trans('home'),
+            ],
         ]);
     }
 }

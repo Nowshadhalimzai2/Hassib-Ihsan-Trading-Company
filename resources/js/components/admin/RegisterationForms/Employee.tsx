@@ -26,7 +26,7 @@ export const EmployeeForm = () => {
         });
     };
     return (
-        <div className="mx-auto max-w-xl rounded-md border border-gray-700 bg-white shadow-md shadow-white dark:bg-gray-900">
+        <div className="mx-auto max-w-2xl rounded-md border bg-white dark:bg-slate-900">
             <form className="flex flex-col rounded-lg p-6" onSubmit={submit}>
                 <div className="">
                     <div className="grid gap-2">
@@ -156,9 +156,9 @@ export const EmployeeForm = () => {
                             <InputError message={errors.password_confirmation} />
                         </div>
 
-                        <Button type="submit" className="mt-2 w-full" tabIndex={9} disabled={processing}>
+                        <Button type="submit" className="mt-2 w-full bg-slate-950" tabIndex={9} disabled={processing}>
                             {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                            Create account
+                            Create Account
                         </Button>
                     </div>
                 </div>

@@ -16,7 +16,7 @@ export default function Dashboard({ curs }: { curs: { Afg?: number; Pak?: number
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Admin Dashboard" />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-                <span className="w-full rounded-sm border bg-lime-100 p-3 text-center text-2xl font-bold text-slate-900 dark:bg-transparent dark:text-white">
+                <span className="w-full rounded-sm border border-lime-400 bg-lime-500/10 p-3 text-center text-2xl font-bold text-lime-400">
                     Balance
                 </span>
 

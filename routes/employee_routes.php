@@ -5,11 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransactionController;
-use App\Models\Product;
-use Inertia\Inertia;
 
 Route::middleware('auth')->prefix('admin')->group(function () {
-
 
     Route::get('/dashboard', [EmployeeController::class,  'dashboard'])->name('admin.dashboard');
 

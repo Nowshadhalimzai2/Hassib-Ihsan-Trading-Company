@@ -1,11 +1,17 @@
 import Footer from '@/components/builtIn/Footer';
 import NavBar from '@/components/builtIn/NavBar';
-import { Head } from '@inertiajs/react';
-import { ReactNode } from 'react';
+import { Head, usePage } from '@inertiajs/react';
+import { ReactNode, useEffect } from 'react';
 interface Props {
     children: ReactNode;
 }
 const MYLayout = ({ children }: Props) => {
+    const { locale } = usePage().props;
+    useEffect(() => {
+        document.documentElement.dir = locale === 'ps' ? 'rtl' : 'ltr';
+        document.documentElement.classList = 'font-serif';
+    }, [locale]);
+
     return (
         <>
             <div className="bg-white dark:bg-slate-900">

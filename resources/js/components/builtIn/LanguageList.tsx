@@ -5,10 +5,10 @@ const LanguageList = () => {
                 English
             </a>
             <a href={route('lang', 'ps')} className="hover:underline">
-                Pashto
+                پښتو
             </a>
             <a href={route('lang', 'dr')} className="hover:underline">
-                Dari
+                دری
             </a>
         </ul>
     );

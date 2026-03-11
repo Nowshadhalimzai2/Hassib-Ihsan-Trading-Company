@@ -5,9 +5,11 @@ import OnLoadTransimition from '../builtIn/OnLoadTransmition';
 const CTEButtons = ({
     setSubscription,
     showSubscription,
+    translation,
 }: {
     setSubscription: React.Dispatch<React.SetStateAction<boolean>>;
     showSubscription: boolean;
+    translation: { home: { shop_now: string; cancel: string; subscribe: string } };
 }) => {
     const [transimited, setTransimited] = useState(false);
 
@@ -22,13 +24,13 @@ const CTEButtons = ({
                     className={`border bg-lime-400 px-4 py-2 text-sm text-slate-900 transition duration-300 hover:border-white hover:bg-slate-900 hover:text-white md:text-[16px] lg:px-6 ${transimited ? 'translate-x-0 opacity-100' : '-translate-x-50 opacity-0'}`}
                     onClick={() => router.get(route('public.products.index'))}
                 >
-                    Shop Now
+                    {translation.home.shop_now}
                 </button>
                 <button
                     className={`border border-white px-4 py-2 text-sm text-white transition duration-300 hover:border-lime-400 hover:text-lime-400 md:text-[16px] lg:px-6 ${transimited ? 'translate-x-0 opacity-100' : 'translate-x-50 opacity-0'}`}
                     onClick={() => setSubscription((pre) => !pre)}
                 >
-                    {showSubscription ? 'Cancel' : 'Subscribe!'}
+                    {showSubscription ? `${translation.home.cancel}` : `${translation.home.subscribe}`}
                 </button>
             </div>
         </>

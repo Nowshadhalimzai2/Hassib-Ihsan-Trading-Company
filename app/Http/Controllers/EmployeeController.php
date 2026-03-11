@@ -14,8 +14,6 @@ class EmployeeController extends Controller
 {
     // ===================== FUNCTIONS ===================== //
 
-
-
     //          PUBLIC FUNCTIONS          //
 
     public function dashboard()

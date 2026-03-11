@@ -2,18 +2,14 @@
 
 use App\Http\Controllers\Comment\CommentController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\OtpController;
 use App\Http\Controllers\Post\PostController;
-use App\Http\Requests\Auth\LoginRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Subscriber;
 use App\Models\Transaction;
 use App\Models\User;
-use Illuminate\Http\Client\Request as ClientRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -23,7 +19,6 @@ use Illuminate\Support\Facades\Mail;
 
 
 Route::get('/', function () {
-    // dd(Cache::get('otp_nawshadhalimzai@gmail.com'));
     $product = Product::with('images')->where('is_featured', true)->latest()->take(5)->get();
     return Inertia::render('Home/Home', ['products' => $product]);
 })->name('home');
@@ -153,9 +148,6 @@ Route::get('lang/{locale}', function ($locale) {
     }
     return back();
 })->name('lang');
-
-Route::post('/otp-verify', [OtpController::class, 'verify'])->name('otp.post');
-Route::get('/otp-show', [OtpController::class, 'show'])->name('otp.show');
 
 // -------------INVESTOR ROUTES --------------------
 // Route::middleware(['auth', 'verified'])->group(function () {

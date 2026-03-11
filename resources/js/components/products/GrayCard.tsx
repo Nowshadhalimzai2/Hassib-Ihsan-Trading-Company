@@ -1,4 +1,4 @@
-import { router } from '@inertiajs/react';
+import { router, usePage } from '@inertiajs/react';
 import { useEffect } from 'react';
 interface Props {
     id: number;
@@ -7,10 +7,12 @@ interface Props {
     itemDescription?: string;
 }
 const GrayCard = ({ productImage, itemName, itemDescription, id }: Props) => {
+    const details_btn = usePage().props.locale as string;
     const navigateToDetails = () => {
         // Implement navigation logic here, e.g., using React Router or any other navigation library
         router.get(`/products/${id}`);
     };
+
     // display the feildset block whenever the user hovers over the card
     function handleMouseEnter(id: number) {
         const fieldset: HTMLElement | null = document.querySelector('#fieldset' + id);
@@ -54,7 +56,8 @@ const GrayCard = ({ productImage, itemName, itemDescription, id }: Props) => {
                         onClick={() => navigateToDetails()}
                         className="w-full rounded-sm bg-[#ffffff] px-3 py-2 text-sm font-semibold text-[#1c3d3d] transition-all hover:bg-lime-400"
                     >
-                        Details
+                        {/* change between languages if it's english or pashto */}
+                        {details_btn === 'en' ? 'Details' : 'توضیحات'}
                     </button>
                 </fieldset>
             </div>

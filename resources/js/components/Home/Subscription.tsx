@@ -5,7 +5,7 @@ type subscribe = {
     name: string;
     email: string;
 };
-const Subscription = () => {
+const Subscription = ({ title }: { title: string }) => {
     const { data, setData, post, processing, errors, reset } = useForm<Required<subscribe>>({
         name: '',
         email: '',
@@ -49,8 +49,8 @@ const Subscription = () => {
                         <input
                             disabled={processing}
                             type="submit"
-                            value="Subscribe Now"
-                            className="w-2/3 rounded-md border bg-white p-2 hover:bg-gray-100 dark:border-white dark:bg-white/10 dark:text-white dark:hover:border-lime-400 dark:hover:bg-white/5 dark:hover:text-lime-400"
+                            value={title}
+                            className="w-2/3 rounded-md border bg-white p-2 transition-colors duration-300 hover:bg-gray-900 hover:text-white"
                         />
                     </div>
                 </form>
