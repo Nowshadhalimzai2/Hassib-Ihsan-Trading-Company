@@ -23,11 +23,10 @@ class ProductController extends Controller
     {
 
         // the user is passed to the component so as to detect the component the role of the user
-        $user = User::with('role')->find(Auth::id());
         $products = Product::with(['user'])->get();
 
 
-        return Inertia::render("admin/Product/Index", ['products' => $products, 'user' => $user]);
+        return Inertia::render("admin/Product/Index", ['products' => $products]);
     }
 
     /**
@@ -36,13 +35,10 @@ class ProductController extends Controller
     public function create()
     {
 
-        // the user is passed to the component so as to detect the component the role of the user
-        $user = User::with('role')->find(Auth::id());
-
         $vendors = User::where('role_id', 5)->get();
         $categories = Category::all(['id', 'name']);
 
-        return Inertia::render("admin/Product/Create", ['user' => $user, 'vendors' => $vendors, 'categories' => $categories]);
+        return Inertia::render("admin/Product/Create", [ 'vendors' => $vendors, 'categories' => $categories]);
     }
 
     /**

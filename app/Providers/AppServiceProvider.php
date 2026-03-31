@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use App\Models\Users\Role;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Inertia\Inertia;
@@ -46,6 +49,7 @@ class AppServiceProvider extends ServiceProvider
                 'navbar' => trans('navbar'),
                 'home' => trans('home'),
             ],
+            'role'=>fn()=>User::with('role')->find(Auth::id())->only('role'),
         ]);
     }
 }

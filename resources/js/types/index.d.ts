@@ -35,8 +35,10 @@ export interface User {
     id: number;
     name: string;
     email: string;
-    
+    phone:string;
+    address:string;
     role:Role;
+    orders:Order[];
     avatar?: string;
     email_verified_at: string | null;
     source_id?: number;
@@ -107,3 +109,30 @@ export interface Image{
     is_primary:boolean;
 }
 
+export interface Order{
+    id:number;
+    total_amount:number;
+    status: 'pending'|'completed';
+    should_call:boolean;
+    delivery_address:string;
+    order_date:Date;
+    unknown_user:UKUser;
+    order_items:OrderItem[];
+    user:User;
+    currency_id:number;
+    note?:string;
+}
+export interface OrderItem{
+    id:number;
+    product:Product;
+    quantity:number;
+    unit_price:number;
+    subtotal:number;
+}
+export interface UKUser{
+    id:number;
+    first_name:string;
+    last_name:string;
+    phone:string;
+    address:string;
+}

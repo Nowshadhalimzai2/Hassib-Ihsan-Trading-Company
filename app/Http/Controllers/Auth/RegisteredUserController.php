@@ -24,38 +24,11 @@ class RegisteredUserController extends Controller
     public function create(): Response
     {
         $roles = Role::all();
-        $user = User::with('role')->find(Auth::id());
 
-        return Inertia::render('admin/RegisterUser', ['roles' => $roles, 'user' => $user]);
+        return Inertia::render('admin/RegisterUser', ['roles' => $roles, ]);
     }
 
-    public function storeCustomer(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
-            'phone' => 'required|string|max:15',
-            'address' => 'required|string|max:255',
-            'company' => 'sometimes|string|max:255',
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
-        $role_id = Role::where('name', 'customer')->first()->id; // Assuming 'customer' is the name of the role for customers
-        $user = User::create([
-            'name' => $request->first_name . ' ' . $request->last_name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'address' => $request->address,
-            'role_id' => $role_id, // Assuming '3' is the ID for the 'customer' role
-            'password' => Hash::make($request->password),
-        ]);
-        $user->company = $request->company ?? null;
-        $user->save();
-        event(new Registered($user));
 
-
-        return redirect()->back()->with('success', 'Customer registered successfully.');
-    }
 
     public function storeEmployee(Request $request): RedirectResponse
     {
@@ -179,28 +152,8 @@ class RegisteredUserController extends Controller
 
 
     // ======================= VIEW ALL USERS =========================
-    public function allCustomers(): Response
-    {
-        $customers = User::with('role')
-            ->whereHas('role', function ($query) {
-                $query->where('name', 'customer');
-            })
-            ->get();
 
-        return Inertia::render('UserIndex', ['title' => "Customers", 'users' => $customers]);
-    }
-    public function showCustomer(User $customer): Response
-    {
-        // Load any related data if necessary
-        // example: $customer->load('orders');
-        return Inertia::render('customer/ShowCustomer', ['customer' => $customer]);
-    }
-    public function deleteCustomer(User $customer): RedirectResponse
-    {
-        $customer->delete();
 
-        return redirect()->route('admin.all-customers')->with('success', 'Customer deleted successfully.');
-    }
 
     public function allEmployees(): Response
     {

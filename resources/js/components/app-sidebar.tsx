@@ -26,7 +26,7 @@ export function AppSidebar() {
     // every user's accessable items based on their role.
 
     //===========================     the role items are defined in NavItems.tsx   ===========
-    const role = (usePage().props.user as { role: { name: string } }).role.name; // ROLE NAME EXTRACTION
+    const role = (usePage().props.role as { role: { name: string } }).role.name; // ROLE NAME EXTRACTION
 
     if (role === 'customer') {
         mainNavItems.push(...customerNavItems);

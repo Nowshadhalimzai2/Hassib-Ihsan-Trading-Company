@@ -71,6 +71,10 @@ class User extends Authenticatable
         return $this->hasMany(Order::class);
     }
 
+    function order_items()
+    {
+        return $this->hasManyThrough(OrderItem::class, Order::class);
+    }
     function invoices()
     {
         return $this->hasMany(Invoice::class);

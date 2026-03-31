@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransactionController;
 
@@ -18,27 +20,27 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/register-user', [RegisteredUserController::class, 'create'])->name('admin.register-user');
 
     // ----------------------- CUSTOMER RELATED ROUTES ------------------------
-    Route::get('/all-customers', [RegisteredUserController::class, 'allCustomers'])->name('admin.all-customers');
-    Route::get('/customers/{customer}', [RegisteredUserController::class, 'showCustomer'])->name('admin.customer.show');
-    Route::delete('/customers/{customer}', [RegisteredUserController::class, 'deleteCustomer'])->name('admin.customer.delete');
-
+    Route::get('/customers', [CustomerController::class, 'index'])->name('admin.customers.index');
+    Route::get('/customers/{customer}', [CustomerController::class, 'show'])->name('admin.customer.show');
+    Route::delete('/customers/{customer}', [CustomerController::class, 'delete'])->name('admin.customer.delete');
+    Route::get('/customers/{customer}/orders/{order}', [CustomerController::class, 'order'])->name('admin.customer.order');
     // ----------------------- EMPLOYEE RELATED ROUTES ------------------------
-    Route::get('/all-employees', [RegisteredUserController::class, 'allEmployees'])->name('admin.all-employees');
+    Route::get('/employees', [RegisteredUserController::class, 'allEmployees'])->name('admin.employees.index');
     Route::get('/employees/{employee}', [RegisteredUserController::class, 'showEmployee'])->name('admin.employee.show');
     Route::delete('/employees/{employee}', [RegisteredUserController::class, 'deleteEmployee'])->name('admin.employee.delete');
 
     // ----------------------- Investor Related ROUTES ------------------------
-    Route::get('/all-investors', [RegisteredUserController::class, 'allInvestors'])->name('admin.all-investors');
+    Route::get('/investors', [RegisteredUserController::class, 'allInvestors'])->name('admin.investors.index');
     Route::get('/investors/{investor}', [RegisteredUserController::class, 'showInvestor'])->name('admin.investor.show');
     Route::delete('/investors/{investor}', [RegisteredUserController::class, 'deleteInvestor'])->name('admin.investor.delete');
 
     // ----------------------- TELLERS Related ROUTES ------------------------
-    Route::get('/all-tellers', [RegisteredUserController::class, 'allTellers'])->name('admin.all-tellers');
+    Route::get('/tellers', [RegisteredUserController::class, 'allTellers'])->name('admin.tellers.index');
     Route::get('/tellers/{teller}', [RegisteredUserController::class, 'showTeller'])->name('admin.teller.show');
     Route::delete('/tellers/{teller}', [RegisteredUserController::class, 'deleteTeller'])->name('admin.teller.delete');
 
     // ----------------------- VENDORS Related ROUTES ------------------------
-    Route::get('/all-vendors', [RegisteredUserController::class, 'allVendors'])->name('admin.all-vendors');
+    Route::get('/vendors', [RegisteredUserController::class, 'allVendors'])->name('admin.vendors.index');
     Route::get('/vendors/{vendor}', [RegisteredUserController::class, 'showVendor'])->name('admin.vendor.show');
     Route::delete('/vendors/{vendor}', [RegisteredUserController::class, 'deleteVendor'])->name('admin.vendor.delete');
 
@@ -48,5 +50,5 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::resource('products', ProductController::class);
 
     // ======================= ORDERS ROUTES =========================
-    Route::get('/orders', fn() => "hello");
+    Route::get('/orders',[OrderController::class, 'index'])->name('admin.orders.index');
 });

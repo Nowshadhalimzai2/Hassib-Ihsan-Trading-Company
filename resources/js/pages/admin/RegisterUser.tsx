@@ -60,7 +60,7 @@ const UserForm = ({ userType }: { userType: string }) => {
         <div className="rounded-lg p-6 md:m-4 dark:border-gray-700 dark:bg-slate-900">
             <div className="flex justify-center py-6 md:justify-end md:py-0">
                 <a
-                    href={`/admin/all-${userType}s`}
+                    href={route(`admin.${userType}s.index`)}
                     className="rounded-sm border border-white px-3 py-2 hover:bg-gray-950 hover:text-white hover:shadow"
                 >
                     List of {userType}s

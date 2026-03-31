@@ -1,18 +1,19 @@
+import { User } from "@/types";
 import React from "react"
 
-interface UserProps{
-    id: number;
-    name: string;
-    email: string;
-    address: string;
-    phone: string;
-    salary?:number;
-    profit_percentage?: number;
-}
+// interface UserProps{
+//     id: number;
+//     name: string;
+//     email: string;
+//     address: string;
+//     phone: string;
+//     salary?:number;
+//     profit_percentage?: number;
+// }
 
 interface Props{
-    users:UserProps[];
-    setUsers:React.Dispatch<React.SetStateAction<UserProps[]>>;
+    users:User[];
+    setUsers:React.Dispatch<React.SetStateAction<User[]>>;
     searchTerm:string;
 }
 
