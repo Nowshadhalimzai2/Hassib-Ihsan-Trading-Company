@@ -15,6 +15,7 @@ interface Props{
     users:User[];
     setUsers:React.Dispatch<React.SetStateAction<User[]>>;
     searchTerm:string;
+    
 }
 
 const Search=({users,setUsers,searchTerm}:Props)=>{

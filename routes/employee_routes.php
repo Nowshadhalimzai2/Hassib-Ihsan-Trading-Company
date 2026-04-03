@@ -51,4 +51,13 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 
     // ======================= ORDERS ROUTES =========================
     Route::get('/orders',[OrderController::class, 'index'])->name('admin.orders.index');
+    Route::get('/orders/{order}/items',[OrderController::class, 'show'])->name('admin.orders.show');
+    Route::patch('/orders/{order}/confirm/{status}', [OrderController::class, 'confirm'])->name('order.confirm');
+    Route::patch('/orders/{order}/delivery/{time}', [OrderController::class, 'delivery'])->name('order.delivery.time');
+    Route::delete('/items/{item}',[OrderController::class, 'destroyItem'])->name('items.destory');
+
+    // ======================= Invoce Routes ============================
+    // Route::post('/invoice',[InvoiceController:class,'store'])->name('invoices.store');
+     
+    
 });

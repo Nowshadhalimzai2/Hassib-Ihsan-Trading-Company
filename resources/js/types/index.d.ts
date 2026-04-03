@@ -112,7 +112,8 @@ export interface Image{
 export interface Order{
     id:number;
     total_amount:number;
-    status: 'pending'|'completed';
+    status: 'pending'|'completed' | 'confirmed' | 'cancelled';
+    delivery_time:string | null;
     should_call:boolean;
     delivery_address:string;
     order_date:Date;
@@ -121,6 +122,7 @@ export interface Order{
     user:User;
     currency_id:number;
     note?:string;
+    created_at:Date;
 }
 export interface OrderItem{
     id:number;
