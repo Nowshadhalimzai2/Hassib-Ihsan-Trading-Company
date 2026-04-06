@@ -1,5 +1,5 @@
 import { NavItem } from "@/types";
-import { Goal, HandHelping, LayoutGrid, UserPlus, ShoppingBasket, NotepadTextDashed } from "lucide-react";
+import { Goal, LayoutGrid, UserPlus, ShoppingBasket, NotepadTextDashed, Package, Receipt } from "lucide-react";
 
 export const customerNavItems: NavItem[] = [
     {
@@ -30,9 +30,10 @@ export const employeeNavItems: NavItem[] = [
         icon: UserPlus,
     },
      {
-        title: 'Transactions',
+        title: 'Transaction',
         href: '/admin/transactions',
-        icon: HandHelping,
+        icon: Receipt,
+    
     },
      {
         title: 'Orders',
@@ -40,9 +41,16 @@ export const employeeNavItems: NavItem[] = [
         icon: ShoppingBasket,
     },
     {
-        title: 'Product',
+        title: 'Payments',
+        href: '/admin/payments',
+        icon: Receipt,
+    
+    },
+    {
+        title: 'Products',
         href: '/admin/products',
-        icon: ShoppingBasket,
+        icon: Package ,
+    
     },
     {
         title: 'Notification',

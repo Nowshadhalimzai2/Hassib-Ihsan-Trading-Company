@@ -9,7 +9,7 @@ const ItemList = ({ items }: { items: OrderItem[] }) => {
     }
     return (
         <div>
-            <h2 className="mx-auto my-3 max-w-7xl rounded-lg bg-gray-400 py-4 text-center text-2xl font-bold">Order Item List</h2>
+            <h2 className="mx-auto my-3 max-w-7xl rounded-lg bg-gray-400 py-4 text-center text-2xl font-bold">Items</h2>
             <div className="flex flex-col md:px-5">
                 <table className="w-full space-y-2 overflow-hidden rounded-xl bg-gray-200 py-2">
                     <thead className=" rounded-t-xl bg-gray-300 ">

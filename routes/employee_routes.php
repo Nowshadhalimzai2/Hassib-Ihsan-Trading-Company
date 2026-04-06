@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransactionController;
@@ -57,7 +58,9 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::delete('/items/{item}',[OrderController::class, 'destroyItem'])->name('items.destory');
 
     // ======================= Invoce Routes ============================
-    // Route::post('/invoice',[InvoiceController:class,'store'])->name('invoices.store');
-     
+    Route::post('/invoice',[InvoiceController::class,'store'])->name('invoices.store');
+    Route::get('/invoice/{order}',[InvoiceController::class,'show'])->name('invoices.show');
+    
+    // ======================= Employee Payments Routes =========================
     
 });

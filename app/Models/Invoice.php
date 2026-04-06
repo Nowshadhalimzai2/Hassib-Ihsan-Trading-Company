@@ -8,10 +8,9 @@ class Invoice extends Model
 {
     protected $fillable = [
         'sale_id',
+        'order_id',
         'invoice_number',
-        'date_issued',
-        'due_date',
-        'notes',
+        'invoice_date',
     ];
     public function sale()
     {

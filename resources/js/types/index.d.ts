@@ -138,3 +138,33 @@ export interface UKUser{
     phone:string;
     address:string;
 }
+
+export interface Invoice{
+    id:number;
+    invoice_number:string;
+    order?:Order;
+    sale?:Sale;
+    paid_amount:number;
+    notes?:string;
+    payment_status:'unpaid' | 'paid' | 'partially_paid';
+    invoice_date:Date;
+}
+
+export interface Sale{
+    id:number;
+    // total_amount:number; the amount fisrt should be added to the sales table
+    delivery_address:string;
+    sale_date:Date;
+    order_items:SaleItem[];
+    user:User;
+    customer_name:string;
+    currency_id:number;
+    created_at:Date;
+}
+export interface SaleItem{
+    id:number;
+    product:Product;
+    quantity:number;
+    unit_price:number;
+    subtotal:number;
+}

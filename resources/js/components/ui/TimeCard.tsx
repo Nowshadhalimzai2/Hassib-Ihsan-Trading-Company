@@ -5,12 +5,12 @@ import { Order } from '@/types';
 interface Props{
     order: Order;
     duration:string;
-    title:string;
+    
     variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
     selected:boolean;
     setDeliveryTime: React.Dispatch<React.SetStateAction<string | null>>;
 }
-const TimeCard = ({ order, duration, title, variant,selected, setDeliveryTime }: Props) => {
+const TimeCard = ({ order, duration, variant,selected, setDeliveryTime }: Props) => {
     const assignTime=(time:string)=>{
         axios.patch(route('order.delivery.time', [order.id, time])).then(res=>{
             if(res.status===200){
@@ -33,8 +33,7 @@ const TimeCard = ({ order, duration, title, variant,selected, setDeliveryTime }:
     return (
     <Button disabled={selected} variant={variant} className={`${selected ? "bg-blue-300 border text-black border-red-500 shadow-blue-500 shadow-md" : ""}`} onClick={()=>assignTime(duration)}>
         <p>Within</p>
-        <p > {duration} </p>
-        <p> {title} </p>
+        <p> {duration} hour{duration !== '1' && 's'} </p>
     </Button>
   )
 }

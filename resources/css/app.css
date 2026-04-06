@@ -162,4 +162,9 @@
     .homelinks li{
         @apply py-6 text-lg list-none
     }
+    .INVOICE{
+        /* set the app-logo-icon as the background image */
+        /* image path: 'js/components/app-logo-icon.tsx' */
+        background-image: url('../js/components/app-logo-icon.tsx');
+    }
 }
