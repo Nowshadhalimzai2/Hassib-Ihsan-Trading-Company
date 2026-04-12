@@ -1,9 +1,9 @@
-import AppLogoIcon from '@/components/app-logo-icon';
 import FlashMessage from '@/components/builtIn/FlashMessage';
-import { Button } from '@/components/ui/button';
+import ReceiptHeader from '@/components/receipt-header';
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem, Order } from '@/types';
 import axios from 'axios';
+import { Printer } from 'lucide-react';
 import { useState } from 'react';
 interface Props {
     order: Order;
@@ -60,23 +60,14 @@ const Show = ({ order, invoice_number, is_invoice_exists }: Props) => {
                     <h2 className="rounded-lg bg-slate-700 py-3 text-center text-lg font-bold text-white md:text-2xl lg:text-3xl">
                         Invoice for Order #{order.id}
                     </h2>
-                    <div className='py-3 flex items-center justify-center bg-red-500/15 border border-red-500 rounded-md mt-1'>
+                    <div className="mt-1 flex items-center justify-center rounded-md border border-red-500 bg-red-500/15 py-3">
                         {is_invoice_exists && <p className="text-red-500">Invoice already exists for this order. you can print it below.</p>}
                         <FlashMessage message={message} duration={5000} />
                     </div>
-                    <section id="invoice" className="mt-4 ">
+                    <section id="invoice" className="mt-4">
                         <div className="INVOICE mx-auto max-w-4xl rounded-sm bg-white px-4">
-                            <div className="flex w-full items-center justify-between px-4">
-                                <div className="flex flex-1 items-center justify-between text-2xl font-bold">
-                                    <span className="bg-gradient-to-r from-blue-500 via-pink-500 to-yellow-500 bg-clip-text text-transparent">
-                                        BasitIshaq Ltd
-                                    </span>
-                                    <AppLogoIcon className="size-36" />
-                                </div>
-
-                                <div className="w-fit bg-gradient-to-r from-blue-500 via-pink-500 to-yellow-500 bg-clip-text text-2xl font-bold text-transparent">
-                                    د باسط اسحاق تجارتي شرکت
-                                </div>
+                            <div>
+                                <ReceiptHeader />
                             </div>
                             <div>
                                 <div className="flex justify-between px-5 py-4">
@@ -154,14 +145,15 @@ const Show = ({ order, invoice_number, is_invoice_exists }: Props) => {
                         </div>
                     </section>
                     <div className="py-8">
-                        <Button onClick={print} className="mt-5 w-full text-center">
-                            {is_invoice_exists ? 'Print' : 'Create'} Invoice
-                        </Button>
+                        <button onClick={print} className="mt-5 w-full space-x-2 rounded-md border bg-slate-800 px-2.5 py-1 text-gray-50">
+                            <div>{is_invoice_exists ? <Printer className="inline size-6 text-gray-200" /> : '+Create'} Print Invoice</div>
+                        </button>
                     </div>
                 </div>
             </div>
         </AppLayout>
     );
 };
+
 
 export default Show;

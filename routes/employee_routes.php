@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransactionController;
 
@@ -62,5 +63,6 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/invoice/{order}',[InvoiceController::class,'show'])->name('invoices.show');
     
     // ======================= Employee Payments Routes =========================
-    
+    Route::resource('payments', PaymentController::class);
+    Route::get('/currency/{invoice_number}',[PaymentController::class,'get_currency'])->name('currency.get');
 });

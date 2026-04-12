@@ -1,15 +1,25 @@
 import { OrderItem } from '@/types';
-import { router } from '@inertiajs/react';
-import { memo } from 'react';
+import axios from 'axios';
+import { memo, useState } from 'react';
+import FlashMessage from '../builtIn/FlashMessage';
 
 const ItemList = ({ items }: { items: OrderItem[] }) => {
-    function DeleteItem(item:OrderItem){
-        if(confirm("Do you want to delete the "+item.product.name+" Item"))
-            router.delete(route('items.destory',item.id));
-    }
+    const [message,setMessage]=useState<{error:string|null;success:string|null;}>({error:'',success:''})
+ 
+        function DeleteItem(item:OrderItem){
+            if(confirm("Do you want to delete the "+item.product.name+" Item"))
+                axios.delete(route('items.destory',item.id)).then((res)=>{
+            setMessage(()=>{   return {error:null,success:res.data.success}});
+                });
+                
+        }
+    
+
+    
     return (
         <div>
             <h2 className="mx-auto my-3 max-w-7xl rounded-lg bg-gray-400 py-4 text-center text-2xl font-bold">Items</h2>
+            {(message.success || message.error) && <FlashMessage message={message}/>}
             <div className="flex flex-col md:px-5">
                 <table className="w-full space-y-2 overflow-hidden rounded-xl bg-gray-200 py-2">
                     <thead className=" rounded-t-xl bg-gray-300 ">

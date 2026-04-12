@@ -49,7 +49,7 @@ class AppServiceProvider extends ServiceProvider
                 'navbar' => trans('navbar'),
                 'home' => trans('home'),
             ],
-            'role'=>fn()=>User::with('role')->find(Auth::id())->only('role'),
+            'role'=>fn()=>User::with('role')->find(Auth::id())?->only('role'),
         ]);
     }
 }

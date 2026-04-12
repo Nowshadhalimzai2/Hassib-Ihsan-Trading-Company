@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\OrderItem;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class OrderController extends Controller
@@ -19,9 +20,30 @@ class OrderController extends Controller
         return Inertia::render('admin/Order/Show', compact('order'));
     }
     public function confirm(Order $order, $status){
-        $order->status = $status;
-        $order->save();
-        return redirect()->back();
+        DB::beginTransaction();
+        try{
+            $order->status = $status;
+            $order->save();
+            if($status=="confirmed"){
+                // Decrease stock for each product in the order
+                
+                foreach($order->orderItems()->with('product')->get() as $item){
+                    $product=$item->product;
+                    if($product->quantity_in_stock < $item->quantity){
+                        return response()->json(['error'=>'Not enough stock for '.$product->name]);
+                        }
+                        $product->quantity_in_stock -= $item->quantity;
+                        $product->save();
+                        } 
+                        }
+                      
+                        DB::commit();
+            return response()->json(['message' => 'Order confirmed successfully']);
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            return response()->json(['error'=>'An error occured while confirming the order: '.$e->getMessage()]);
+        }
         // return response()->json(['message' => 'Order ' . $status . ' with delivery time: ' ]);
     }
     public function delivery(Order $order, $time){
@@ -30,7 +52,8 @@ class OrderController extends Controller
         return response()->json(['message' => 'Order delivery time set to: ' . $time . ' hours']);
     }
     public function destroyItem(OrderItem $item){
-    $item->delete();
-        return response()->json(['success'=>'Item has been deleted from'.$item.' successfully']);
+        $item->delete();
+        return response()->json(['success'=>'Item has been deleted from '.$item->product->name.' successfully']);
     }
+   
 }

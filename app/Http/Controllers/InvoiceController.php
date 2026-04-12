@@ -25,8 +25,11 @@ return Response()->json(['success'=>'Invoice created successfully', 'invoice'=>$
     }
     public function show(Order $order){
         $order->load(['orderItems.product','orderItems','user:id,name'])->get();
-        $invoice_number='INV-'.Invoice::max('id')+1;
         $is_invoice_exists=Invoice::where('order_id',$order->id)->exists();
+        if($is_invoice_exists)
+            $invoice_number=Invoice::where('order_id',$order->id)->pluck('invoice_number')->first();
+        else
+            $invoice_number='INV-'.Invoice::max('id')+1;
         
         return Inertia::render('admin/invoice/Show', compact(['order', 'invoice_number','is_invoice_exists']));
     }

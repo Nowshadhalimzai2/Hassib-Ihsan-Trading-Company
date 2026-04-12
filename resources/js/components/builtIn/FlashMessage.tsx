@@ -3,17 +3,21 @@ import { useEffect, useState } from 'react';
 type Props = {
     message: { error?: string | null; success: string | null };
     duration?: number;
+    onClose?: () => void;
 };
-const FlashMessage = ({ message, duration = 5000 }: Props) => {
+const FlashMessage = ({ message, duration = 5000, onClose }: Props) => {
     const [displayMessage, setDisplayMessage] = useState<string | null>(null);
     useEffect(() => {
         setDisplayMessage(message.error ? message.error : message.success);
-        if (message.error || message.success) setTimeout(() => setDisplayMessage(null), duration);
+        if (message.error || message.success) setTimeout(() => {
+            setDisplayMessage(null);
+            if (onClose) onClose();
+        }, duration);
         return () => {
             message.error = null;
             message.success = null;
         };
-    }, [message, duration]);
+    }, [message, duration, onClose]);
 
     return (
         <>

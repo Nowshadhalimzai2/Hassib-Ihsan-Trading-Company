@@ -2,11 +2,11 @@ import TimeCard from '@/components/ui/TimeCard';
 import TimeCounter from '@/components/ui/TimeCounter';
 import AppLayout from '@/layouts/app-layout';
 import { Order } from '@/types';
-import { router } from '@inertiajs/react';
 import React, { JSX } from 'react';
 import ItemList from '../../../components/products/ItemList';
 import Status from '@/components/admin/OrderItem/Status';
 import { buttonVariants } from '@/components/ui/button';
+import axios from 'axios';
 
 
 const Show = ({ order }: { order: Order }): JSX.Element => {
@@ -32,11 +32,21 @@ const Show = ({ order }: { order: Order }): JSX.Element => {
     ));
     React.useEffect(() => {
         function updateStatus() {
-            router.patch(route('order.confirm', [order.id, status]), { status, order: order.id });
+            axios.patch(route('order.confirm', [order.id, status]), { status, order: order.id }).
+            then((response) => {
+                if (response.data.error){
+                    alert(response.data.error);
+                    setStatus(order.status);
+                }
+                setStatus(status);
+                console.log('success', response);
+                
+            });
         }
         if (status !== order.status) {
             updateStatus();
         }
+       
     }, [status, order.id, order.status]);
 
     return (
@@ -66,9 +76,11 @@ const Show = ({ order }: { order: Order }): JSX.Element => {
                                     <Status status={status} setStatus={setStatus} deliveryTime={deliveryTime}/>
                                 </div>
                                 <div>
-                                    {status==="confirmed" && <a href={route('invoices.show', order.id)} className={buttonVariants({ variant: 'default' })+' w-full text-center'}>
-                                        Invoice
-                                    </a>}
+                                    {status==="confirmed" || status==="completed" ? (
+                                        <a href={route('invoices.show', order.id)} className={buttonVariants({ variant: 'default' })+' w-full text-center'}>
+                                            Invoice
+                                        </a>
+                                    ) : null}
                                 </div>
                                
                             </div>
@@ -80,7 +92,7 @@ const Show = ({ order }: { order: Order }): JSX.Element => {
                             </div>
                         </div>
                         <div className="space-y-12 pt-10">
-                            {status === 'confirmed' && (
+                            {status === 'confirmed' ? (
                                 <>
                                     <h3 className="text-center text-lg font-bold md:text-xl lg:text-2xl">Assign Reception Time</h3>
                                     {deliveryTime != '' && deliveryTime !== null && (
@@ -93,7 +105,11 @@ const Show = ({ order }: { order: Order }): JSX.Element => {
                                         {timeCards}
                                     </div>
                                 </>
-                            )}
+                            ):(
+                                status === 'pending' && (
+                                <h3 className="text-center text-lg font-bold md:text-xl lg:text-2xl">Change Order Status to Confirmed to assign reception time</h3>
+                            ))
+                            }
                         </div>
                     </div>
                 </div>

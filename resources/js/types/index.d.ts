@@ -168,3 +168,20 @@ export interface SaleItem{
     unit_price:number;
     subtotal:number;
 }
+
+export interface Payment{
+    id:number;
+    amount:number;
+    currency_id:number;
+    invoice_id:number;
+    invoice:Invoice;
+    payment_method:PaymentMethod;  
+    notes?:string; 
+    payment_date:Date;
+    user:{id:number;name:string;}
+
+ }
+ export interface PaymentMethod{
+    id:number;
+    name:'Cash ' | 'Credit Card' | 'Bank Transfer' | 'Mobile Payment' | 'HessabPay' ;
+ }

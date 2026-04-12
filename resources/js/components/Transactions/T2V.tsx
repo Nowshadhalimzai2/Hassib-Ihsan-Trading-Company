@@ -16,7 +16,7 @@ interface Props {
 }
 
 type RegisterFormType = {
-    amount: string | number;
+    amount:  number;
     currency_id: number;
     destination_id: number;
     source_id: number;
@@ -26,7 +26,7 @@ type RegisterFormType = {
 
 const T2V = ({ tellers, vendors, transaction, dealing_entity }: Props) => {
     const { data, setData, post, put, processing, errors, reset } = useForm<Required<RegisterFormType>>({
-        amount: transaction ? transaction.amount : '',
+        amount: transaction ? transaction.amount : 0,
         currency_id: transaction ? transaction.currency_id : 1,
         source_id: transaction ? Number(transaction.source_id) : tellers[0].id,
         destination_id: transaction ? Number(transaction.destination_id) : vendors[0].id,
@@ -107,11 +107,11 @@ const T2V = ({ tellers, vendors, transaction, dealing_entity }: Props) => {
                             <Label htmlFor="amount">Amount</Label>
                             <Input
                                 id="amount"
-                                type="text"
+                                type="amount"
                                 required
                                 tabIndex={2}
                                 value={data.amount}
-                                onChange={(e) => setData('amount', e.target.value)}
+                                onChange={(e) => setData('amount',Number( e.target.value))}
                                 disabled={processing}
                                 placeholder="Enter the amount"
                                 className={fieldStyle}
