@@ -77,7 +77,7 @@ const Show = ({ order }: { order: Order }): JSX.Element => {
                                 </div>
                                 <div>
                                     {status==="confirmed" || status==="completed" ? (
-                                        <a href={route('invoices.show', order.id)} className={buttonVariants({ variant: 'default' })+' w-full text-center'}>
+                                        <a href={route('order.invoice.show', order.id)} className={buttonVariants({ variant: 'default' })+' w-full text-center'}>
                                             Invoice
                                         </a>
                                     ) : null}

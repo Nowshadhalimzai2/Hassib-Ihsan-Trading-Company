@@ -58,10 +58,10 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::patch('/orders/{order}/delivery/{time}', [OrderController::class, 'delivery'])->name('order.delivery.time');
     Route::delete('/items/{item}',[OrderController::class, 'destroyItem'])->name('items.destory');
 
-    // ======================= Invoce Routes ============================
+    // ======================= Invoice Routes ============================
     Route::post('/invoice',[InvoiceController::class,'store'])->name('invoices.store');
     Route::get('/invoice/{order}',[InvoiceController::class,'show'])->name('invoices.show');
-    
+    Route::get('/orders/{order}/invoice',[InvoiceController::class,'orderInvoiceShow'])->name('order.invoice.show');
     // ======================= Employee Payments Routes =========================
     Route::resource('payments', PaymentController::class);
     Route::get('/currency/{invoice_number}',[PaymentController::class,'get_currency'])->name('currency.get');
