@@ -9,6 +9,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransactionController;
+use App\Models\Invoice;
 
 Route::middleware('auth')->prefix('admin')->group(function () {
 
@@ -56,13 +57,13 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/orders/{order}/items',[OrderController::class, 'show'])->name('admin.orders.show');
     Route::patch('/orders/{order}/confirm/{status}', [OrderController::class, 'confirm'])->name('order.confirm');
     Route::patch('/orders/{order}/delivery/{time}', [OrderController::class, 'delivery'])->name('order.delivery.time');
-    Route::delete('/items/{item}',[OrderController::class, 'destroyItem'])->name('items.destory');
+    Route::delete('/items/{item}',[OrderController::class, 'destroyItem'])->name('items.destroy');
 
     // ======================= Invoice Routes ============================
-    Route::post('/invoice',[InvoiceController::class,'store'])->name('invoices.store');
-    Route::get('/invoice/{order}',[InvoiceController::class,'show'])->name('invoices.show');
-    Route::get('/orders/{order}/invoice',[InvoiceController::class,'orderInvoiceShow'])->name('order.invoice.show');
+    Route::resource('invoices',InvoiceController::class);
+    Route::get('/invoices/{order}/print',[InvoiceController::class,'orderInvoiceShow'])->name('invoices.show.print');
     // ======================= Employee Payments Routes =========================
     Route::resource('payments', PaymentController::class);
+    // Route::get('/payments/create/{invoice}', [PaymentController::class, 'create'])->name('payments.create');
     Route::get('/currency/{invoice_number}',[PaymentController::class,'get_currency'])->name('currency.get');
 });

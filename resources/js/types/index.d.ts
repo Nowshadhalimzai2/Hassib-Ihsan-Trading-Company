@@ -144,10 +144,10 @@ export interface Invoice{
     invoice_number:string;
     order?:Order;
     sale?:Sale;
-    paid_amount:number;
     notes?:string;
     payment_status:'unpaid' | 'paid' | 'partially_paid';
     invoice_date:Date;
+    payments:Payment[];
 }
 
 export interface Sale{

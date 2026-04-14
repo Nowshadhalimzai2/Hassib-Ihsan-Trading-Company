@@ -78,7 +78,6 @@ const Index = ({ payments }: { payments: Payment[] }) => {
 };
 
 const PaymentCard = ({ payment }: { payment: Payment }) => {
-    console.log('payment::::', payment.invoice.invoice_number);
     
     return (
         <Link href={route('payments.show', payment.id)} className="mb-4 flex items-center hover:shadow hover:bg-gray-100 justify-between rounded-lg border bg-gray-50 p-4">
