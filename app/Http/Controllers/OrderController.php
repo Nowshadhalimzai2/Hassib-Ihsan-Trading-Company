@@ -11,7 +11,9 @@ class OrderController extends Controller
 {
     public function index()
     {
+        // makes the new orders as seen
         Order::where('is_seen', false)->update(['is_seen' => true]);
+        
         $orders=Order::with('user:id,name')->get();
         return Inertia::render('admin/Order/Index', compact('orders'));
     }
