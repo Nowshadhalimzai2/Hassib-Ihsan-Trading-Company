@@ -15,6 +15,7 @@ class Order extends Model
         'order_date',
         'should_call',
         'delivery_address',
+        'is_seen',
     ];
     public function user()
     {

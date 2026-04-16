@@ -146,7 +146,7 @@ const ShowPrintInvoice = ({ order, invoice_number, is_invoice_exists }: Props) =
                     </section>
                     <div className="py-8">
                         <button onClick={print} className="mt-5 w-full space-x-2 rounded-md border bg-slate-800 px-2.5 py-1 text-gray-50">
-                            <div>{is_invoice_exists ? <Printer className="inline size-6 text-gray-200" /> : '+Create'} Print Invoice</div>
+                            <div>{is_invoice_exists ? <Printer className="inline size-6 text-gray-200" /> : 'Create + '} Print Invoice</div>
                         </button>
                     </div>
                 </div>

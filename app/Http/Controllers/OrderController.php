@@ -11,6 +11,7 @@ class OrderController extends Controller
 {
     public function index()
     {
+        Order::where('is_seen', false)->update(['is_seen' => true]);
         $orders=Order::with('user:id,name')->get();
         return Inertia::render('admin/Order/Index', compact('orders'));
     }
@@ -54,6 +55,11 @@ class OrderController extends Controller
     public function destroyItem(OrderItem $item){
         $item->delete();
         return response()->json(['success'=>'Item has been deleted from '.$item->product->name.' successfully']);
+    }
+    public function notificationBadge()
+    {
+        $ntf_badge_count = Order::where('is_seen', false)->count();
+        return response()->json(['new_invoices_count' => $ntf_badge_count]);
     }
    
 }

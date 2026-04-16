@@ -13,7 +13,7 @@ class InvoiceController extends Controller
 {
     public function index(): Response
     {
-        $invoices = Invoice::with(['order', 'order.orderItems', 'order.orderItems.product:id,name', 'order.user:id,name', 'payments'])->get();
+    $invoices = Invoice::with(['order', 'order.orderItems', 'order.orderItems.product:id,name', 'order.user:id,name', 'payments'])->get();
 
         return Inertia::render('admin/invoice/index', compact('invoices'));
     }
@@ -57,4 +57,5 @@ class InvoiceController extends Controller
 
         return Inertia::render('admin/invoice/show-print-invoice', compact(['order', 'invoice_number', 'is_invoice_exists']));
     }
+  
 }

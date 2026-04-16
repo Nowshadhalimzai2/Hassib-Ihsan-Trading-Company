@@ -8,6 +8,8 @@ interface Props {
     invoices: Invoice[];
 }
 const Index = ({invoices}:Props) => {
+    
+    
     const [searchTerm,setSearchTerm]=useState<string>('');
     const [initailInvoices,setInitialInvoices]=useState<Invoice[]>(invoices);
     useEffect(()=>{
@@ -56,7 +58,7 @@ const Index = ({invoices}:Props) => {
       >
           <div className="p-4 bg-white">
               <div>
-                  <h2 className='w-full p-3 rounded-md font-semibold bg-slate-800 text-white text-center lg:text-2xl md:text-xl text-lg'>Invoices</h2>
+                  <h2 className='w-full p-3 rounded-md font-semibold bg-slate-800 text-white text-center lg:text-2xl md:text-xl text-lg'>Invoices </h2>
                   <p className='text-center text-gray-600 text-sm md:text-[16px] mt-2 py-4'>You can find all invoices here!</p>
               </div>
               <div className="p-4 max-w-4xl mx-auto">

@@ -58,8 +58,9 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::patch('/orders/{order}/confirm/{status}', [OrderController::class, 'confirm'])->name('order.confirm');
     Route::patch('/orders/{order}/delivery/{time}', [OrderController::class, 'delivery'])->name('order.delivery.time');
     Route::delete('/items/{item}',[OrderController::class, 'destroyItem'])->name('items.destroy');
-
+    Route::get('orders/notification/badge',[OrderController::class, 'notificationBadge'])->name('get.new-orders.count');
     // ======================= Invoice Routes ============================
+
     Route::resource('invoices',InvoiceController::class);
     Route::get('/invoices/{order}/print',[InvoiceController::class,'orderInvoiceShow'])->name('invoices.show.print');
     // ======================= Employee Payments Routes =========================
